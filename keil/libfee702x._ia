@@ -1,0 +1,1 @@
+--cpu ARM7TDMI --pd "__RTX SETA 1" -g --apcs=interwork -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\ADI" --list ".\libFee702x.lst" --xref -o ".\libFee702x.o" --depend ".\libFee702x.d" "..\FlashEE\libFee702x.a"

@@ -1,0 +1,15 @@
+ht1622.o: ..\bsp\ht1622\HT1622.c
+ht1622.o: C:\Keil\ARM\INC\ADI\aduc7024.h
+ht1622.o: C:\Keil\ARM\INC\ADI\irq.h
+ht1622.o: C:\Keil\ARM\INC\ADI\timer.h
+ht1622.o: C:\Keil\ARM\INC\ADI\dac.h
+ht1622.o: C:\Keil\ARM\INC\ADI\uart.h
+ht1622.o: C:\Keil\ARM\INC\ADI\I2C.h
+ht1622.o: C:\Keil\ARM\INC\ADI\PLA.H
+ht1622.o: C:\Keil\ARM\INC\ADI\GPIO.h
+ht1622.o: C:\Keil\ARM\INC\ADI\flash.h
+ht1622.o: C:\Keil\ARM\INC\ADI\pwm.h
+ht1622.o: C:\Keil\ARM\RV31\INC\stdio.h
+ht1622.o: C:\Keil\ARM\RV31\INC\stdlib.h
+ht1622.o: C:\Keil\ARM\RV31\INC\string.h
+ht1622.o: C:\Keil\ARM\RV31\INC\math.h

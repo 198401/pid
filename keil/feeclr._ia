@@ -1,0 +1,1 @@
+--cpu ARM7TDMI --pd "__RTX SETA 1" -g --apcs=interwork -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\ADI" --list ".\FeeClr.lst" --xref -o ".\FeeClr.o" --depend ".\FeeClr.d" "..\FlashEE\FeeClr.s"

@@ -1,0 +1,125 @@
+[Global]
+CurrentProject=PID.vpj
+[ProjectDates]
+PID.vpj=20110519003342774
+[ActiveConfig]
+PID.vpj=Debug
+[TreeExpansion2]
+- PID.vpj
+  - Source Files
+    - ..\FlashEE\iap.c
+    - ..\src\main.c
+    - ..\modbus\mb.c
+    - ..\modbus\ascii\mbascii.c
+    - ..\modbus\rtu\mbcrc.c
+    - ..\modbus\functions\mbfunccoils.c
+    - ..\modbus\functions\mbfuncdiag.c
+    - ..\modbus\functions\mbfuncdisc.c
+    - ..\modbus\functions\mbfuncholding.c
+    - ..\modbus\functions\mbfuncinput.c
+    - ..\modbus\functions\mbfuncother.c
+    - ..\modbus\rtu\mbrtu.c
+    - ..\modbus\tcp\mbtcp.c
+    - ..\modbus\functions\mbutils.c
+    - ..\bsp\port\portevent.c
+    - ..\bsp\port\portserial.c
+    - ..\bsp\port\porttimer.c
+    - ..\rtos\RTX_Config.c
+    - ..\src\Startup.s
+  - Header Files
+    - ..\src\AppTypes.h
+    - ..\src\Consts.h
+    - ..\modbus\include\mb.h
+    - ..\modbus\ascii\mbascii.h
+    - ..\modbus\include\mbconfig.h
+    - ..\modbus\rtu\mbcrc.h
+    - ..\modbus\include\mbframe.h
+    - ..\modbus\include\mbfunc.h
+    - ..\modbus\include\mbport.h
+    - ..\modbus\include\mbproto.h
+    - ..\modbus\rtu\mbrtu.h
+    - ..\modbus\tcp\mbtcp.h
+    - ..\modbus\include\mbutils.h
+    - ..\bsp\port\port.h
+  + Resource Files
+  + Bitmaps
+  + Other Files
+    - ..\bsp\Makefile
+    - PID.vpj
+    - PID.vpw
+    - PID.vpwhist
+scroll:0
+[State]
+SCREEN: 1680 1050 110 145 1260 742 0 0 M 0 0 0 0 1353 730 0
+CWD: ..\SE
+BUFFER: BN="..\bsp\port\portserial.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=0 TL=0 MLL=0 ASE=0 LNL=1 LCF=6 CAPS=0 E=0 ESBU2=-1 CL="" SC="" SCE= SCU=
+VIEW: LN=.2635 CL=26 LE=0 CX=27 CY=24 WI=5 BI=24 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="..\bsp\port\porttimer.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=0 TL=0 MLL=0 ASE=0 LNL=1 LCF=6 CAPS=0 E=0 ESBU2=-1 CL="" SC="" SCE= SCU=
+VIEW: LN=.1008 CL=22 LE=0 CX=23 CY=29 WI=5 BI=25 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="..\modbus\ascii\mbascii.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=0 TL=0 MLL=0 ASE=0 LNL=1 LCF=6 CAPS=0 E=0 ESBU2=-1 CL="" SC="" SCE= SCU=
+VIEW: LN=.6747 CL=1 LE=0 CX=2 CY=12 WI=5 BI=26 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="..\modbus\rtu\mbrtu.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=0 TL=0 MLL=0 ASE=0 LNL=1 LCF=6 CAPS=0 E=0 ESBU2=-1 CL="" SC="" SCE= SCU=
+VIEW: LN=.0 CL=1 LE=0 CX=2 CY=0 WI=5 BI=27 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="..\modbus\mb.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=0 TL=0 MLL=0 ASE=0 LNL=1 LCF=6 CAPS=0 E=0 ESBU2=-1 CL="" SC="" SCE= SCU=
+VIEW: LN=.798 CL=20 LE=0 CX=21 CY=27 WI=5 BI=28 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="..\src\AppTypes.h"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=0 TL=0 MLL=0 ASE=0 LNL=1 LCF=6 CAPS=0 E=0 ESBU2=-1 CL="" SC="" SCE= SCU=
+VIEW: LN=.1435 CL=19 LE=0 CX=20 CY=25 WI=5 BI=29 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="..\rtos\RTX_Config.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=0 TL=0 MLL=0 ASE=0 LNL=1 LCF=6 CAPS=0 E=0 ESBU2=-1 CL="" SC="" SCE= SCU=
+VIEW: LN=.7233 CL=64 LE=0 CX=65 CY=17 WI=5 BI=30 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="..\src\main.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=0 TL=0 MLL=0 ASE=0 LNL=1 LCF=6 CAPS=0 E=0 ESBU2=-1 CL="" SC="" SCE= SCU=
+VIEW: LN=.3299 CL=1 LE=0 CX=2 CY=23 WI=5 BI=31 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="..\FlashEE\iap.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=864 TL=0 MLL=0 ASE=0 LNL=1 LCF=6 CAPS=0 E=0 ESBU2=-1 CL="" SC="" SCE= SCU=
+VIEW: LN=.0 CL=1 LE=0 CX=2 CY=0 WI=5 BI=32 HT=0 HN=0 HF=0 HC=4
+WINDOW: 40 58 1048 511 -1 -1 N  WF=0 WT=2 ",,,"
+BUFFER: BN="..\bsp\port\portserial.c"
+VIEW: LN=.2635 CL=26 LE=0 CX=31 CY=24 WI=184 BI=24 HT=0 HN=0 HF=0 HC=4
+WINDOW: 80 116 1048 511 -1 -1 N  WF=0 WT=5 ",,,"
+BUFFER: BN="..\bsp\port\porttimer.c"
+VIEW: LN=.1008 CL=22 LE=0 CX=26 CY=29 WI=186 BI=25 HT=0 HN=0 HF=0 HC=4
+WINDOW: 100 145 1048 511 -1 -1 N  WF=0 WT=6 ",,,"
+BUFFER: BN="..\modbus\ascii\mbascii.c"
+VIEW: LN=.6747 CL=1 LE=0 CX=6 CY=12 WI=188 BI=26 HT=0 HN=0 HF=0 HC=4
+WINDOW: 60 87 1048 511 -1 -1 N  WF=0 WT=3 ",,,"
+BUFFER: BN="..\modbus\rtu\mbrtu.c"
+VIEW: LN=.0 CL=1 LE=0 CX=5 CY=0 WI=190 BI=27 HT=0 HN=0 HF=0 HC=4
+WINDOW: 0 0 1048 511 -1 -1 N  WF=0 WT=4 ",,,"
+BUFFER: BN="..\modbus\mb.c"
+VIEW: LN=.798 CL=20 LE=0 CX=24 CY=27 WI=192 BI=28 HT=0 HN=0 HF=0 HC=4
+WINDOW: 0 0 1048 511 -1 -1 N  WF=0 WT=7 ",,,"
+BUFFER: BN="..\src\AppTypes.h"
+VIEW: LN=.1435 CL=19 LE=0 CX=23 CY=25 WI=194 BI=29 HT=0 HN=0 HF=0 HC=4
+WINDOW: 0 0 1048 511 -1 -1 N  WF=0 WT=8 ",,,"
+BUFFER: BN="..\rtos\RTX_Config.c"
+VIEW: LN=.7233 CL=64 LE=0 CX=69 CY=17 WI=196 BI=30 HT=0 HN=0 HF=0 HC=4
+WINDOW: 20 29 1048 511 -1 -1 N  WF=0 WT=1 ",,,"
+BUFFER: BN="..\src\main.c"
+VIEW: LN=.3299 CL=1 LE=0 CX=6 CY=23 WI=198 BI=31 HT=0 HN=0 HF=0 HC=4
+WINDOW: 0 0 1048 511 -1 -1 M  WF=0 WT=9 ",,,"
+BUFFER: BN="..\FlashEE\iap.c"
+VIEW: LN=.625 CL=2 LE=0 CX=6 CY=17 WI=200 BI=32 HT=0 HN=0 HF=0 HC=4
+FILEHIST: 9
+..\bsp\port\porttimer.c
+..\modbus\ascii\mbascii.c
+..\modbus\rtu\mbrtu.c
+..\modbus\mb.c
+..\bsp\port\port.h
+..\src\AppTypes.h
+..\src\main.c
+..\rtos\RTX_Config.c
+..\FlashEE\iap.c
+DEBUG: 0 0 0 0 3 0 gdb
+printf
+strcpy
+std::*
+DEBUG2: 0
+PROJECT_CACHE: 0
+TBCLASS: 0 0

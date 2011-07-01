@@ -1,0 +1,12 @@
+mbfunccoils.o: ..\modbus\functions\mbfunccoils.c
+mbfunccoils.o: C:\Keil\ARM\RV31\INC\stdlib.h
+mbfunccoils.o: C:\Keil\ARM\RV31\INC\string.h
+mbfunccoils.o: ..\bsp\port\port.h
+mbfunccoils.o: C:\Keil\ARM\RV31\INC\assert.h
+mbfunccoils.o: C:\Keil\ARM\RV31\INC\inttypes.h
+mbfunccoils.o: C:\Keil\ARM\RV31\INC\stdint.h
+mbfunccoils.o: ..\modbus\include\mb.h
+mbfunccoils.o: ..\modbus\include\mbport.h
+mbfunccoils.o: ..\modbus\include\mbproto.h
+mbfunccoils.o: ..\modbus\include\mbframe.h
+mbfunccoils.o: ..\modbus\include\mbconfig.h

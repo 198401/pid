@@ -1,0 +1,11 @@
+port.o: ..\bsp\port\port.c
+port.o: C:\Keil\ARM\INC\ADI\ADuC7024.h
+port.o: C:\Keil\ARM\INC\ADI\irq.h
+port.o: C:\Keil\ARM\INC\ADI\timer.h
+port.o: C:\Keil\ARM\INC\ADI\dac.h
+port.o: C:\Keil\ARM\INC\ADI\uart.h
+port.o: C:\Keil\ARM\INC\ADI\I2C.h
+port.o: C:\Keil\ARM\INC\ADI\PLA.H
+port.o: C:\Keil\ARM\INC\ADI\GPIO.h
+port.o: C:\Keil\ARM\INC\ADI\flash.h
+port.o: C:\Keil\ARM\INC\ADI\pwm.h
