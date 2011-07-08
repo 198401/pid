@@ -17,8 +17,6 @@
 
 /* ----------------------- Platform includes --------------------------------*/
 #include "port.h"
-#include <ADuC7024.H>  
-#include "Consts.h"
 
 /* ----------------------- Modbus includes ----------------------------------*/
 #include "mb.h"
@@ -313,9 +311,6 @@ eMBDisable( void )
     return eStatus;
 }
 
-#define SET_485_T()			GP2SET |= BIT16;
-#define SET_485_R()			GP2CLR |= BIT16;
-
 eMBErrorCode
 eMBPoll( void )
 {
@@ -387,10 +382,8 @@ eMBPoll( void )
                 if( ( eMBCurrentMode == MB_ASCII ) && MB_ASCII_TIMEOUT_WAIT_BEFORE_SEND_MS )
                 {
                     vMBPortTimersDelay( MB_ASCII_TIMEOUT_WAIT_BEFORE_SEND_MS );
-                }
-                SET_485_T();                
+                }              
                 eStatus = peMBFrameSendCur( ucMBAddress, ucMBFrame, usLength );
-                SET_485_R();
             }
             break;
 

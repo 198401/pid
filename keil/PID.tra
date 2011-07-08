@@ -29,7 +29,7 @@
 ### ADS-LD Output File: 'PID.axf'
 ### ADS-LD Command File: 'PID.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile 'PID.lnp', Handle=0x00000588
+### Creating CmdFile 'PID.lnp', Handle=0x00000254
 ### Writing '.lnp' file
 ### ADS-LD Command file 'PID.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.

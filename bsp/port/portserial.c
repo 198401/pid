@@ -24,6 +24,7 @@ vMBPortSerialEnable( mbBOOL xRxEnable, mbBOOL xTxEnable )
     if ( xRxEnable )
     {
         COMIEN0 |= 0x01;
+		GP1DAT &= ~0x00800000;
     }
     else
     {
@@ -32,6 +33,7 @@ vMBPortSerialEnable( mbBOOL xRxEnable, mbBOOL xTxEnable )
     if ( xTxEnable )
     {
         COMIEN0 |= 0x02;
+		GP1DAT |= 0x80800000;
     }
     else
     {
@@ -49,7 +51,8 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
 
     ( void )ucPORT;
 
-    GP1CON = 0x011;       /* Setup tx & rx pins on P1.0 and P1.1 */
+    GP1CON |= 0x011;       /* Setup tx & rx pins on P1.0 and P1.1 */
+	GP1DAT |= 0x80000000;       /* Setup tr pins on P1.7 */
 
     switch ( ucDataBits )
     {

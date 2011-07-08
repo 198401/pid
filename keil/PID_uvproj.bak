@@ -122,7 +122,7 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <LimitSpeedToRealTime>1</LimitSpeedToRealTime>
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
@@ -504,6 +504,16 @@
               <FileName>HT1622.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\bsp\ht1622\HT1622.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>hmi</GroupName>
+          <Files>
+            <File>
+              <FileName>Hmi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\Hmi.c</FilePath>
             </File>
           </Files>
         </Group>

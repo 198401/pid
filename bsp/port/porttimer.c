@@ -16,14 +16,15 @@
 #include "mb.h"
 #include "mbport.h"
 
-#define OS_CLOCK       41780000
+#define OS_CLOCK       320000
 #define OS_TICK        50
+
+static ULONG mb_timer;
 
 mbBOOL
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
-    T2LD   = ((USHORT)(((double)OS_CLOCK*(double)OS_TICK)/1E6)-1);                       // Counter Value
-	IRQEN |= WAKEUP_TIMER_BIT;              // Enable Timer1 IRQ
+    mb_timer   = ((ULONG)(((double)OS_CLOCK*(double)OS_TICK)/1E6)-1);                       // Counter Value
     return TRUE;
 }
 
@@ -31,19 +32,20 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
 inline void
 vMBPortTimersEnable(  )
 {
-    T2CON  = 0x04;
     T2CON  = 0x84;                       // Enabled,Free,Binary and CLK/16
+	T2LD   = mb_timer;
+	IRQEN |= WAKEUP_TIMER_BIT;              // Enable Timer1 IRQ
 }
 
 inline void
 vMBPortTimersDisable(  )
 {
-    T2CON  = 0x04;
+    IRQEN &= ~WAKEUP_TIMER_BIT;              // Enable Timer1 IRQ
 }
 
 void mb_timer2_interrupt (void) __irq
 {
     ( void )pxMBPortCBTimerExpired(  );
-    T2CLRI = 0;                             // Clear Timer IRQ
+    T2CLRI = 0xFF;                             // Clear Timer IRQ
 }
 

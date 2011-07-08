@@ -27,33 +27,24 @@ UNIT_CFG                        g_UnitCfg;
 #define EEPADDR 				0x8F400
 const UNIT_CFG                  g_UnitCfgInFlash    __at (EEPADDR);
 
-#define REG_INPUT_START             0x1000
+#define REG_INPUT_START             0x0001
 #define REG_INPUT_NREGS             sizeof(g_UnitData)/sizeof(short)
-#define REG_HOLDING_START           0x1000
+#define REG_HOLDING_START           0x0001
 #define REG_HOLDING_NREGS           sizeof(g_UnitCfg)/sizeof(short)
 
-OS_TID t_keyin;                         /* assigned task id of task: keyin   */
+OS_TID t_feeddog;                       /* assigned task id of task: feeddog */
 OS_TID t_blink;                         /* assigned task id of task: blink   */
 OS_TID t_modbus;                        /* assigned task id of task: blink   */
 OS_TID t_adc;                           /* assigned task id of task: adc     */
 OS_TID t_hmi;                           /* assigned task id of task: hmi     */
 
-U16    delay;                           /* clock tick delay global variable  */
 
-
-__task void keyin(void)
+__task void feeddog(void)
 {
     os_itv_set(5);                       /* set wait interval: 5 clock ticks  */
     while (1)
     {
-        if (GP0DAT & 0x00000010)          /* check P0.4 key input              */
-        {
-            delay = 400;                       /* set 4 clock tick delay           */
-        }
-        else
-        {
-            delay = 300;                       /* set 3 clock tick delay           */
-        }
+        T3CLRI = 0x55;
         os_itv_wait();                     /* wait interval                     */
     }
 }
@@ -63,7 +54,7 @@ __task void blink(void)
     while (1)
     {
         GP4DAT ^= 0x00040000;               /* toggle P4.2 LED                   */
-        os_dly_wait(delay);                /* programmed delay                  */
+        os_dly_wait(20);                /* programmed delay                  */
     }
 }
 
@@ -103,7 +94,10 @@ __task void adc(void)
     os_itv_set (10);                                /* set wait interval: 10 clock ticks  */
     while (1)
     {
-        GetADC(3);
+        for (U16 i=1;i<10;i++)
+	    {
+	        GetADC(i);    
+	    }
     }
 }
 
@@ -112,6 +106,8 @@ __task void hmi(void)
 	while(1)
 	{
 		HMI_Handler();
+//		GP1DAT |= 0x80800000;
+//		xMBPortSerialPutByte(0x55);
 		os_dly_wait(100);                /* programmed delay                  */
 	}
 }
@@ -127,7 +123,9 @@ void ADCpoweron(int time)
 
 __task void init(void)
 {
-    GP4DAT = 0x04040000;                             /* P4.2 defined as output                         */
+	U32	adctest;    
+
+	GP4DAT = 0x04040000;                             /* P4.2 defined as output                         */
 
     ADCpoweron(20000);                               /* power on ADC				                   */                       
     ADCCP                   = 0x00;                  /* Selecting ADC Channel 0                        */
@@ -144,21 +142,42 @@ __task void init(void)
 		g_UnitCfg.dat.byMbAddr = 1;
 
 	if (g_UnitCfg.dat.uBau == 0)
-		g_UnitCfg.dat.uBau = 19200;
+		g_UnitCfg.dat.uBau = 4800;
 
     Init_FEE( );
 
 	HMI_Init();
-	GP3DAT  =0x01000000;		//p3.0设为输出 输出为0
+	GP3DAT  = 0x01000000;		//p3.0设为输出 输出为0
 
-    eMBInit( MB_RTU, g_UnitCfg.dat.byMbAddr, 0, g_UnitCfg.dat.uBau, MB_PAR_EVEN );
+	adctest	= GetADC(0);
 
-    /* Enable the Modbus Protocol Stack. */
-    eMBEnable( );
+    if(adctest < 820)
+	{
+		//anl
+	}
+	else if(adctest < 2460)
+	{
+		eMBInit( MB_RTU, g_UnitCfg.dat.byMbAddr, 8, g_UnitCfg.dat.uBau, MB_PAR_EVEN );
+	    /* Enable the Modbus Protocol Stack. */
+	    eMBEnable( );
+		t_modbus = os_tsk_create (modbus, 1);    /* start task 'modbus'              */
+	}
+	else if(adctest < 2460)
+	{
+		//can
+	}
+	else
+	{
+	   ;
+	}	
 
-    t_keyin = os_tsk_create (keyin, 2);      /* start task 'keyin'               */
+	// Initilize Timer 3 in WatchDog mode with timeout period of   second
+//    T3LD  = 0x0080;         //  clock ticks
+//    T3CON = 0xE4;  // WatchDog mode, enable timer, 32768hz clock/256
+//    T3CLRI = 0x55;      // Feed Dog
+
+    t_feeddog = os_tsk_create (feeddog, 2);      /* start task 'keyin'               */
     t_blink = os_tsk_create (blink, 2);      /* start task 'blink'               */
-    t_modbus = os_tsk_create (modbus, 1);    /* start task 'modbus'              */
     t_adc = os_tsk_create (adc, 1);          /* start task 'adc'                 */
 	t_hmi = os_tsk_create (hmi, 1);          /* start task 'lcd'                 */
 	

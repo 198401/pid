@@ -48,7 +48,7 @@ UND_Stack_Size  EQU     0x00000000
 SVC_Stack_Size  EQU     0x00000020
 ABT_Stack_Size  EQU     0x00000000
 FIQ_Stack_Size  EQU     0x00000000
-IRQ_Stack_Size  EQU     0x00000040
+IRQ_Stack_Size  EQU     0x00000060
 USR_Stack_Size  EQU     0x00000400
 
 ISR_Stack_Size  EQU     (UND_Stack_Size + SVC_Stack_Size + ABT_Stack_Size + \
