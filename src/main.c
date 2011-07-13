@@ -94,7 +94,7 @@ __task void adc(void)
     os_itv_set (10);                                /* set wait interval: 10 clock ticks  */
     while (1)
     {
-        for (U16 i=1;i<10;i++)
+        for (U16 i = 4; i < 10; i++)
 	    {
 	        GetADC(i);    
 	    }
@@ -144,10 +144,13 @@ __task void init(void)
 	if (g_UnitCfg.dat.uBau == 0)
 		g_UnitCfg.dat.uBau = 4800;
 
-    Init_FEE( );
+	Init_FEE( );
 
 	HMI_Init();
+
 	GP3DAT  = 0x01000000;		//p3.0设为输出 输出为0
+
+	
 
 	adctest	= GetADC(0);
 
@@ -158,8 +161,8 @@ __task void init(void)
 	else if(adctest < 2460)
 	{
 		eMBInit( MB_RTU, g_UnitCfg.dat.byMbAddr, 8, g_UnitCfg.dat.uBau, MB_PAR_EVEN );
-	    /* Enable the Modbus Protocol Stack. */
-	    eMBEnable( );
+		/* Enable the Modbus Protocol Stack. */
+		eMBEnable( );
 		t_modbus = os_tsk_create (modbus, 1);    /* start task 'modbus'              */
 	}
 	else if(adctest < 2460)
@@ -172,12 +175,12 @@ __task void init(void)
 	}	
 
 	// Initilize Timer 3 in WatchDog mode with timeout period of   second
-//    T3LD  = 0x0080;         //  clock ticks
-//    T3CON = 0xE4;  // WatchDog mode, enable timer, 32768hz clock/256
-//    T3CLRI = 0x55;      // Feed Dog
-
-    t_feeddog = os_tsk_create (feeddog, 2);      /* start task 'keyin'               */
+    T3LD  = 0x00FF;         //  clock ticks
+    T3CON = 0xE4;  // WatchDog mode, enable timer, 32768hz clock/256
+    T3CLRI = 0x55;      // Feed Dog
+	t_feeddog = os_tsk_create (feeddog, 2);      /* start task 'keyin'               */
     t_blink = os_tsk_create (blink, 2);      /* start task 'blink'               */
+	
     t_adc = os_tsk_create (adc, 1);          /* start task 'adc'                 */
 	t_hmi = os_tsk_create (hmi, 1);          /* start task 'lcd'                 */
 	

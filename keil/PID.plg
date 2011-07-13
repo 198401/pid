@@ -7,9 +7,34 @@ F:\object\PID\keil\PID.uvproj
 Project File Date:  07/08/2011
 
 <h2>Output:</h2>
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.222V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Halting CPU core
+Info: Using DBGRQ to halt CPU
+Info: Resetting TRST in order to halt CPU
+Info: Resetting target using RESET pin
+Info: Halting CPU core
+Info: Using DBGRQ to halt CPU
+Info: Resetting TRST in order to halt CPU
+***JLink Error: Could not find supported CPU core on JTAG chain
+Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x5.
+Unable to halt ARM core
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Error: Could not find supported CPU core on JTAG chain
 Build target 'Target 1'
-compiling main.c...
 linking...
-Program Size: Code=15320 RO-data=47308 RW-data=316 ZI-data=6700  
+Program Size: Code=15336 RO-data=47292 RW-data=316 ZI-data=6700  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
