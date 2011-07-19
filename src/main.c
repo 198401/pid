@@ -13,6 +13,7 @@
 #include <RTL.h>
 #include <ADuC7024.H> 
 #include <absacc.h>
+#include <math.h>
 
 #include "mb.h"
 #include "mbport.h"
@@ -94,10 +95,61 @@ __task void adc(void)
     os_itv_set (10);                                /* set wait interval: 10 clock ticks  */
     while (1)
     {
-        for (U16 i = 4; i < 10; i++)
-	    {
-	        GetADC(i);    
-	    }
+        static float temp,ztccof,stccof;
+		if(g_UnitCfg.dat.bIsVoltage)
+			GP0DAT |= 0x40400000;
+		else
+			GP0DAT &= ~0x00400000;
+		g_UnitData.dat.iAD4 = GetADC(4);
+		g_UnitData.dat.iAD5 = GetADC(5);
+		g_UnitData.dat.iAD6 = GetADC(6);
+		g_UnitData.dat.iAD7 = GetADC(7);
+		g_UnitData.dat.iAD8 = GetADC(8);
+		     
+		g_UnitData.dat.fTemp = ((float) -3.90802e-1+  sqrt((float)0.152726203204 - (float)4*((float)-5.80195e-5)*((float)100-g_UnitData.dat.iAD8)))/((float)-1.16039e-4);
+		temp					= g_UnitData.dat.fTemp;
+        ztccof                  = g_UnitCfg.dat.fg_Tzc[0] 
+                                  + g_UnitCfg.dat.fg_Tzc[1]*temp 
+                                  + g_UnitCfg.dat.fg_Tzc[2]*temp*temp;
+      	stccof                  = g_UnitCfg.dat.fg_Tsc[0] 
+                                  + g_UnitCfg.dat.fg_Tsc[1]*temp 
+                                  + g_UnitCfg.dat.fg_Tsc[2]*temp*temp;
+		if(stccof < 0.01)
+			stccof              = 1.0f;
+  
+			
+		temp			= g_UnitData.dat.iAD4;
+		temp            = g_UnitCfg.dat.fPos_Lic[0] 
+                      	+ g_UnitCfg.dat.fPos_Lic[1]*temp 
+                      	+ g_UnitCfg.dat.fPos_Lic[2]*temp*temp 
+                      	+ g_UnitCfg.dat.fPos_Lic[3]*temp*temp*temp; 
+		g_UnitData.dat.fPos = temp*(g_UnitCfg.dat.fPosMax - g_UnitCfg.dat.fPosMin) 
+	                      	+ g_UnitCfg.dat.fPosMin; 
+
+		temp			= g_UnitData.dat.iAD5;
+		temp            = g_UnitCfg.dat.fSet_Lic[0] 
+                      	+ g_UnitCfg.dat.fSet_Lic[1]*temp 
+                      	+ g_UnitCfg.dat.fSet_Lic[2]*temp*temp 
+                      	+ g_UnitCfg.dat.fSet_Lic[3]*temp*temp*temp; 
+		g_UnitData.dat.fSet = temp*(g_UnitCfg.dat.fSetMax - g_UnitCfg.dat.fSetMin) 
+	                      	+ g_UnitCfg.dat.fSetMin; 
+
+		temp			= (g_UnitData.dat.iAD6 - ztccof)*stccof;
+		temp            = g_UnitCfg.dat.fPress1_Lic[0] 
+                      	+ g_UnitCfg.dat.fPress1_Lic[1]*temp 
+                      	+ g_UnitCfg.dat.fPress1_Lic[2]*temp*temp 
+                      	+ g_UnitCfg.dat.fPress1_Lic[3]*temp*temp*temp; 
+		g_UnitData.dat.fPress1 = temp*(g_UnitCfg.dat.fPress1Max - g_UnitCfg.dat.fPress1Min) 
+	                      	   + g_UnitCfg.dat.fPress1Min; 
+
+		temp			= (g_UnitData.dat.iAD7 - ztccof)*stccof;
+		temp            = g_UnitCfg.dat.fPress2_Lic[0] 
+                      	+ g_UnitCfg.dat.fPress2_Lic[1]*temp 
+                      	+ g_UnitCfg.dat.fPress2_Lic[2]*temp*temp 
+                      	+ g_UnitCfg.dat.fPress2_Lic[3]*temp*temp*temp; 
+		g_UnitData.dat.fPress2 = temp*(g_UnitCfg.dat.fPress2Max - g_UnitCfg.dat.fPress2Min) 
+	                      	   + g_UnitCfg.dat.fPress2Min; 
+
     }
 }
 
@@ -106,8 +158,6 @@ __task void hmi(void)
 	while(1)
 	{
 		HMI_Handler();
-//		GP1DAT |= 0x80800000;
-//		xMBPortSerialPutByte(0x55);
 		os_dly_wait(100);                /* programmed delay                  */
 	}
 }
@@ -142,7 +192,7 @@ __task void init(void)
 		g_UnitCfg.dat.byMbAddr = 1;
 
 	if (g_UnitCfg.dat.uBau == 0)
-		g_UnitCfg.dat.uBau = 4800;
+		g_UnitCfg.dat.uBau = 19200;
 
 	Init_FEE( );
 

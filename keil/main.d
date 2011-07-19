@@ -11,6 +11,7 @@ main.o: C:\Keil\ARM\INC\ADI\GPIO.h
 main.o: C:\Keil\ARM\INC\ADI\flash.h
 main.o: C:\Keil\ARM\INC\ADI\pwm.h
 main.o: C:\Keil\ARM\RV31\INC\absacc.h
+main.o: C:\Keil\ARM\RV31\INC\math.h
 main.o: ..\modbus\include\mb.h
 main.o: ..\bsp\port\port.h
 main.o: C:\Keil\ARM\RV31\INC\assert.h

@@ -23,6 +23,8 @@
 #include "HT1622.h"
 #include "AppTypes.h"
 
+#include "ds18b20.h"
+
 typedef unsigned char           BYTE;       /* Prefix: by	*/
 typedef unsigned int	        WORD;       /* Prefix: w	*/
 
@@ -122,9 +124,9 @@ static void Display()
 		{
 //			nVal = 0;
 			clearLCD();
-			floattochar (nVal, byNum,0);
+			floattochar (DS18B20_Temperature(), byNum,1);
 //			display_char(byStr);
-			display_digital(byNum,0,3);
+			display_digital(byNum,1,3);
 		}
 	}
 	else

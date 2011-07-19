@@ -7,14 +7,17 @@ typedef union _UNIT_DATA
 {
     struct _UNIT_DATA_
     {
-        float   fAD0;
-        float   fP;
-        float   fFIXP;
-        float   fTEMP;
-        float   fZ;
-
-        uint32_t    wCrcErrors;
-        uint32_t    wFrmErrors;
+        float   fPos;
+        float   fSet;
+        float   fPress1;
+        float   fPress2;
+		float   fTemp;
+        
+		uint32_t   	iAD4;
+        uint32_t    iAD5;
+        uint32_t    iAD6;
+		uint32_t    iAD7;
+        uint32_t    iAD8;
 
         mbBOOL    bOK;
         mbBOOL    bZ;
@@ -27,46 +30,30 @@ typedef union _UNIT_CFG
 {
     struct _UNIT_CFG_
     {
-        float   fFmin;
-        float   fFmax;
+        float   fPosMin;
+        float   fPosMax;
 
-        float   fg_Sfa;
-        float   fg_Sza;
+		float   fSetMin;
+        float   fSetMax;
 
-        float   fg_Ldw;
-        float   fg_Lwt;
+		float   fPress1Min;
+        float   fPress1Max;
 
-        float   fProp;
-        float   fDamping;
+		float   fPress2Min;
+        float   fPress2Max;
 
-        float   fFixed;
-        float   fFixed1;     
-        float   fFixed2;
-
-        float   fg_Lic[4];
+        float   fPos_Lic[4];
+		float   fSet_Lic[4];
+		float   fPress1_Lic[4];
+		float   fPress2_Lic[4];
         float   fg_Tzc[3];
         float   fg_Tsc[3];
 
-		ULONG 	uBau;
+		ULONG 	uBau; 
 
-        UCHAR   bySn[16];
-        UCHAR   byMessage[24];
-        UCHAR   byTag[18];
-        UCHAR   byDay;
-        UCHAR   byMonth;
-        UCHAR   byYear;
-        UCHAR   byManufacturerID;
-        UCHAR   byDeviceType;
-        UCHAR   byDeviceIdentifier0;
-        UCHAR   byDeviceIdentifier1;
-        UCHAR   byDeviceIdentifier2;
-        UCHAR   byShortFrameAddr;
         UCHAR   byMbAddr;
-        UCHAR   byMode;             
-        UCHAR   byBau;              
-        UCHAR   byUnit;             
-        UCHAR   byPga;
-		UCHAR   byNone;
+		
+		mbBOOL  bIsVoltage;        
     } dat;
     unsigned short    buf[sizeof(struct _UNIT_CFG_)/sizeof(short)];
 } UNIT_CFG;

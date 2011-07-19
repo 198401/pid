@@ -24,6 +24,11 @@ vMBPortSerialEnable( mbBOOL xRxEnable, mbBOOL xTxEnable )
     if ( xRxEnable )
     {
         COMIEN0 |= 0x01;
+		//delay 2 byte time
+		for (ULONG i = 0; i < 2560; ++i)
+		{
+			;
+		}
 		GP1DAT &= ~0x00800000;
     }
     else
