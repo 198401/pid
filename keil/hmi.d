@@ -21,4 +21,3 @@ hmi.o: ..\bsp\port\port.h
 hmi.o: C:\Keil\ARM\RV31\INC\assert.h
 hmi.o: C:\Keil\ARM\RV31\INC\inttypes.h
 hmi.o: C:\Keil\ARM\RV31\INC\stdint.h
-hmi.o: ..\src\ds18b20.h

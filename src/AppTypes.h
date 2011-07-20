@@ -12,6 +12,7 @@ typedef union _UNIT_DATA
         float   fPress1;
         float   fPress2;
 		float   fTemp;
+		float   fTem;
         
 		uint32_t   	iAD4;
         uint32_t    iAD5;
@@ -42,10 +43,10 @@ typedef union _UNIT_CFG
 		float   fPress2Min;
         float   fPress2Max;
 
-        float   fPos_Lic[4];
-		float   fSet_Lic[4];
-		float   fPress1_Lic[4];
-		float   fPress2_Lic[4];
+        float   fPos_Lic[3];
+		float   fSet_Lic[3];
+		float   fPress1_Lic[3];
+		float   fPress2_Lic[3];
         float   fg_Tzc[3];
         float   fg_Tsc[3];
 

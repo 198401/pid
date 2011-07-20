@@ -18,6 +18,7 @@
 #include "mb.h"
 #include "mbport.h"
 #include "Hmi.h"
+#include "ds18b20.h"
 
 #include "AppTypes.h"
 
@@ -100,14 +101,15 @@ __task void adc(void)
 			GP0DAT |= 0x40400000;
 		else
 			GP0DAT &= ~0x00400000;
-		g_UnitData.dat.iAD4 = GetADC(4);
-		g_UnitData.dat.iAD5 = GetADC(5);
-		g_UnitData.dat.iAD6 = GetADC(6);
-		g_UnitData.dat.iAD7 = GetADC(7);
-		g_UnitData.dat.iAD8 = GetADC(8);
+		g_UnitData.dat.iAD4 	= GetADC(4);
+		g_UnitData.dat.iAD5 	= GetADC(5);
+		g_UnitData.dat.iAD6 	= GetADC(6);
+		g_UnitData.dat.iAD7 	= GetADC(7);
+		g_UnitData.dat.iAD8 	= GetADC(8);
 		     
-		g_UnitData.dat.fTemp = ((float) -3.90802e-1+  sqrt((float)0.152726203204 - (float)4*((float)-5.80195e-5)*((float)100-g_UnitData.dat.iAD8)))/((float)-1.16039e-4);
-		temp					= g_UnitData.dat.fTemp;
+		g_UnitData.dat.fTemp 	= ((float) -3.90802e-1+  sqrt((float)0.152726203204 - (float)4*((float)-5.80195e-5)*((float)100-g_UnitData.dat.iAD8)))/((float)-1.16039e-4);
+		g_UnitData.dat.fTem		= DS18B20_Temperature();
+		temp					= g_UnitData.dat.fTem;
         ztccof                  = g_UnitCfg.dat.fg_Tzc[0] 
                                   + g_UnitCfg.dat.fg_Tzc[1]*temp 
                                   + g_UnitCfg.dat.fg_Tzc[2]*temp*temp;
@@ -118,38 +120,33 @@ __task void adc(void)
 			stccof              = 1.0f;
   
 			
-		temp			= g_UnitData.dat.iAD4;
-		temp            = g_UnitCfg.dat.fPos_Lic[0] 
-                      	+ g_UnitCfg.dat.fPos_Lic[1]*temp 
-                      	+ g_UnitCfg.dat.fPos_Lic[2]*temp*temp 
-                      	+ g_UnitCfg.dat.fPos_Lic[3]*temp*temp*temp; 
-		g_UnitData.dat.fPos = temp*(g_UnitCfg.dat.fPosMax - g_UnitCfg.dat.fPosMin) 
-	                      	+ g_UnitCfg.dat.fPosMin; 
+		temp					= (g_UnitData.dat.iAD4 - ztccof)*stccof;
+		temp            		= g_UnitCfg.dat.fPos_Lic[0] 
+                      			+ g_UnitCfg.dat.fPos_Lic[1]*temp 
+                      			+ g_UnitCfg.dat.fPos_Lic[2]*temp*temp;  
+		g_UnitData.dat.fPos 	= temp*(g_UnitCfg.dat.fPosMax - g_UnitCfg.dat.fPosMin) 
+	                      		+ g_UnitCfg.dat.fPosMin; 
 
-		temp			= g_UnitData.dat.iAD5;
-		temp            = g_UnitCfg.dat.fSet_Lic[0] 
-                      	+ g_UnitCfg.dat.fSet_Lic[1]*temp 
-                      	+ g_UnitCfg.dat.fSet_Lic[2]*temp*temp 
-                      	+ g_UnitCfg.dat.fSet_Lic[3]*temp*temp*temp; 
-		g_UnitData.dat.fSet = temp*(g_UnitCfg.dat.fSetMax - g_UnitCfg.dat.fSetMin) 
-	                      	+ g_UnitCfg.dat.fSetMin; 
+		temp					= (g_UnitData.dat.iAD5 - ztccof)*stccof;
+		temp            		= g_UnitCfg.dat.fSet_Lic[0] 
+                      			+ g_UnitCfg.dat.fSet_Lic[1]*temp 
+                      			+ g_UnitCfg.dat.fSet_Lic[2]*temp*temp; 
+		g_UnitData.dat.fSet 	= temp*(g_UnitCfg.dat.fSetMax - g_UnitCfg.dat.fSetMin) 
+	                      		+ g_UnitCfg.dat.fSetMin; 
 
-		temp			= (g_UnitData.dat.iAD6 - ztccof)*stccof;
-		temp            = g_UnitCfg.dat.fPress1_Lic[0] 
-                      	+ g_UnitCfg.dat.fPress1_Lic[1]*temp 
-                      	+ g_UnitCfg.dat.fPress1_Lic[2]*temp*temp 
-                      	+ g_UnitCfg.dat.fPress1_Lic[3]*temp*temp*temp; 
-		g_UnitData.dat.fPress1 = temp*(g_UnitCfg.dat.fPress1Max - g_UnitCfg.dat.fPress1Min) 
-	                      	   + g_UnitCfg.dat.fPress1Min; 
+		temp					= (g_UnitData.dat.iAD6 - ztccof)*stccof;
+		temp            		= g_UnitCfg.dat.fPress1_Lic[0] 
+                      			+ g_UnitCfg.dat.fPress1_Lic[1]*temp 
+                      			+ g_UnitCfg.dat.fPress1_Lic[2]*temp*temp; 
+		g_UnitData.dat.fPress1 	= temp*(g_UnitCfg.dat.fPress1Max - g_UnitCfg.dat.fPress1Min) 
+	                      	   	+ g_UnitCfg.dat.fPress1Min; 
 
-		temp			= (g_UnitData.dat.iAD7 - ztccof)*stccof;
-		temp            = g_UnitCfg.dat.fPress2_Lic[0] 
-                      	+ g_UnitCfg.dat.fPress2_Lic[1]*temp 
-                      	+ g_UnitCfg.dat.fPress2_Lic[2]*temp*temp 
-                      	+ g_UnitCfg.dat.fPress2_Lic[3]*temp*temp*temp; 
-		g_UnitData.dat.fPress2 = temp*(g_UnitCfg.dat.fPress2Max - g_UnitCfg.dat.fPress2Min) 
-	                      	   + g_UnitCfg.dat.fPress2Min; 
-
+		temp					= (g_UnitData.dat.iAD7 - ztccof)*stccof;
+		temp            		= g_UnitCfg.dat.fPress2_Lic[0] 
+                      			+ g_UnitCfg.dat.fPress2_Lic[1]*temp 
+                      			+ g_UnitCfg.dat.fPress2_Lic[2]*temp*temp; 
+		g_UnitData.dat.fPress2 	= temp*(g_UnitCfg.dat.fPress2Max - g_UnitCfg.dat.fPress2Min) 
+	                      	   	+ g_UnitCfg.dat.fPress2Min; 		  
     }
 }
 

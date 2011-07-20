@@ -23,8 +23,6 @@
 #include "HT1622.h"
 #include "AppTypes.h"
 
-#include "ds18b20.h"
-
 typedef unsigned char           BYTE;       /* Prefix: by	*/
 typedef unsigned int	        WORD;       /* Prefix: w	*/
 
@@ -40,6 +38,7 @@ typedef unsigned int	        WORD;       /* Prefix: w	*/
 #define MENU_ITEMS				6
 #define KB_BUF_SIZE				16
 
+extern UNIT_DATA                g_UnitData;
 
 DEFINE_STACK(MENU_CTL_BLOCK, BYTE, STACK_MCB)
 
@@ -124,7 +123,7 @@ static void Display()
 		{
 //			nVal = 0;
 			clearLCD();
-			floattochar (DS18B20_Temperature(), byNum,1);
+			floattochar (g_UnitData.dat.fTem, byNum,1);
 //			display_char(byStr);
 			display_digital(byNum,1,3);
 		}

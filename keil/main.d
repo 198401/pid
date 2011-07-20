@@ -20,4 +20,5 @@ main.o: C:\Keil\ARM\RV31\INC\stdint.h
 main.o: ..\modbus\include\mbport.h
 main.o: ..\modbus\include\mbproto.h
 main.o: ..\src\Hmi.h
+main.o: ..\src\ds18b20.h
 main.o: ..\src\AppTypes.h
