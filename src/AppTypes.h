@@ -24,7 +24,7 @@ typedef union _UNIT_DATA
         mbBOOL    bZ;
         mbBOOL  bReboot;
     } dat;
-    UCHAR    buf[sizeof(struct _UNIT_DATA_)];
+    unsigned short    buf[sizeof(struct _UNIT_DATA_)/sizeof(short)];
 } UNIT_DATA;
 
 typedef union _UNIT_CFG

@@ -122,31 +122,31 @@ __task void adc(void)
 			
 		temp					= (g_UnitData.dat.iAD4 - ztccof)*stccof;
 		temp            		= g_UnitCfg.dat.fPos_Lic[0] 
-                      			+ g_UnitCfg.dat.fPos_Lic[1]*temp 
-                      			+ g_UnitCfg.dat.fPos_Lic[2]*temp*temp;  
+                      			  + g_UnitCfg.dat.fPos_Lic[1]*temp 
+                      			  + g_UnitCfg.dat.fPos_Lic[2]*temp*temp;  
 		g_UnitData.dat.fPos 	= temp*(g_UnitCfg.dat.fPosMax - g_UnitCfg.dat.fPosMin) 
-	                      		+ g_UnitCfg.dat.fPosMin; 
+	                      		  + g_UnitCfg.dat.fPosMin; 
 
 		temp					= (g_UnitData.dat.iAD5 - ztccof)*stccof;
 		temp            		= g_UnitCfg.dat.fSet_Lic[0] 
-                      			+ g_UnitCfg.dat.fSet_Lic[1]*temp 
-                      			+ g_UnitCfg.dat.fSet_Lic[2]*temp*temp; 
+                      			  + g_UnitCfg.dat.fSet_Lic[1]*temp 
+                      			  + g_UnitCfg.dat.fSet_Lic[2]*temp*temp; 
 		g_UnitData.dat.fSet 	= temp*(g_UnitCfg.dat.fSetMax - g_UnitCfg.dat.fSetMin) 
-	                      		+ g_UnitCfg.dat.fSetMin; 
+	                      		  + g_UnitCfg.dat.fSetMin; 
 
 		temp					= (g_UnitData.dat.iAD6 - ztccof)*stccof;
 		temp            		= g_UnitCfg.dat.fPress1_Lic[0] 
-                      			+ g_UnitCfg.dat.fPress1_Lic[1]*temp 
-                      			+ g_UnitCfg.dat.fPress1_Lic[2]*temp*temp; 
+                      			  + g_UnitCfg.dat.fPress1_Lic[1]*temp 
+                      			  + g_UnitCfg.dat.fPress1_Lic[2]*temp*temp; 
 		g_UnitData.dat.fPress1 	= temp*(g_UnitCfg.dat.fPress1Max - g_UnitCfg.dat.fPress1Min) 
-	                      	   	+ g_UnitCfg.dat.fPress1Min; 
+	                      	   	  + g_UnitCfg.dat.fPress1Min; 
 
 		temp					= (g_UnitData.dat.iAD7 - ztccof)*stccof;
 		temp            		= g_UnitCfg.dat.fPress2_Lic[0] 
-                      			+ g_UnitCfg.dat.fPress2_Lic[1]*temp 
-                      			+ g_UnitCfg.dat.fPress2_Lic[2]*temp*temp; 
+                      			  + g_UnitCfg.dat.fPress2_Lic[1]*temp 
+                      			  + g_UnitCfg.dat.fPress2_Lic[2]*temp*temp; 
 		g_UnitData.dat.fPress2 	= temp*(g_UnitCfg.dat.fPress2Max - g_UnitCfg.dat.fPress2Min) 
-	                      	   	+ g_UnitCfg.dat.fPress2Min; 		  
+	                      	   	  + g_UnitCfg.dat.fPress2Min; 		  
     }
 }
 
