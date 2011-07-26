@@ -14,11 +14,11 @@ typedef union _UNIT_DATA
 		float   fTemp;
 		float   fTem;
         
-		uint32_t   	iAD4;
-        uint32_t    iAD5;
-        uint32_t    iAD6;
-		uint32_t    iAD7;
-        uint32_t    iAD8;
+		uint16_t   	iAD4;
+        uint16_t    iAD5;
+        uint16_t    iAD6;
+		uint16_t    iAD7;
+        uint16_t    iAD8;
 
         mbBOOL    bOK;
         mbBOOL    bZ;
