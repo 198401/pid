@@ -35,7 +35,7 @@ const UNIT_CFG                  g_UnitCfgInFlash    __at (EEPADDR);
 #define REG_HOLDING_NREGS           sizeof(g_UnitCfg)/sizeof(short)
 
 OS_TID t_feeddog;                       /* assigned task id of task: feeddog */
-OS_TID t_blink;                         /* assigned task id of task: blink   */
+OS_TID t_pid;                         /* assigned task id of task: blink   */
 OS_TID t_modbus;                        /* assigned task id of task: blink   */
 OS_TID t_adc;                           /* assigned task id of task: adc     */
 OS_TID t_hmi;                           /* assigned task id of task: hmi     */
@@ -51,11 +51,137 @@ __task void feeddog(void)
     }
 }
 
-__task void blink(void)
+#define PWM_DAT0VALUE           0x1000  /* set PWM freq to 5.5KHz */
+
+//void SetPwmDutyCycle0(float uiDutyCycle)
+//{
+//    if(uiDutyCycle > 0.5f)
+//	{
+//		PWMEN  &= ~0x100;
+//		PWMDAT0	= PWM_DAT0VALUE;
+//		PWMCH0 	= PWM_DAT0VALUE * (uiDutyCycle - 0.5f);
+//	}
+//	else
+//	{
+//		PWMEN  |= 0x100;
+//		PWMDAT0	= PWM_DAT0VALUE;
+//		PWMCH0 	= PWM_DAT0VALUE * (0.5 - uiDutyCycle);
+//	}
+//}
+//
+//void SetPwmDutyCycle1(float uiDutyCycle)
+//{
+//    if(uiDutyCycle > 0.5f)
+//	{
+//		PWMEN  &= ~0x080;
+//		PWMDAT0	= PWM_DAT0VALUE;
+//		PWMCH1 	= PWM_DAT0VALUE * (uiDutyCycle - 0.5f);
+//	}
+//	else
+//	{
+//		PWMEN  |= 0x080;
+//		PWMDAT0	= PWM_DAT0VALUE;
+//		PWMCH1 	= PWM_DAT0VALUE * (0.5 - uiDutyCycle);
+//	}
+//}
+
+void SetPwmDutyCycle2(S16 uiDutyCycle)
+{
+    if(uiDutyCycle > 500)
+	{
+		PWMEN  	= 0x07D;
+		PWMDAT0	= PWM_DAT0VALUE;
+		PWMCH2 	= PWM_DAT0VALUE * (uiDutyCycle/1000 - 0.5f);
+	}
+	else if(uiDutyCycle > 0)
+	{
+		PWMEN  	= 0x03D;
+		PWMDAT0	= PWM_DAT0VALUE;
+		PWMCH2 	= PWM_DAT0VALUE * (uiDutyCycle/1000 - 0.5f);
+	}
+	else if(uiDutyCycle > -500)
+	{
+		PWMEN  	= 0x07E;
+		PWMDAT0	= PWM_DAT0VALUE;
+		PWMCH2 	= PWM_DAT0VALUE * (-uiDutyCycle/1000 - 0.5f);
+	}
+	else
+	{
+		PWMEN  	= 0x03E;
+		PWMDAT0	= PWM_DAT0VALUE;
+		PWMCH2 	= PWM_DAT0VALUE * (0.5 + uiDutyCycle/1000);
+	}
+}
+
+volatile struct Controller_struct
+{
+	// controls coefficients
+	S32 Kp;				// proportional gain
+	S32 Ki;				// integral gain
+	S32 Kd;				// derivative gain
+	// state variables
+	S32 error;			// error (input-feedback)
+	S32 error_last;		// previous error
+	S32 error_integ;	// integral of error
+	S32 error_diff;		// derivative of error
+	// limits
+	S32 windupMax;		// integral wind-up limit
+	S32 outputMax;		// output clamp (limit)
+	// input and output
+	S32 output;			// output
+	S32 input;			// user input
+	S32 feedback;		// feedback
+	// counters
+	U32 counts;
+	// mode
+	U8 mode;			// control mode
+} Controller;
+
+//volatile S32 EncoderLastPos=0;
+
+__task void pid(void)
 {
     while (1)
     {
         GP4DAT ^= 0x00040000;               /* toggle P4.2 LED                   */
+		S32 EncoderCurrentPos;
+	
+		// get setpoint
+		// **** set by user via commands
+		//Controller.input = 0;
+		
+		// get feedback
+		// velocity feedback
+		Controller.input	= g_UnitData.dat.fSet;
+		EncoderCurrentPos 	= g_UnitData.dat.fPos;
+		Controller.feedback = EncoderCurrentPos;//-EncoderLastPos;
+//		EncoderLastPos = EncoderCurrentPos;
+	
+		// calculate error
+		Controller.error = Controller.input-Controller.feedback;
+		// calculate integral error
+		Controller.error_integ += Controller.error;
+		// clamp integral error (anti-windup)
+		//Controller.error_integ = MAX(Controller.error_integ, -Controller.windupMax);
+		//Controller.error_integ = MIN(Controller.error_integ,  Controller.windupMax);
+		// calculate differential error
+		Controller.error_diff = Controller.error - Controller.error_last;
+		Controller.error_last = Controller.error;
+		// do PID
+		Controller.output =	 ((Controller.Kp*Controller.error)>>8)
+							+((Controller.Ki*Controller.error_integ)>>8)
+							+((Controller.Kd*Controller.error_diff)>>8);
+		// output value
+//		motorSetPower(Controller.output);
+		// counters
+		Controller.counts++;
+//		SetPwmDutyCycle0(0.55f);
+//		SetPwmDutyCycle1(0.55f);
+		if(Controller.output > 1000)
+			Controller.output = 1000;
+		if(Controller.output < -1000)
+			Controller.output = -1000;
+		SetPwmDutyCycle2(Controller.output);
         os_dly_wait(20);                /* programmed delay                  */
     }
 }
@@ -73,7 +199,6 @@ U32 GetADC(U8 adc_channel)
 {
     U16 adc_value[33];      
     U32 adc_value_ave      = 0; 
-//	U16 max_value=0,min_value=0,max_index=1,min_index=1; 
 
     ADCCP                    = adc_channel;                     /*  select ADC channel          */
     ADCCON                  |= (1UL<<7);                        /*  start continuous conversion */
@@ -96,7 +221,7 @@ __task void adc(void)
     os_itv_set (10);                                /* set wait interval: 10 clock ticks  */
     while (1)
     {
-        static float temp,ztccof,stccof;
+        static float temp;
 		if(g_UnitCfg.dat.bIsVoltage)
 			GP0DAT |= 0x40400000;
 		else
@@ -107,46 +232,63 @@ __task void adc(void)
 		g_UnitData.dat.iAD7 	= GetADC(7);
 		g_UnitData.dat.iAD8 	= GetADC(8);
 		     
-		g_UnitData.dat.fTemp 	= ((float) -3.90802e-1+  sqrt((float)0.152726203204 - (float)4*((float)-5.80195e-5)*((float)100-g_UnitData.dat.iAD8)))/((float)-1.16039e-4);
-		g_UnitData.dat.fTem		= DS18B20_Temperature();
-		temp					= g_UnitData.dat.fTem;
-        ztccof                  = g_UnitCfg.dat.fg_Tzc[0] 
-                                  + g_UnitCfg.dat.fg_Tzc[1]*temp 
-                                  + g_UnitCfg.dat.fg_Tzc[2]*temp*temp;
-      	stccof                  = g_UnitCfg.dat.fg_Tsc[0] 
-                                  + g_UnitCfg.dat.fg_Tsc[1]*temp 
-                                  + g_UnitCfg.dat.fg_Tsc[2]*temp*temp;
-		if(stccof < 0.01)
-			stccof              = 1.0f;
-  
-			
-		temp					= (g_UnitData.dat.iAD4 - ztccof)*stccof;
-		temp            		= g_UnitCfg.dat.fPos_Lic[0] 
-                      			  + g_UnitCfg.dat.fPos_Lic[1]*temp 
-                      			  + g_UnitCfg.dat.fPos_Lic[2]*temp*temp;  
-		g_UnitData.dat.fPos 	= temp*(g_UnitCfg.dat.fPosMax - g_UnitCfg.dat.fPosMin) 
-	                      		  + g_UnitCfg.dat.fPosMin; 
+		temp					= DS18B20_Temperature();
+		if (temp >= -55.0f && temp <= 125.0f)
+			g_UnitData.dat.fTem		= temp;
 
-		temp					= (g_UnitData.dat.iAD5 - ztccof)*stccof;
-		temp            		= g_UnitCfg.dat.fSet_Lic[0] 
-                      			  + g_UnitCfg.dat.fSet_Lic[1]*temp 
-                      			  + g_UnitCfg.dat.fSet_Lic[2]*temp*temp; 
-		g_UnitData.dat.fSet 	= temp*(g_UnitCfg.dat.fSetMax - g_UnitCfg.dat.fSetMin) 
-	                      		  + g_UnitCfg.dat.fSetMin; 
+		temp					= g_UnitData.dat.iAD4;
+		g_UnitData.dat.fPos		= g_UnitCfg.dat.fPos_Lic[0] + g_UnitCfg.dat.fPos_Lic[1]*temp;
 
-		temp					= (g_UnitData.dat.iAD6 - ztccof)*stccof;
-		temp            		= g_UnitCfg.dat.fPress1_Lic[0] 
-                      			  + g_UnitCfg.dat.fPress1_Lic[1]*temp 
-                      			  + g_UnitCfg.dat.fPress1_Lic[2]*temp*temp; 
-		g_UnitData.dat.fPress1 	= temp*(g_UnitCfg.dat.fPress1Max - g_UnitCfg.dat.fPress1Min) 
-	                      	   	  + g_UnitCfg.dat.fPress1Min; 
 
-		temp					= (g_UnitData.dat.iAD7 - ztccof)*stccof;
-		temp            		= g_UnitCfg.dat.fPress2_Lic[0] 
-                      			  + g_UnitCfg.dat.fPress2_Lic[1]*temp 
-                      			  + g_UnitCfg.dat.fPress2_Lic[2]*temp*temp; 
-		g_UnitData.dat.fPress2 	= temp*(g_UnitCfg.dat.fPress2Max - g_UnitCfg.dat.fPress2Min) 
-	                      	   	  + g_UnitCfg.dat.fPress2Min; 		  
+		if(g_UnitCfg.dat.bIsVoltage)
+		{	
+			temp					= g_UnitData.dat.iAD5;
+			g_UnitData.dat.fSet		= g_UnitCfg.dat.fSet_Lic[0] + g_UnitCfg.dat.fSet_Lic[1]*temp;
+		} 
+		else
+		{	
+			temp					= g_UnitData.dat.iAD5;
+			g_UnitData.dat.fSet		= g_UnitCfg.dat.fSet_cLic[0] + g_UnitCfg.dat.fSet_cLic[1]*temp;
+		}
+
+		if(g_UnitCfg.dat.bIsP1Voltage)
+		{	
+			temp					= g_UnitData.dat.iAD6;
+			g_UnitData.dat.fPress1	= g_UnitCfg.dat.fPress1_Lic[0] + g_UnitCfg.dat.fPress1_Lic[1]*temp;
+		} 
+		else
+		{	
+			temp					= g_UnitData.dat.iAD6;
+			g_UnitData.dat.fPress1	= g_UnitCfg.dat.fPress1_cLic[0] + g_UnitCfg.dat.fPress1_cLic[1]*temp;
+		}
+
+		if(g_UnitCfg.dat.bIsP2Voltage)
+		{	
+			temp					= g_UnitData.dat.iAD7;
+			g_UnitData.dat.fPress2	= g_UnitCfg.dat.fPress2_Lic[0] + g_UnitCfg.dat.fPress2_Lic[1]*temp;
+		} 
+		else
+		{	
+			temp					= g_UnitData.dat.iAD7;
+			g_UnitData.dat.fPress2	= g_UnitCfg.dat.fPress2_cLic[0] + g_UnitCfg.dat.fPress2_cLic[1]*temp;
+		}
+		 
+		
+		if(g_UnitCfg.dat.byTemp == 1)
+		{	
+			temp					= g_UnitData.dat.iAD8;
+			g_UnitData.dat.fPress2	= g_UnitCfg.dat.fTemp_vLic[0] + g_UnitCfg.dat.fTemp_vLic[1]*temp;
+		} 
+		else if(g_UnitCfg.dat.byTemp == 2)
+		{	
+			temp					= g_UnitData.dat.iAD8;
+			g_UnitData.dat.fPress2	= g_UnitCfg.dat.fTemp_cLic[0] + g_UnitCfg.dat.fTemp_cLic[1]*temp;
+		}
+		else
+		{	
+			temp					= g_UnitData.dat.iAD8;
+			g_UnitData.dat.fPress2	= g_UnitCfg.dat.fTemp_Lic[0] + g_UnitCfg.dat.fTemp_Lic[1]*temp;
+		}	  
     }
 }
 
@@ -155,7 +297,7 @@ __task void hmi(void)
 	while(1)
 	{
 		HMI_Handler();
-		os_dly_wait(100);                /* programmed delay                  */
+		os_dly_wait(3);                /* programmed delay                  */
 	}
 }
 
@@ -195,9 +337,7 @@ __task void init(void)
 
 	HMI_Init();
 
-	GP3DAT  = 0x01000000;		//p3.0设为输出 输出为0
-
-	
+	GP3DAT  = 0x01000000;		//p3.0设为输出 输出为0	
 
 	adctest	= GetADC(0);
 
@@ -221,15 +361,40 @@ __task void init(void)
 	   ;
 	}	
 
+	// Setup the PWM
+	GP3CON |= 0x00110000;				// Enable the PWM outputs to the GPIO
+	PWMCON 	= 0x01;   				// Ext ASYNC disabled
+	PWMDAT0 = PWM_DAT0VALUE;  		// Period register 182uS
+	PWMDAT1 = 0;    				// 0us Dead time
+	SetPwmDutyCycle2(0);
+	// controls coefficients
+	Controller.Kp			= 4000;
+	Controller.Ki			= 0;
+	Controller.Kd			= 4000;
+	// limits
+	Controller.windupMax	= 200<<8;
+	Controller.outputMax	= 700;
+	// state variables
+	Controller.error		= 0;
+	Controller.error_last	= 0;
+	Controller.error_integ	= 0;
+	Controller.error_diff	= 0;
+	// input and output
+	Controller.output		= 0;
+	Controller.input		= 0;
+	Controller.feedback		= 0;
+
 	// Initilize Timer 3 in WatchDog mode with timeout period of   second
-    T3LD  = 0x00FF;         //  clock ticks
-    T3CON = 0xE4;  // WatchDog mode, enable timer, 32768hz clock/256
-    T3CLRI = 0x55;      // Feed Dog
-	t_feeddog = os_tsk_create (feeddog, 2);      /* start task 'keyin'               */
-    t_blink = os_tsk_create (blink, 2);      /* start task 'blink'               */
+    T3LD  = 0x00FF;         		//  clock ticks
+    T3CON = 0xE4;  					// WatchDog mode, enable timer, 32768hz clock/256
+    T3CLRI = 0x55;      			// Feed Dog
+
+
+	t_feeddog = os_tsk_create (feeddog, 2);      	/* start task 'feeddog'             */
+    t_pid = os_tsk_create (pid, 2);      			/* start task 'pid'                 */
 	
-    t_adc = os_tsk_create (adc, 1);          /* start task 'adc'                 */
-	t_hmi = os_tsk_create (hmi, 1);          /* start task 'lcd'                 */
+    t_adc = os_tsk_create (adc, 1);          		/* start task 'adc'                 */
+	t_hmi = os_tsk_create (hmi, 1);          		/* start task 'lcd'                 */
 	
     os_tsk_delete_self();
 }

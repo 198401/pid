@@ -203,47 +203,47 @@ const unsigned char LED16Char[]={
 	0x000
 };
  
-//const unsigned char LED16Num[]={		
-//	0x090,		// 0 LSB
-//	0x090,		// 0 ...
-//	0x090,		// 0 ...
-//	0x090,		// 0 MSB
-//	0x000,		// 1 LSB
-//	0x000,		// 1 ...
-//	0x090,		// 1 ...
-//	0x000,		// 1 MSB
-//	0x090,		// 2 LSB
-//	0x090,		// 2 ...
-//	0x050,		// 2 ...
-//	0x0A0,		// 2 MSB
-//	0x090,		// 3 LSB
-//	0x090,		// 3 ...
-//	0x0D0,		// 3 ...
-//	0x020,		// 3 MSB
-//	0x000,		// 4 LSB
-//	0x000,		// 4 ...
-//	0x0D0,		// 4 ...
-//	0x030,		// 4 MSB
-//	0x090,		// 5 LSB
-//	0x090,		// 5 ...
-//	0x0C0,		// 5 ...
-//	0x030,		// 5 MSB
-//	0x090,		// 6 LSB
-//	0x090,		// 6 ...
-//	0x0C0,		// 6 ...
-//	0x0B0,		// 6 MSB
-//	0x010,		// 7 LSB
-//	0x010,		// 7 ...
-//	0x090,		// 7 ...
-//	0x000,		// 7 MSB
-//	0x090,		// 8 LSB
-//	0x090,		// 8 ...
-//	0x0D0,		// 8 ...
-//	0x0B0,		// 8 MSB
-//	0x090,		// 9 LSB
-//	0x090,		// 9 ...
-//	0x0D0,		// 9 ...
-//	0x030,		// 9 MSB
+const unsigned char LED16Num[]={		
+	0x090,		// 0 LSB
+	0x090,		// 0 ...
+	0x090,		// 0 ...
+	0x090,		// 0 MSB
+	0x000,		// 1 LSB
+	0x000,		// 1 ...
+	0x090,		// 1 ...
+	0x000,		// 1 MSB
+	0x090,		// 2 LSB
+	0x090,		// 2 ...
+	0x050,		// 2 ...
+	0x0A0,		// 2 MSB
+	0x090,		// 3 LSB
+	0x090,		// 3 ...
+	0x0D0,		// 3 ...
+	0x020,		// 3 MSB
+	0x000,		// 4 LSB
+	0x000,		// 4 ...
+	0x0D0,		// 4 ...
+	0x030,		// 4 MSB
+	0x090,		// 5 LSB
+	0x090,		// 5 ...
+	0x0C0,		// 5 ...
+	0x030,		// 5 MSB
+	0x090,		// 6 LSB
+	0x090,		// 6 ...
+	0x0C0,		// 6 ...
+	0x0B0,		// 6 MSB
+	0x010,		// 7 LSB
+	0x010,		// 7 ...
+	0x090,		// 7 ...
+	0x000,		// 7 MSB
+	0x090,		// 8 LSB
+	0x090,		// 8 ...
+	0x0D0,		// 8 ...
+	0x0B0,		// 8 MSB
+	0x090,		// 9 LSB
+	0x090,		// 9 ...
+	0x0D0,		// 9 ...
+	0x030,		// 9 MSB
 //	0x010,		// A LSB
 //	0x010,		// A ...
 //	0x0D0,		// A ...
@@ -272,7 +272,7 @@ const unsigned char LED16Char[]={
 //	0x000,
 //	0x000,
 //	0x000
-//};
+};
 
 
 static void SENDCOMB(BYTE address);
@@ -302,77 +302,189 @@ static BYTE LCDWRITE_1622(const unsigned char data,BYTE Addr)
 
 void display_char(unsigned char * temp)   
 {
-   	LCDWRITE_1622(LED16Char[(*(temp + 0) - 'A')*4],0xC0);
-	LCDWRITE_1622(LED16Char[(*(temp + 0) - 'A')*4 + 1],0xB8);
-	LCDWRITE_1622(LED16Char[(*(temp + 0) - 'A')*4 + 2],0xB0);
-	LCDWRITE_1622(LED16Char[(*(temp + 0) - 'A')*4 + 3],0xC8);
+   	if(*(temp + 0) >= 'A' && *(temp + 0) <= '[')
+	{
+		LCDWRITE_1622(LED16Char[(*(temp + 0) - 'A')*4],0xC0);
+		LCDWRITE_1622(LED16Char[(*(temp + 0) - 'A')*4 + 1],0xB8);
+		LCDWRITE_1622(LED16Char[(*(temp + 0) - 'A')*4 + 2],0xB0);
+		LCDWRITE_1622(LED16Char[(*(temp + 0) - 'A')*4 + 3],0xC8);
+	}
+	else
+	{
+		LCDWRITE_1622(LED16Num[(*(temp + 0) - '0')*4],0xC0);
+		LCDWRITE_1622(LED16Num[(*(temp + 0) - '0')*4 + 1],0xB8);
+		LCDWRITE_1622(LED16Num[(*(temp + 0) - '0')*4 + 2],0xB0);
+		LCDWRITE_1622(LED16Num[(*(temp + 0) - '0')*4 + 3],0xC8);
+	}
 	
-	LCDWRITE_1622(LED16Char[(*(temp + 1) - 'A')*4],0x08);
-	LCDWRITE_1622(LED16Char[(*(temp + 1) - 'A')*4 + 1],0x10);
-	LCDWRITE_1622(LED16Char[(*(temp + 1) - 'A')*4 + 2],0xA8);
-	LCDWRITE_1622(LED16Char[(*(temp + 1) - 'A')*4 + 3],0x00); 
+	if(*(temp + 1) >= 'A' && *(temp + 1) <= '[')
+	{
+		LCDWRITE_1622(LED16Char[(*(temp + 1) - 'A')*4],0x08);
+		LCDWRITE_1622(LED16Char[(*(temp + 1) - 'A')*4 + 1],0x10);
+		LCDWRITE_1622(LED16Char[(*(temp + 1) - 'A')*4 + 2],0xA8);
+		LCDWRITE_1622(LED16Char[(*(temp + 1) - 'A')*4 + 3],0x00);
+	} 
+	else
+	{
+		LCDWRITE_1622(LED16Num[(*(temp + 1) - '0')*4],0x08);
+		LCDWRITE_1622(LED16Num[(*(temp + 1) - '0')*4 + 1],0x10);
+		LCDWRITE_1622(LED16Num[(*(temp + 1) - '0')*4 + 2],0xA8);
+		LCDWRITE_1622(LED16Num[(*(temp + 1) - '0')*4 + 3],0x00);
+	} 
 	
-	LCDWRITE_1622(LED16Char[(*(temp + 2) - 'A')*4],0x20);
-	LCDWRITE_1622(LED16Char[(*(temp + 2) - 'A')*4 + 1],0x28);
-	LCDWRITE_1622(LED16Char[(*(temp + 2) - 'A')*4 + 2],0xA0);
-	LCDWRITE_1622(LED16Char[(*(temp + 2) - 'A')*4 + 3],0x18); 
-	
-	LCDWRITE_1622(LED16Char[(*(temp + 3) - 'A')*4],0x38);
-	LCDWRITE_1622(LED16Char[(*(temp + 3) - 'A')*4 + 1],0x40);
-	LCDWRITE_1622(LED16Char[(*(temp + 3) - 'A')*4 + 2],0x98);
-	LCDWRITE_1622(LED16Char[(*(temp + 3) - 'A')*4 + 3],0x30); 
-	
-	LCDWRITE_1622(LED16Char[(*(temp + 4) - 'A')*4],0x88);
-	LCDWRITE_1622(LED16Char[(*(temp + 4) - 'A')*4 + 1],0x80);
-	LCDWRITE_1622(LED16Char[(*(temp + 4) - 'A')*4 + 2],0x78);
-	LCDWRITE_1622(LED16Char[(*(temp + 4) - 'A')*4 + 3],0x90); 
-	
-	LCDWRITE_1622(LED16Char[(*(temp + 5) - 'A')*4],0x68);
-	LCDWRITE_1622(LED16Char[(*(temp + 5) - 'A')*4 + 1],0x60);
-	LCDWRITE_1622(LED16Char[(*(temp + 5) - 'A')*4 + 2],0x58);
-	LCDWRITE_1622(LED16Char[(*(temp + 5) - 'A')*4 + 3],0x70); 
-	
-	LCDWRITE_1622(((LED16Char[(*(temp + 6) - 'A')*4]) >> 3)|
-				  ((LED16Char[(*(temp + 6) - 'A')*4]) << 3)|
-				  ((LED16Char[(*(temp + 6) - 'A')*4]&0x40) >> 1)|
-				  ((LED16Char[(*(temp + 6) - 'A')*4]&0x20) << 1)
-				  ,0x64);
-	LCDWRITE_1622(((LED16Char[(*(temp + 6) - 'A')*4 + 1]) >> 3)|
-				  ((LED16Char[(*(temp + 6) - 'A')*4 + 1]) << 3)|
-				  ((LED16Char[(*(temp + 6) - 'A')*4 + 1]&0x40) >> 1)|
-				  ((LED16Char[(*(temp + 6) - 'A')*4 + 1]&0x20) << 1)
-				  ,0x6C);
-	LCDWRITE_1622(((LED16Char[(*(temp + 6) - 'A')*4 + 2]&0x80) >> 3)|
-				  ((LED16Char[(*(temp + 6) - 'A')*4 + 2]&0x10) << 3)|
-				  ((LED16Char[(*(temp + 6) - 'A')*4 + 2]&0x40) >> 1)|
-				  ((LED16Char[(*(temp + 6) - 'A')*4 + 2]&0x20) << 1)
-				  ,0x74);
-	LCDWRITE_1622(((LED16Char[(*(temp + 6) - 'A')*4 + 3]) >> 3)|
-				  ((LED16Char[(*(temp + 6) - 'A')*4 + 3]) << 3)|
-				  ((LED16Char[(*(temp + 6) - 'A')*4 + 3]&0x40) >> 1)|
-				  ((LED16Char[(*(temp + 6) - 'A')*4 + 3]&0x20) << 1)
-				  ,0x54);
+	if(*(temp + 2) >= 'A' && *(temp + 2) <= '[')
+	{
+		LCDWRITE_1622(LED16Char[(*(temp + 2) - 'A')*4],0x20);
+		LCDWRITE_1622(LED16Char[(*(temp + 2) - 'A')*4 + 1],0x28);
+		LCDWRITE_1622(LED16Char[(*(temp + 2) - 'A')*4 + 2],0xA0);
+		LCDWRITE_1622(LED16Char[(*(temp + 2) - 'A')*4 + 3],0x18); 
+	}
+	else
+	{
+		LCDWRITE_1622(LED16Num[(*(temp + 2) - '0')*4],0x20);
+		LCDWRITE_1622(LED16Num[(*(temp + 2) - '0')*4 + 1],0x28);
+		LCDWRITE_1622(LED16Num[(*(temp + 2) - '0')*4 + 2],0xA0);
+		LCDWRITE_1622(LED16Num[(*(temp + 2) - '0')*4 + 3],0x18); 
+	}
 
-	LCDWRITE_1622(((LED16Char[(*(temp + 7) - 'A')*4]) >> 3)|
-				  ((LED16Char[(*(temp + 7) - 'A')*4]) << 3)|
-				  ((LED16Char[(*(temp + 7) - 'A')*4]&0x40) >> 1)|
-				  ((LED16Char[(*(temp + 7) - 'A')*4]&0x20) << 1)
-				  ,0x8C);
-	LCDWRITE_1622(((LED16Char[(*(temp + 7) - 'A')*4 + 1]) >> 3)|
-				  ((LED16Char[(*(temp + 7) - 'A')*4 + 1]) << 3)|
-				  ((LED16Char[(*(temp + 7) - 'A')*4 + 1]&0x40) >> 1)|
-				  ((LED16Char[(*(temp + 7) - 'A')*4 + 1]&0x20) << 1)
-				  ,0x94);
-	LCDWRITE_1622(((LED16Char[(*(temp + 7) - 'A')*4 + 2]) >> 3)|
-				  ((LED16Char[(*(temp + 7) - 'A')*4 + 2]) << 3)|
-				  ((LED16Char[(*(temp + 7) - 'A')*4 + 2]&0x40) >> 1)|
-				  ((LED16Char[(*(temp + 7) - 'A')*4 + 2]&0x20) << 1)
-				  ,0x4C);
-	LCDWRITE_1622(((LED16Char[(*(temp + 7) - 'A')*4 + 3]) >> 3)|
-				  ((LED16Char[(*(temp + 7) - 'A')*4 + 3]) << 3)|
-				  ((LED16Char[(*(temp + 7) - 'A')*4 + 3]&0x40) >> 1)|
-				  ((LED16Char[(*(temp + 7) - 'A')*4 + 3]&0x20) << 1)
-				  ,0x84);
+	if(*(temp + 3) >= 'A' && *(temp + 3) <= '[')
+	{
+		LCDWRITE_1622(LED16Char[(*(temp + 3) - 'A')*4],0x38);
+		LCDWRITE_1622(LED16Char[(*(temp + 3) - 'A')*4 + 1],0x40);
+		LCDWRITE_1622(LED16Char[(*(temp + 3) - 'A')*4 + 2],0x98);
+		LCDWRITE_1622(LED16Char[(*(temp + 3) - 'A')*4 + 3],0x30);
+	} 
+	else
+	{
+		LCDWRITE_1622(LED16Num[(*(temp + 3) - '0')*4],0x38);
+		LCDWRITE_1622(LED16Num[(*(temp + 3) - '0')*4 + 1],0x40);
+		LCDWRITE_1622(LED16Num[(*(temp + 3) - '0')*4 + 2],0x98);
+		LCDWRITE_1622(LED16Num[(*(temp + 3) - '0')*4 + 3],0x30);
+	}
+	
+	if(*(temp + 4) >= 'A' && *(temp + 4) <= '[')
+	{
+		LCDWRITE_1622(LED16Char[(*(temp + 4) - 'A')*4],0x88);
+		LCDWRITE_1622(LED16Char[(*(temp + 4) - 'A')*4 + 1],0x80);
+		LCDWRITE_1622(LED16Char[(*(temp + 4) - 'A')*4 + 2],0x78);
+		LCDWRITE_1622(LED16Char[(*(temp + 4) - 'A')*4 + 3],0x90);
+	}
+	else
+	{
+		LCDWRITE_1622(LED16Num[(*(temp + 4) - '0')*4],0x88);
+		LCDWRITE_1622(LED16Num[(*(temp + 4) - '0')*4 + 1],0x80);
+		LCDWRITE_1622(LED16Num[(*(temp + 4) - '0')*4 + 2],0x78);
+		LCDWRITE_1622(LED16Num[(*(temp + 4) - '0')*4 + 3],0x90);
+	} 
+	
+	if(*(temp + 5) >= 'A' && *(temp + 5) <= '[')
+	{
+		LCDWRITE_1622(LED16Char[(*(temp + 5) - 'A')*4],0x68);
+		LCDWRITE_1622(LED16Char[(*(temp + 5) - 'A')*4 + 1],0x60);
+		LCDWRITE_1622(LED16Char[(*(temp + 5) - 'A')*4 + 2],0x58);
+		LCDWRITE_1622(LED16Char[(*(temp + 5) - 'A')*4 + 3],0x70);
+	}
+	else
+	{
+		LCDWRITE_1622(LED16Num[(*(temp + 5) - '0')*4],0x68);
+		LCDWRITE_1622(LED16Num[(*(temp + 5) - '0')*4 + 1],0x60);
+		LCDWRITE_1622(LED16Num[(*(temp + 5) - '0')*4 + 2],0x58);
+		LCDWRITE_1622(LED16Num[(*(temp + 5) - '0')*4 + 3],0x70);
+	} 
+	
+	if(*(temp + 6) >= 'A' && *(temp + 6) <= '[')
+	{
+		LCDWRITE_1622(((LED16Char[(*(temp + 6) - 'A')*4]) >> 3)|
+					  ((LED16Char[(*(temp + 6) - 'A')*4]) << 3)|
+					  ((LED16Char[(*(temp + 6) - 'A')*4]&0x40) >> 1)|
+					  ((LED16Char[(*(temp + 6) - 'A')*4]&0x20) << 1)
+					  ,0x64);
+		LCDWRITE_1622(((LED16Char[(*(temp + 6) - 'A')*4 + 1]) >> 3)|
+					  ((LED16Char[(*(temp + 6) - 'A')*4 + 1]) << 3)|
+					  ((LED16Char[(*(temp + 6) - 'A')*4 + 1]&0x40) >> 1)|
+					  ((LED16Char[(*(temp + 6) - 'A')*4 + 1]&0x20) << 1)
+					  ,0x6C);
+		LCDWRITE_1622(((LED16Char[(*(temp + 6) - 'A')*4 + 2]&0x80) >> 3)|
+					  ((LED16Char[(*(temp + 6) - 'A')*4 + 2]&0x10) << 3)|
+					  ((LED16Char[(*(temp + 6) - 'A')*4 + 2]&0x40) >> 1)|
+					  ((LED16Char[(*(temp + 6) - 'A')*4 + 2]&0x20) << 1)
+					  ,0x74);
+		LCDWRITE_1622(((LED16Char[(*(temp + 6) - 'A')*4 + 3]) >> 3)|
+					  ((LED16Char[(*(temp + 6) - 'A')*4 + 3]) << 3)|
+					  ((LED16Char[(*(temp + 6) - 'A')*4 + 3]&0x40) >> 1)|
+					  ((LED16Char[(*(temp + 6) - 'A')*4 + 3]&0x20) << 1)
+					  ,0x54);
+	}
+	else
+	{
+		LCDWRITE_1622(((LED16Num[(*(temp + 6) - '0')*4]) >> 3)|
+					  ((LED16Num[(*(temp + 6) - '0')*4]) << 3)|
+					  ((LED16Num[(*(temp + 6) - '0')*4]&0x40) >> 1)|
+					  ((LED16Num[(*(temp + 6) - '0')*4]&0x20) << 1)
+					  ,0x64);
+		LCDWRITE_1622(((LED16Num[(*(temp + 6) - '0')*4 + 1]) >> 3)|
+					  ((LED16Num[(*(temp + 6) - '0')*4 + 1]) << 3)|
+					  ((LED16Num[(*(temp + 6) - '0')*4 + 1]&0x40) >> 1)|
+					  ((LED16Num[(*(temp + 6) - '0')*4 + 1]&0x20) << 1)
+					  ,0x6C);
+		LCDWRITE_1622(((LED16Num[(*(temp + 6) - '0')*4 + 2]&0x80) >> 3)|
+					  ((LED16Num[(*(temp + 6) - '0')*4 + 2]&0x10) << 3)|
+					  ((LED16Num[(*(temp + 6) - '0')*4 + 2]&0x40) >> 1)|
+					  ((LED16Num[(*(temp + 6) - '0')*4 + 2]&0x20) << 1)
+					  ,0x74);
+		LCDWRITE_1622(((LED16Num[(*(temp + 6) - '0')*4 + 3]) >> 3)|
+					  ((LED16Num[(*(temp + 6) - '0')*4 + 3]) << 3)|
+					  ((LED16Num[(*(temp + 6) - '0')*4 + 3]&0x40) >> 1)|
+					  ((LED16Num[(*(temp + 6) - '0')*4 + 3]&0x20) << 1)
+					  ,0x54);
+	}
+
+	if(*(temp + 7) >= 'A' && *(temp + 7) <= '[')
+	{
+		LCDWRITE_1622(((LED16Char[(*(temp + 7) - 'A')*4]) >> 3)|
+					  ((LED16Char[(*(temp + 7) - 'A')*4]) << 3)|
+					  ((LED16Char[(*(temp + 7) - 'A')*4]&0x40) >> 1)|
+					  ((LED16Char[(*(temp + 7) - 'A')*4]&0x20) << 1)
+					  ,0x8C);
+		LCDWRITE_1622(((LED16Char[(*(temp + 7) - 'A')*4 + 1]) >> 3)|
+					  ((LED16Char[(*(temp + 7) - 'A')*4 + 1]) << 3)|
+					  ((LED16Char[(*(temp + 7) - 'A')*4 + 1]&0x40) >> 1)|
+					  ((LED16Char[(*(temp + 7) - 'A')*4 + 1]&0x20) << 1)
+					  ,0x94);
+		LCDWRITE_1622(((LED16Char[(*(temp + 7) - 'A')*4 + 2]) >> 3)|
+					  ((LED16Char[(*(temp + 7) - 'A')*4 + 2]) << 3)|
+					  ((LED16Char[(*(temp + 7) - 'A')*4 + 2]&0x40) >> 1)|
+					  ((LED16Char[(*(temp + 7) - 'A')*4 + 2]&0x20) << 1)
+					  ,0x4C);
+		LCDWRITE_1622(((LED16Char[(*(temp + 7) - 'A')*4 + 3]) >> 3)|
+					  ((LED16Char[(*(temp + 7) - 'A')*4 + 3]) << 3)|
+					  ((LED16Char[(*(temp + 7) - 'A')*4 + 3]&0x40) >> 1)|
+					  ((LED16Char[(*(temp + 7) - 'A')*4 + 3]&0x20) << 1)
+					  ,0x84);
+	}
+	else
+	{
+		LCDWRITE_1622(((LED16Num[(*(temp + 7) - '0')*4]) >> 3)|
+					  ((LED16Num[(*(temp + 7) - '0')*4]) << 3)|
+					  ((LED16Num[(*(temp + 7) - '0')*4]&0x40) >> 1)|
+					  ((LED16Num[(*(temp + 7) - '0')*4]&0x20) << 1)
+					  ,0x8C);
+		LCDWRITE_1622(((LED16Num[(*(temp + 7) - '0')*4 + 1]) >> 3)|
+					  ((LED16Num[(*(temp + 7) - '0')*4 + 1]) << 3)|
+					  ((LED16Num[(*(temp + 7) - '0')*4 + 1]&0x40) >> 1)|
+					  ((LED16Num[(*(temp + 7) - '0')*4 + 1]&0x20) << 1)
+					  ,0x94);
+		LCDWRITE_1622(((LED16Num[(*(temp + 7) - '0')*4 + 2]) >> 3)|
+					  ((LED16Num[(*(temp + 7) - '0')*4 + 2]) << 3)|
+					  ((LED16Num[(*(temp + 7) - '0')*4 + 2]&0x40) >> 1)|
+					  ((LED16Num[(*(temp + 7) - '0')*4 + 2]&0x20) << 1)
+					  ,0x4C);
+		LCDWRITE_1622(((LED16Num[(*(temp + 7) - '0')*4 + 3]) >> 3)|
+					  ((LED16Num[(*(temp + 7) - '0')*4 + 3]) << 3)|
+					  ((LED16Num[(*(temp + 7) - '0')*4 + 3]&0x40) >> 1)|
+					  ((LED16Num[(*(temp + 7) - '0')*4 + 3]&0x20) << 1)
+					  ,0x84);
+	}
 }
 
 void digital(BYTE * data, BYTE dotp)
@@ -486,35 +598,38 @@ void display_digital(BYTE * data,BYTE dotp,BYTE shine)
 {
     if ((shine >0)&&(shine <6))
     {
-        digital(data,dotp);
-        Delay50ms();      
-	   	switch (shine)
-	    {
-		case 5:
-			LCDWRITE_1622(0,0x04);
-			LCDWRITE_1622(0,0xBC);
-	        break;
-	    case 4:
-			LCDWRITE_1622(0,0x14);
-		  	LCDWRITE_1622(0,0x0C);
-			break;
-	    case 3:
-			LCDWRITE_1622(0,0x24);
-			LCDWRITE_1622(0,0x1C);
-			break;
-	    case 2:
-			LCDWRITE_1622(0,0x34);
-			LCDWRITE_1622(0,0x2C);
-			break;
-	    case 1:
-			LCDWRITE_1622(0,0x44);
-			LCDWRITE_1622(0,0x3C);	
-			break;
-	    default:
-			break;
-	    } 
-        Delay50ms();  
-		digital(data,dotp);
+        for(unsigned short i =0; i < 5; i++)
+		{
+			digital(data,dotp);
+	        Delay50ms();      
+		   	switch (shine)
+		    {
+			case 5:
+				LCDWRITE_1622(0,0x04);
+				LCDWRITE_1622(0,0xBC);
+		        break;
+		    case 4:
+				LCDWRITE_1622(0,0x14);
+			  	LCDWRITE_1622(0,0x0C);
+				break;
+		    case 3:
+				LCDWRITE_1622(0,0x24);
+				LCDWRITE_1622(0,0x1C);
+				break;
+		    case 2:
+				LCDWRITE_1622(0,0x34);
+				LCDWRITE_1622(0,0x2C);
+				break;
+		    case 1:
+				LCDWRITE_1622(0,0x44);
+				LCDWRITE_1622(0,0x3C);	
+				break;
+		    default:
+				break;
+		    } 
+	        Delay50ms();  
+			digital(data,dotp);
+		}
     }
     else   
 		digital(data,dotp);
@@ -634,8 +749,7 @@ void floattochar(float fdata,BYTE disbuf[6],BYTE dotp)
 
 static void Delay50ms(void)
 {
-    int m;
-    for (m=0;m<100;m++)
+    for (int i=0; i < 6600; i++)
     {
         ;
     }

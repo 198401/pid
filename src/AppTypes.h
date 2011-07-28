@@ -31,30 +31,25 @@ typedef union _UNIT_CFG
 {
     struct _UNIT_CFG_
     {
-        float   fPosMin;
-        float   fPosMax;
-
-		float   fSetMin;
-        float   fSetMax;
-
-		float   fPress1Min;
-        float   fPress1Max;
-
-		float   fPress2Min;
-        float   fPress2Max;
-
-        float   fPos_Lic[3];
-		float   fSet_Lic[3];
-		float   fPress1_Lic[3];
-		float   fPress2_Lic[3];
-        float   fg_Tzc[3];
-        float   fg_Tsc[3];
+        float   fPos_Lic[2];
+		float   fSet_Lic[2];
+		float   fSet_cLic[2];
+		float   fPress1_Lic[2];
+		float   fPress1_cLic[2];
+		float   fPress2_Lic[2];
+		float   fPress2_cLic[2];
+		float   fTemp_Lic[2];
+		float   fTemp_vLic[2];
+		float   fTemp_cLic[2];
 
 		ULONG 	uBau; 
-
         UCHAR   byMbAddr;
 		
-		mbBOOL  bIsVoltage;        
+		UCHAR   byTemp;	   //0 pt100 1 voltage 2 current other pt100
+
+		mbBOOL  bIsVoltage; 
+		mbBOOL  bIsP1Voltage;
+		mbBOOL  bIsP2Voltage;    
     } dat;
     unsigned short    buf[sizeof(struct _UNIT_CFG_)/sizeof(short)];
 } UNIT_CFG;
