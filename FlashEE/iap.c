@@ -13,11 +13,12 @@
 
 #include <ADuC7024.H>
 #include "AppTypes.h"
+#include <string.h>
 
 #define USER_ADD_START 0x8F400
 #define USER_ADD_END   0x8F5FF
 extern UNIT_CFG        g_UnitCfg;
-#define CFG_NREGS           sizeof(g_UnitCfg)
+#define CFG_NREGS      (sizeof(g_UnitCfg)/sizeof(short))
 
 static void erase_page(unsigned short paddrs);
 void Init_FEE(void)
@@ -38,11 +39,10 @@ static void EepromWr( unsigned short addr, unsigned short  data)
 void  EepromWr_n( unsigned short *pcData )
 {
 	erase_page((unsigned short)USER_ADD_START);
-	for(unsigned short i=0; i < CFG_NREGS; i += 2)
+	for(unsigned short i = 0; i < CFG_NREGS; i ++)
 	{
-		EepromWr((unsigned short)USER_ADD_START + i, pcData[i]);
-	}	
-
+		EepromWr((unsigned short)USER_ADD_START + 2 * i, pcData[i]);
+	}
 }
 
 static void erase_page(unsigned short addr)

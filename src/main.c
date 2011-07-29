@@ -27,7 +27,7 @@ UNIT_BUF                        g_UnitBuf;
 UNIT_CFG                        g_UnitCfg;
 
 #define EEPADDR 				0x8F400
-const UNIT_CFG                  g_UnitCfgInFlash    __at (EEPADDR);
+const unsigned short            g_UnitCfgInFlash[256]    __at (EEPADDR);
 
 #define REG_INPUT_START             0x0001
 #define REG_INPUT_NREGS             sizeof(g_UnitData)/sizeof(short)
@@ -35,7 +35,7 @@ const UNIT_CFG                  g_UnitCfgInFlash    __at (EEPADDR);
 #define REG_HOLDING_NREGS           sizeof(g_UnitCfg)/sizeof(short)
 
 OS_TID t_feeddog;                       /* assigned task id of task: feeddog */
-OS_TID t_pid;                         /* assigned task id of task: blink   */
+OS_TID t_pid;                           /* assigned task id of task: blink   */
 OS_TID t_modbus;                        /* assigned task id of task: blink   */
 OS_TID t_adc;                           /* assigned task id of task: adc     */
 OS_TID t_hmi;                           /* assigned task id of task: hmi     */
@@ -321,11 +321,11 @@ __task void init(void)
     REFCON                  = 0x00;                  /* disconnect internal 2.5V reference to Vref pin */
     ADCCON                  = 0xE24;                 /* ADC Config: fADC/8, acq. time = 8 clocks       */
 
-    for (U16 i = 0;i < sizeof(struct _UNIT_DATA_);i++)
+    for (U16 i = 0;i < sizeof(struct _UNIT_DATA_)/2;i++)
         g_UnitData.buf[i]   = 0; 
 
-    for (U16 i = 0;i < sizeof(struct _UNIT_CFG_);i++)
-        g_UnitCfg.buf[i]    = g_UnitCfgInFlash.buf[i]; 
+    for (U16 i = 0;i < sizeof(struct _UNIT_CFG_)/2;i++)
+        g_UnitCfg.buf[i]    = g_UnitCfgInFlash[i]; 
 
 	if (g_UnitCfg.dat.byMbAddr == 0)
 		g_UnitCfg.dat.byMbAddr = 1;

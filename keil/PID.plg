@@ -7,51 +7,24 @@ F:\object\PID\keil\PID.uvproj
 Project File Date:  07/28/2011
 
 <h2>Output:</h2>
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 0.000V
-***JLink Warning: No matching core found.
-***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
-Please check target power.
-***JLink Warning: No matching core found.
-***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
-Please check target power.
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-***JLink Warning: No matching core found.
-***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
-Please check target power.
-***JLink Warning: No matching core found.
-***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
-Please check target power.
-JTAG speed: 5 kHz
-Full Chip Erase Failed!
 Build target 'Target 1'
 compiling Hmi.c...
 linking...
-Program Size: Code=17604 RO-data=44952 RW-data=356 ZI-data=6732  
+Program Size: Code=18608 RO-data=43948 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.190V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-Info: CPU no longer halted after stop via DBGRQ: DBGACK = 0, nMREQ  = 0
-***JLink Error: Could not find supported CPU core on JTAG chain
-Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Error: Could not find supported CPU core on JTAG chain
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=18608 RO-data=43948 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=18596 RO-data=43960 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
 Load "F:\\object\\PID\\keil\\PID.AXF" 
 VTarget = 3.203V
 Info: TotalIRLen = 4, IRPrint = 0x01
@@ -62,39 +35,43 @@ Info: Could not measure total IR len. TDO is constant high.
 Info: Could not measure total IR len. TDO is constant high.
 Info: Resetting target using RESET pin
 Info: Resetting TRST
-Info: CPU no longer halted after stop via DBGRQ: DBGACK = 0, nMREQ  = 0
 ***JLink Error: Could not find supported CPU core on JTAG chain
-Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
 DLL version V4.15n, compiled Jun 18 2010 19:55:09
 Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
 Hardware: V8.00
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Error: Could not find supported CPU core on JTAG chain
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.196V
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
 Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-Info: CPU no longer halted after stop via DBGRQ: DBGACK = 0, nMREQ  = 0
-***JLink Error: Could not find supported CPU core on JTAG chain
-Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Error: Could not find supported CPU core on JTAG chain
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=18608 RO-data=43948 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=17604 RO-data=44952 RW-data=356 ZI-data=6732  
+Program Size: Code=18608 RO-data=43948 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
 Load "F:\\object\\PID\\keil\\PID.AXF" 
@@ -107,48 +84,6 @@ Info: Could not measure total IR len. TDO is constant high.
 Info: Could not measure total IR len. TDO is constant high.
 Info: Resetting target using RESET pin
 Info: Resetting TRST
-Info: CPU no longer halted after stop via DBGRQ: DBGACK = 0, nMREQ  = 0
-***JLink Error: Could not find supported CPU core on JTAG chain
-Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Error: Could not find supported CPU core on JTAG chain
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=17604 RO-data=44952 RW-data=356 ZI-data=6732  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.254V
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Error: Could not find supported CPU core on JTAG chain
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.209V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.254V
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Error: Could not find supported CPU core on JTAG chain
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.203V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
 ***JLink Error: Could not find supported CPU core on JTAG chain
 DLL version V4.15n, compiled Jun 18 2010 19:55:09
 Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
@@ -179,288 +114,47 @@ JTAG speed: 8000 kHz
 Application running ...
 Build target 'Target 1'
 compiling Hmi.c...
-linking...
-Program Size: Code=17604 RO-data=44952 RW-data=356 ZI-data=6732  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=17604 RO-data=44952 RW-data=356 ZI-data=6732  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.203V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=17608 RO-data=44948 RW-data=356 ZI-data=6732  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=17608 RO-data=44948 RW-data=356 ZI-data=6732  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.190V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=17608 RO-data=44948 RW-data=360 ZI-data=6728  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=17608 RO-data=44948 RW-data=360 ZI-data=6728  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-..\src\Hmi.c(450): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_ACT_END].byMenuItemID                                 = MENU_ACT_END;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(451): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_ACT_END].byChildMenuItems                             = 3;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(452): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_ACT_END].pChildMenu                                   = NULL;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(453): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_ACT_END].pParentMenu                                  = &m_aMenuItems[MENU_MAIN_ACT];
-..\src\Hmi.c:           ^
-..\src\Hmi.c(454): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_ACT_END].KeyboardHandler                              = ZeroConfig_KeyboardHandler;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(455): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_ACT_END].DisplayHandler                               = ZeroConfig_DisplayHandler;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(456): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_ACT_END].OnOpeningHandler                             = ZeroConfig_OpeningHandler;
-..\src\Hmi.c:           ^
-..\src\Hmi.c: ..\src\Hmi.c: 7 warnings, 0 errors
-linking...
-Program Size: Code=17616 RO-data=44940 RW-data=360 ZI-data=6728  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 7 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=17612 RO-data=44944 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=17604 RO-data=44952 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=17608 RO-data=44948 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.190V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-Info: CPU no longer halted after stop via DBGRQ: DBGACK = 0, nMREQ  = 0
-***JLink Error: Could not find supported CPU core on JTAG chain
-Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Error: Could not find supported CPU core on JTAG chain
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.203V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-Info: CPU no longer halted after stop via DBGRQ: DBGACK = 0, nMREQ  = 0
-***JLink Error: Could not find supported CPU core on JTAG chain
-Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Error: Could not find supported CPU core on JTAG chain
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.203V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-Info: CPU no longer halted after stop via DBGRQ: DBGACK = 0, nMREQ  = 0
-***JLink Error: Could not find supported CPU core on JTAG chain
-Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Error: Could not find supported CPU core on JTAG chain
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.196V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-compiling Hmi.c...
-..\src\Hmi.c(233): error:  #513: a value of type "int" cannot be assigned to an entity of type "MENU_CTL_BLOCK"
-..\src\Hmi.c:                                   m_mcbCurrent = NULL;
-..\src\Hmi.c:                                                ^
+..\src\Hmi.c(498): error:  #20: identifier "ACT_SNGL_OnOpeningHandler" is undefined
+..\src\Hmi.c:           m_aMenuItems[MENU_ACT_SNGL].OnOpeningHandler                    = ACT_SNGL_OnOpeningHandler;
+..\src\Hmi.c:                                                                             ^
 ..\src\Hmi.c: ..\src\Hmi.c: 0 warnings, 1 error
 Target not created
 Build target 'Target 1'
 compiling Hmi.c...
+..\src\Hmi.c(502): error:  #20: identifier "ACT_SNGL_OnOpeningHandler" is undefined
+..\src\Hmi.c:           m_aMenuItems[MENU_ACT_SNGL].OnOpeningHandler                    = ACT_SNGL_OnOpeningHandler;
+..\src\Hmi.c:                                                                             ^
+..\src\Hmi.c(326): warning:  #177-D: function "ACT_SNGL_OpeningHandler" was declared but never referenced
+..\src\Hmi.c:   static void ACT_SNGL_OpeningHandler()
+..\src\Hmi.c:               ^
+..\src\Hmi.c: ..\src\Hmi.c: 1 warning, 1 error
+Target not created
+Build target 'Target 1'
+compiling Hmi.c...
 linking...
-Program Size: Code=17592 RO-data=44964 RW-data=360 ZI-data=7280  
+Program Size: Code=18616 RO-data=43940 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=17592 RO-data=44964 RW-data=360 ZI-data=7280  
+Program Size: Code=18616 RO-data=43940 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=18616 RO-data=43940 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=17592 RO-data=44964 RW-data=360 ZI-data=7280  
+Program Size: Code=18616 RO-data=43940 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
+compiling Hmi.c...
 linking...
-Program Size: Code=17592 RO-data=44964 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=17592 RO-data=44964 RW-data=360 ZI-data=7280  
+Program Size: Code=18636 RO-data=43920 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
 Load "F:\\object\\PID\\keil\\PID.AXF" 
@@ -504,105 +198,7 @@ Application running ...
 Build target 'Target 1'
 compiling Hmi.c...
 linking...
-Program Size: Code=17592 RO-data=44964 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.196V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=17592 RO-data=44964 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.196V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=17588 RO-data=44968 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=17588 RO-data=44968 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=17588 RO-data=44968 RW-data=360 ZI-data=7280  
+Program Size: Code=18628 RO-data=43928 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
 Load "F:\\object\\PID\\keil\\PID.AXF" 
@@ -646,160 +242,29 @@ Application running ...
 Build target 'Target 1'
 compiling Hmi.c...
 linking...
-Program Size: Code=17584 RO-data=44972 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=17584 RO-data=44972 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.190V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-compiling HT1622.c...
-linking...
-Program Size: Code=17588 RO-data=44968 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling HT1622.c...
-linking...
-Program Size: Code=17788 RO-data=44768 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling HT1622.c...
-linking...
-Program Size: Code=17788 RO-data=44768 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling HT1622.c...
-linking...
-Program Size: Code=17788 RO-data=44768 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling HT1622.c...
-linking...
-Program Size: Code=18396 RO-data=44160 RW-data=360 ZI-data=7280  
+Program Size: Code=18636 RO-data=43920 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
 compiling Hmi.c...
 linking...
-Program Size: Code=18396 RO-data=44160 RW-data=360 ZI-data=7280  
+Program Size: Code=18624 RO-data=43932 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.190V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
 Build target 'Target 1'
-compiling HT1622.c...
+compiling Hmi.c...
 linking...
-Program Size: Code=18308 RO-data=44248 RW-data=360 ZI-data=7280  
+Program Size: Code=18584 RO-data=43972 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.190V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-Info: CPU no longer halted after stop via DBGRQ: DBGACK = 0, nMREQ  = 0
-***JLink Error: Could not find supported CPU core on JTAG chain
-Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Error: Could not find supported CPU core on JTAG chain
 Load "F:\\object\\PID\\keil\\PID.AXF" 
 VTarget = 3.164V
 Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
+Info: Could not measure total IR len. TDO is constant high.
 ***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
 Info: Resetting target using RESET pin
 Info: Resetting TRST
 ***JLink Error: Could not find supported CPU core on JTAG chain
@@ -833,344 +298,7 @@ Application running ...
 Build target 'Target 1'
 compiling Hmi.c...
 linking...
-Program Size: Code=18308 RO-data=44248 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.203V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
-compiling Hmi.c...
-compiling ds18b20.c...
-linking...
-Program Size: Code=18308 RO-data=44248 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=18312 RO-data=44244 RW-data=360 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.190V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=18312 RO-data=44244 RW-data=376 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=18400 RO-data=44156 RW-data=376 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-..\src\Hmi.c(278): warning:  #177-D: function "ZeroConfig_KeyboardHandler" was declared but never referenced
-..\src\Hmi.c:   static void ZeroConfig_KeyboardHandler(BYTE byKeyCode)
-..\src\Hmi.c:               ^
-..\src\Hmi.c(315): warning:  #177-D: function "ZeroConfig_DisplayHandler" was declared but never referenced
-..\src\Hmi.c:   static void ZeroConfig_DisplayHandler()
-..\src\Hmi.c:               ^
-..\src\Hmi.c(327): warning:  #177-D: function "ZeroConfig_OpeningHandler" was declared but never referenced
-..\src\Hmi.c:   static void ZeroConfig_OpeningHandler()
-..\src\Hmi.c:               ^
-..\src\Hmi.c: ..\src\Hmi.c: 3 warnings, 0 errors
-linking...
-Program Size: Code=18196 RO-data=44360 RW-data=376 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 3 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.196V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
-compiling Hmi.c...
-..\src\Hmi.c(278): warning:  #177-D: function "ZeroConfig_KeyboardHandler" was declared but never referenced
-..\src\Hmi.c:   static void ZeroConfig_KeyboardHandler(BYTE byKeyCode)
-..\src\Hmi.c:               ^
-..\src\Hmi.c(315): warning:  #177-D: function "ZeroConfig_DisplayHandler" was declared but never referenced
-..\src\Hmi.c:   static void ZeroConfig_DisplayHandler()
-..\src\Hmi.c:               ^
-..\src\Hmi.c(327): warning:  #177-D: function "ZeroConfig_OpeningHandler" was declared but never referenced
-..\src\Hmi.c:   static void ZeroConfig_OpeningHandler()
-..\src\Hmi.c:               ^
-..\src\Hmi.c: ..\src\Hmi.c: 3 warnings, 0 errors
-compiling ds18b20.c...
-linking...
-Program Size: Code=18196 RO-data=44360 RW-data=376 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
-compiling Hmi.c...
-..\src\Hmi.c(69): warning:  #550-D: variable "m_byCursorPos" was set but never used
-..\src\Hmi.c:   static BYTE                                             m_byCursorPos                           = 0;
-..\src\Hmi.c:                                                           ^
-..\src\Hmi.c: ..\src\Hmi.c: 1 warning, 0 errors
-compiling ds18b20.c...
-linking...
-Program Size: Code=18196 RO-data=44360 RW-data=376 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
-compiling Hmi.c...
-..\src\Hmi.c(374): error:  #20: identifier "m_byCursorPos" is undefined
-..\src\Hmi.c:           m_byCursorPos = 0;
-..\src\Hmi.c:           ^
-..\src\Hmi.c: ..\src\Hmi.c: 0 warnings, 1 error
-compiling ds18b20.c...
-Target not created
-Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
-compiling Hmi.c...
-compiling ds18b20.c...
-linking...
-Program Size: Code=18192 RO-data=44364 RW-data=372 ZI-data=7284  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.190V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=18124 RO-data=44432 RW-data=372 ZI-data=7284  
+Program Size: Code=18636 RO-data=43920 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
 Load "F:\\object\\PID\\keil\\PID.AXF" 
@@ -1214,27 +342,7 @@ Application running ...
 Build target 'Target 1'
 compiling Hmi.c...
 linking...
-Program Size: Code=18192 RO-data=44364 RW-data=372 ZI-data=7284  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18192 RO-data=44364 RW-data=372 ZI-data=7284  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18192 RO-data=44364 RW-data=372 ZI-data=7284  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18192 RO-data=44364 RW-data=372 ZI-data=7284  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18192 RO-data=44364 RW-data=372 ZI-data=7284  
+Program Size: Code=18640 RO-data=43916 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
@@ -1260,18 +368,7 @@ compiling HT1622.c...
 compiling Hmi.c...
 compiling ds18b20.c...
 linking...
-Program Size: Code=18192 RO-data=44364 RW-data=372 ZI-data=7284  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=18192 RO-data=44364 RW-data=376 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18192 RO-data=44364 RW-data=376 ZI-data=7280  
+Program Size: Code=18640 RO-data=43916 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
 Load "F:\\object\\PID\\keil\\PID.AXF" 
@@ -1315,736 +412,7 @@ Application running ...
 Build target 'Target 1'
 compiling Hmi.c...
 linking...
-Program Size: Code=18336 RO-data=44220 RW-data=400 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18336 RO-data=44220 RW-data=400 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=18348 RO-data=44208 RW-data=400 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18348 RO-data=44208 RW-data=400 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.190V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=18348 RO-data=44208 RW-data=400 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18348 RO-data=44208 RW-data=400 ZI-data=7280  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=18348 RO-data=44208 RW-data=420 ZI-data=7284  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=18452 RO-data=44104 RW-data=420 ZI-data=7284  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-..\src\Hmi.c(361): warning:  #177-D: function "DispConfig_KeyboardHandler" was declared but never referenced
-..\src\Hmi.c:   static void DispConfig_KeyboardHandler(BYTE byKeyCode)
-..\src\Hmi.c:               ^
-..\src\Hmi.c(383): warning:  #177-D: function "DispConfig_DisplayHandler" was declared but never referenced
-..\src\Hmi.c:   static void DispConfig_DisplayHandler()
-..\src\Hmi.c:               ^
-..\src\Hmi.c(396): warning:  #177-D: function "DispConfig_OpeningHandler" was declared but never referenced
-..\src\Hmi.c:   static void DispConfig_OpeningHandler()
-..\src\Hmi.c:               ^
-..\src\Hmi.c: ..\src\Hmi.c: 3 warnings, 0 errors
-linking...
-Program Size: Code=18276 RO-data=44280 RW-data=420 ZI-data=7268  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
-compiling Hmi.c...
-..\src\Hmi.c(361): warning:  #177-D: function "DispConfig_KeyboardHandler" was declared but never referenced
-..\src\Hmi.c:   static void DispConfig_KeyboardHandler(BYTE byKeyCode)
-..\src\Hmi.c:               ^
-..\src\Hmi.c(383): warning:  #177-D: function "DispConfig_DisplayHandler" was declared but never referenced
-..\src\Hmi.c:   static void DispConfig_DisplayHandler()
-..\src\Hmi.c:               ^
-..\src\Hmi.c(396): warning:  #177-D: function "DispConfig_OpeningHandler" was declared but never referenced
-..\src\Hmi.c:   static void DispConfig_OpeningHandler()
-..\src\Hmi.c:               ^
-..\src\Hmi.c: ..\src\Hmi.c: 3 warnings, 0 errors
-compiling ds18b20.c...
-linking...
-Program Size: Code=18276 RO-data=44280 RW-data=420 ZI-data=7268  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
-compiling Hmi.c...
-..\src\Hmi.c(81): warning:  #177-D: variable "m_bufKeyboard" was declared but never referenced
-..\src\Hmi.c:   static BYTE                                             m_bufKeyboard[KB_BUF_SIZE];
-..\src\Hmi.c:                                                           ^
-..\src\Hmi.c: ..\src\Hmi.c: 1 warning, 0 errors
-compiling ds18b20.c...
-linking...
-Program Size: Code=18276 RO-data=44280 RW-data=420 ZI-data=7268  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
-compiling Hmi.c...
-compiling ds18b20.c...
-linking...
-Program Size: Code=18276 RO-data=44280 RW-data=420 ZI-data=7268  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.170V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-***JLink Warning: No matching core found.
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-linking...
-Program Size: Code=18276 RO-data=44280 RW-data=420 ZI-data=7268  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=18276 RO-data=44280 RW-data=420 ZI-data=7268  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
-compiling Hmi.c...
-compiling ds18b20.c...
-linking...
-Program Size: Code=18276 RO-data=44280 RW-data=444 ZI-data=7268  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
-compiling Hmi.c...
-compiling ds18b20.c...
-linking...
-Program Size: Code=18428 RO-data=44128 RW-data=444 ZI-data=7268  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.196V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=18428 RO-data=44128 RW-data=444 ZI-data=7268  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=18428 RO-data=44128 RW-data=444 ZI-data=7268  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18428 RO-data=44128 RW-data=444 ZI-data=7268  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18428 RO-data=44128 RW-data=444 ZI-data=7268  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18428 RO-data=44128 RW-data=444 ZI-data=7268  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
-compiling Hmi.c...
-compiling ds18b20.c...
-linking...
-Program Size: Code=18428 RO-data=44128 RW-data=464 ZI-data=7264  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-..\src\Hmi.c(697): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].byMenuItemID                    = MENU_CONTRL_BININ;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(698): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].byChildMenuItems                = 5;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(699): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].pChildMenu                              = NULL;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(700): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].pParentMenu                             = &m_aMenuItems[MENU_MAIN_CONTRL];
-..\src\Hmi.c:           ^
-..\src\Hmi.c(701): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].KeyboardHandler                 = MainMenu_KeyboardHandler;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(702): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].DisplayHandler                  = MainMenu_DisplayHandler;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(703): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].OnOpeningHandler                = NULL;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(705): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].byMenuItemID                   = MENU_CONTRL_OUTPUT;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(706): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].byChildMenuItems               = 5;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(707): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].pChildMenu                             = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(708): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].pParentMenu                    = &m_aMenuItems[MENU_MAIN_CONTRL];
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(709): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].KeyboardHandler                = MainMenu_KeyboardHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(710): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].DisplayHandler                 = MainMenu_DisplayHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(711): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].OnOpeningHandler               = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(713): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].byMenuItemID                  = MENU_CONTRL_CALUSER;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(714): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].byChildMenuItems              = 5;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(715): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].pChildMenu                    = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(716): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].pParentMenu                   = &m_aMenuItems[MENU_MAIN_CONTRL];
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(717): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].KeyboardHandler               = MainMenu_KeyboardHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(718): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].DisplayHandler                = MainMenu_DisplayHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(719): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].OnOpeningHandler              = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(721): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].byMenuItemID                  = MENU_CONTRL_PCONTRL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(722): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].byChildMenuItems              = 5;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(723): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].pChildMenu                    = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(724): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].pParentMenu                   = &m_aMenuItems[MENU_MAIN_CONTRL];
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(725): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].KeyboardHandler               = MainMenu_KeyboardHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(726): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].DisplayHandler                = MainMenu_DisplayHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(727): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].OnOpeningHandler              = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(729): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].byMenuItemID                              = MENU_CONTRL_END;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(730): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].byChildMenuItems                  = 5;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(731): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].pChildMenu                                = &m_aMenuItems[MENU_MAIN_CONTRL];
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(732): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].pParentMenu                               = &m_aMenuItems[MENU_MAIN_CONTRL];
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(733): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].KeyboardHandler                   = MainMenu_KeyboardHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(734): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].DisplayHandler                    = MainMenu_DisplayHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(735): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].OnOpeningHandler                  = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c: ..\src\Hmi.c: 35 warnings, 0 errors
-linking...
-Program Size: Code=18608 RO-data=43948 RW-data=464 ZI-data=7264  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 35 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.190V
-Info: TotalIRLen = 4, IRPrint = 0x01
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Hardware-Breakpoints: 2
-Software-Breakpoints: 2048
-Watchpoints:          0
-Found 1 JTAG device, Total IRLen = 4:
- Id of device #0: 0x3F0F0F0F
-ARM7 identified.
-JTAG speed: 5 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
-compiling Hmi.c...
-..\src\Hmi.c(697): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].byMenuItemID                    = MENU_CONTRL_BININ;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(698): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].byChildMenuItems                = 5;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(699): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].pChildMenu                              = NULL;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(700): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].pParentMenu                             = &m_aMenuItems[MENU_MAIN_CONTRL];
-..\src\Hmi.c:           ^
-..\src\Hmi.c(701): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].KeyboardHandler                 = MainMenu_KeyboardHandler;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(702): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].DisplayHandler                  = MainMenu_DisplayHandler;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(703): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_BININ].OnOpeningHandler                = NULL;
-..\src\Hmi.c:           ^
-..\src\Hmi.c(705): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].byMenuItemID                   = MENU_CONTRL_OUTPUT;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(706): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].byChildMenuItems               = 5;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(707): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].pChildMenu                             = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(708): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].pParentMenu                    = &m_aMenuItems[MENU_MAIN_CONTRL];
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(709): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].KeyboardHandler                = MainMenu_KeyboardHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(710): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].DisplayHandler                 = MainMenu_DisplayHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(711): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_OUTPUT].OnOpeningHandler               = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(713): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].byMenuItemID                  = MENU_CONTRL_CALUSER;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(714): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].byChildMenuItems              = 5;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(715): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].pChildMenu                    = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(716): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].pParentMenu                   = &m_aMenuItems[MENU_MAIN_CONTRL];
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(717): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].KeyboardHandler               = MainMenu_KeyboardHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(718): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].DisplayHandler                = MainMenu_DisplayHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(719): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_CALUSER].OnOpeningHandler              = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(721): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].byMenuItemID                  = MENU_CONTRL_PCONTRL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(722): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].byChildMenuItems              = 5;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(723): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].pChildMenu                    = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(724): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].pParentMenu                   = &m_aMenuItems[MENU_MAIN_CONTRL];
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(725): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].KeyboardHandler               = MainMenu_KeyboardHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(726): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].DisplayHandler                = MainMenu_DisplayHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(727): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_PCONTRL].OnOpeningHandler              = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(729): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].byMenuItemID                              = MENU_CONTRL_END;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(730): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].byChildMenuItems                  = 5;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(731): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].pChildMenu                                = &m_aMenuItems[MENU_MAIN_CONTRL];
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(732): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].pParentMenu                               = &m_aMenuItems[MENU_MAIN_CONTRL];
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(733): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].KeyboardHandler                   = MainMenu_KeyboardHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(734): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].DisplayHandler                    = MainMenu_DisplayHandler;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c(735): warning:  #175-D: subscript out of range
-..\src\Hmi.c:           m_aMenuItems[MENU_CONTRL_END].OnOpeningHandler                  = NULL;
-..\src\Hmi.c:                       ^
-..\src\Hmi.c: ..\src\Hmi.c: 35 warnings, 0 errors
-compiling ds18b20.c...
-linking...
-Program Size: Code=18608 RO-data=43948 RW-data=464 ZI-data=7264  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 35 Warning(s).
-Build target 'Target 1'
-compiling Hmi.c...
-linking...
-Program Size: Code=18608 RO-data=43948 RW-data=464 ZI-data=7384  
-FromELF: creating hex file...
-"PID.axf" - 0 Error(s), 0 Warning(s).
-Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.209V
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-***JLink Warning: PC of target system has unexpected value of 0xFFFFFFD8 after reset.
-***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
-DLL version V4.15n, compiled Jun 18 2010 19:55:09
-Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
-Hardware: V8.00
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Could not measure total IR len. TDO is constant high.
-***JLink Warning: No matching core found.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Failed to halt CPU core before ADI software reset.
-Info: Could not measure total IR len. TDO is constant high.
-Info: Resetting target using RESET pin
-Info: Resetting TRST
-***JLink Error: Could not find supported CPU core on JTAG chain
-1, got 0x3 (TAP Command : 12) @ Off 0x14.
-JTAG speed: 5 kHz
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Full Chip Erase Done.
-Programming Done.
-Verify OK.
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-Info: TotalIRLen = 4, IRPrint = 0x01
-Info: RTCK is not connected
-Info: Auto JTAG speed: 8000 kHz
-JTAG speed: 8000 kHz
-Application running ...
-Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
-compiling Hmi.c...
-compiling ds18b20.c...
-linking...
-Program Size: Code=18608 RO-data=43948 RW-data=464 ZI-data=7384  
+Program Size: Code=18644 RO-data=43912 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
 Load "F:\\object\\PID\\keil\\PID.AXF" 
@@ -2086,33 +454,110 @@ Info: Auto JTAG speed: 8000 kHz
 JTAG speed: 8000 kHz
 Application running ...
 Build target 'Target 1'
-assembling Startup.s...
-compiling main.c...
-compiling portevent.c...
-compiling portserial.c...
-compiling porttimer.c...
-compiling mb.c...
-compiling mbascii.c...
-compiling mbcrc.c...
-compiling mbrtu.c...
-compiling mbfunccoils.c...
-compiling mbfuncdiag.c...
-compiling mbfuncdisc.c...
-compiling mbfuncholding.c...
-compiling mbfuncinput.c...
-compiling mbfuncother.c...
-compiling mbutils.c...
-compiling RTX_Config.c...
-compiling iap.c...
-compiling HT1622.c...
 compiling Hmi.c...
-compiling ds18b20.c...
 linking...
-Program Size: Code=18608 RO-data=43948 RW-data=464 ZI-data=7384  
+Program Size: Code=18644 RO-data=43912 RW-data=464 ZI-data=7384  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
 Load "F:\\object\\PID\\keil\\PID.AXF" 
-VTarget = 3.229V
+VTarget = 3.164V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.190V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.222V
 Info: TotalIRLen = 4, IRPrint = 0x01
 Info: TotalIRLen = 4, IRPrint = 0x01
 Info: RTCK is not connected
@@ -2149,3 +594,2937 @@ Info: RTCK is not connected
 Info: Auto JTAG speed: 8000 kHz
 JTAG speed: 8000 kHz
 Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(41): error:  #137: expression must be a modifiable lvalue
+..\FlashEE\iap.c:       cBuf    = (unsigned char *)USER_ADD_START;
+..\FlashEE\iap.c:       ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 0 warnings, 1 error
+Target not created
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(41): error:  #137: expression must be a modifiable lvalue
+..\FlashEE\iap.c:       cBuf    = (unsigned char *)USER_ADD_START;
+..\FlashEE\iap.c:       ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 0 warnings, 1 error
+Target not created
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(40): error:  #144: a value of type "unsigned char *" cannot be used to initialize an entity of type "unsigned char"
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)USER_ADD_START;
+..\FlashEE\iap.c:                                ^
+..\FlashEE\iap.c(40): warning:  #520-D: initialization with "{...}" expected for aggregate object
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)USER_ADD_START;
+..\FlashEE\iap.c:                                ^
+..\FlashEE\iap.c(40): error:  #29: expected an expression
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)USER_ADD_START;
+..\FlashEE\iap.c:                                                               ^
+..\FlashEE\iap.c(40): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)USER_ADD_START;
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 2 warnings, 2 errors
+Target not created
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(40): error:  #144: a value of type "unsigned char *" cannot be used to initialize an entity of type "unsigned char"
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)USER_ADD_START;
+..\FlashEE\iap.c:                                ^
+..\FlashEE\iap.c(40): warning:  #520-D: initialization with "{...}" expected for aggregate object
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)USER_ADD_START;
+..\FlashEE\iap.c:                                ^
+..\FlashEE\iap.c(40): error:  #29: expected an expression
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)USER_ADD_START;
+..\FlashEE\iap.c:                                                               ^
+..\FlashEE\iap.c(40): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)USER_ADD_START;
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 2 warnings, 2 errors
+Target not created
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(40): error:  #144: a value of type "unsigned char *" cannot be used to initialize an entity of type "unsigned char"
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)(USER_ADD_START);
+..\FlashEE\iap.c:                                ^
+..\FlashEE\iap.c(40): warning:  #520-D: initialization with "{...}" expected for aggregate object
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)(USER_ADD_START);
+..\FlashEE\iap.c:                                ^
+..\FlashEE\iap.c(40): error:  #29: expected an expression
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)(USER_ADD_START);
+..\FlashEE\iap.c:                                                                 ^
+..\FlashEE\iap.c(40): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)(USER_ADD_START);
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 2 warnings, 2 errors
+Target not created
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(40): error:  #144: a value of type "unsigned char *" cannot be used to initialize an entity of type "unsigned char"
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)(USER_ADD_START);
+..\FlashEE\iap.c:                                ^
+..\FlashEE\iap.c(40): warning:  #520-D: initialization with "{...}" expected for aggregate object
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)(USER_ADD_START);
+..\FlashEE\iap.c:                                ^
+..\FlashEE\iap.c(40): error:  #29: expected an expression
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)(USER_ADD_START);
+..\FlashEE\iap.c:                                                                 ^
+..\FlashEE\iap.c(40): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)(USER_ADD_START);
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 2 warnings, 2 errors
+Target not created
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(40): error:  #144: a value of type "unsigned char *" cannot be used to initialize an entity of type "unsigned char"
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)0x8F400;
+..\FlashEE\iap.c:                                ^
+..\FlashEE\iap.c(40): warning:  #520-D: initialization with "{...}" expected for aggregate object
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)0x8F400;
+..\FlashEE\iap.c:                                ^
+..\FlashEE\iap.c(40): error:  #29: expected an expression
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)0x8F400;
+..\FlashEE\iap.c:                                                        ^
+..\FlashEE\iap.c(40): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]=(unsigned char *)0x8F400;
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 2 warnings, 2 errors
+Target not created
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(40): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]={0};
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 1 warning, 0 errors
+linking...
+Program Size: Code=18776 RO-data=43780 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(41): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]={0};
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 1 warning, 0 errors
+linking...
+Program Size: Code=18776 RO-data=43780 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(42): warning:  #2748-D: null argument provided for parameter marked with attribute "nonnull"
+..\FlashEE\iap.c:       memcpy(cBuf,(unsigned char)USER_ADD_START,512); 
+..\FlashEE\iap.c:                   ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 1 warning, 0 errors
+linking...
+Program Size: Code=18792 RO-data=43764 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18792 RO-data=43764 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+..\FlashEE\iap.c(42): warning:  #2748-D: null argument provided for parameter marked with attribute "nonnull"
+..\FlashEE\iap.c:       memcpy(cBuf,(unsigned char)USER_ADD_START,512); 
+..\FlashEE\iap.c:                   ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 1 warning, 0 errors
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18792 RO-data=43764 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18796 RO-data=43760 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18796 RO-data=43760 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18828 RO-data=43728 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.170V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18828 RO-data=43728 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18828 RO-data=43728 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18828 RO-data=43728 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.222V
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+***JLink Warning: PC of target system has unexpected value of 0xFFFFFFD8 after reset.
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Failed to halt CPU core before ADI software reset.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+1, got 0x3 (TAP Command : 12) @ Off 0x14.
+JTAG speed: 5 kHz
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+linking...
+Program Size: Code=18828 RO-data=43728 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.203V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18800 RO-data=43756 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.164V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18828 RO-data=43728 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18828 RO-data=43728 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.196V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(29): warning:  #177-D: function "EepromWr" was declared but never referenced
+..\FlashEE\iap.c:   static void EepromWr( unsigned short addr, unsigned short  data)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 1 warning, 0 errors
+linking...
+Program Size: Code=18756 RO-data=43800 RW-data=460 ZI-data=7388  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 1 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.196V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(41): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]={0};
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 1 warning, 0 errors
+linking...
+Program Size: Code=18812 RO-data=43744 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 1 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.164V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(54): warning:  #177-D: function "erase_page" was declared but never referenced
+..\FlashEE\iap.c:   static void erase_page(unsigned short addr)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c(29): warning:  #177-D: function "EepromWr" was declared but never referenced
+..\FlashEE\iap.c:   static void EepromWr( unsigned short addr, unsigned short  data)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=18716 RO-data=43840 RW-data=456 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 2 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.222V
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+***JLink Warning: PC of target system has unexpected value of 0xFFFFFFD8 after reset.
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Failed to halt CPU core before ADI software reset.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+1, got 0x3 (TAP Command : 12) @ Off 0x14.
+JTAG speed: 5 kHz
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(41): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]={0};
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c(54): warning:  #177-D: function "erase_page" was declared but never referenced
+..\FlashEE\iap.c:   static void erase_page(unsigned short addr)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c(29): warning:  #177-D: function "EepromWr" was declared but never referenced
+..\FlashEE\iap.c:   static void EepromWr( unsigned short addr, unsigned short  data)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 3 warnings, 0 errors
+linking...
+Program Size: Code=18692 RO-data=43864 RW-data=456 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 3 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.203V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(54): warning:  #177-D: function "erase_page" was declared but never referenced
+..\FlashEE\iap.c:   static void erase_page(unsigned short addr)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c(29): warning:  #177-D: function "EepromWr" was declared but never referenced
+..\FlashEE\iap.c:   static void EepromWr( unsigned short addr, unsigned short  data)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=18584 RO-data=43972 RW-data=456 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 2 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.203V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(41): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]={0};
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c(54): warning:  #177-D: function "erase_page" was declared but never referenced
+..\FlashEE\iap.c:   static void erase_page(unsigned short addr)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c(29): warning:  #177-D: function "EepromWr" was declared but never referenced
+..\FlashEE\iap.c:   static void EepromWr( unsigned short addr, unsigned short  data)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 3 warnings, 0 errors
+linking...
+Program Size: Code=18692 RO-data=43864 RW-data=456 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 3 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.190V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(54): warning:  #177-D: function "erase_page" was declared but never referenced
+..\FlashEE\iap.c:   static void erase_page(unsigned short addr)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c(29): warning:  #177-D: function "EepromWr" was declared but never referenced
+..\FlashEE\iap.c:   static void EepromWr( unsigned short addr, unsigned short  data)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=18716 RO-data=43840 RW-data=456 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 2 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.164V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(41): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]={0};
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c(54): warning:  #177-D: function "erase_page" was declared but never referenced
+..\FlashEE\iap.c:   static void erase_page(unsigned short addr)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c(29): warning:  #177-D: function "EepromWr" was declared but never referenced
+..\FlashEE\iap.c:   static void EepromWr( unsigned short addr, unsigned short  data)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 3 warnings, 0 errors
+linking...
+Program Size: Code=18692 RO-data=43864 RW-data=456 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 3 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.203V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+..\FlashEE\iap.c(54): warning:  #177-D: function "erase_page" was declared but never referenced
+..\FlashEE\iap.c:   static void erase_page(unsigned short addr)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c(29): warning:  #177-D: function "EepromWr" was declared but never referenced
+..\FlashEE\iap.c:   static void EepromWr( unsigned short addr, unsigned short  data)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 2 warnings, 0 errors
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18584 RO-data=43972 RW-data=456 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 2 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.190V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18828 RO-data=43728 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18828 RO-data=43728 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.196V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.196V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18796 RO-data=43760 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.183V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18796 RO-data=43760 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18796 RO-data=43760 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.203V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18796 RO-data=43760 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.190V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18796 RO-data=43760 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.203V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18792 RO-data=43764 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.196V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.183V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+linking...
+PID.axf: Error: L6982E: AT section main.o(.ARM.__AT_0x0008F400) with base 0x0008f400 limit 0x0008f45c overlaps address range with AT section main.o(.ARM.__AT_0x0008F400) with base 0x0008f400 limit 0x0008f600.
+PID.axf: Not enough information to list image symbols.
+PID.axf: Finished: 1 information, 0 warning and 1 error messages.
+Target not created
+Build target 'Target 1'
+compiling main.c...
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.190V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+compiling iap.c...
+compiling Hmi.c...
+linking...
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching main.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rtx_config.o(.bss).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching mbrtu.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rtx_config.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching iap.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_system.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_robin.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_timer.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rtx_config.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_task.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching hal_arm.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching portevent.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching mbfuncother.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_time.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching portserial.o(.data).
+PID.axf: Error: L6407E: Sections of aggregate size 0x80 bytes could not fit into .ANY selector(s).
+PID.axf: Not enough information to list image symbols.
+PID.axf: Not enough information to list the image map.
+PID.axf: Finished: 2 information, 0 warning and 16 error messages.
+Target not created
+Build target 'Target 1'
+compiling main.c...
+compiling iap.c...
+compiling Hmi.c...
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7600  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.222V
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+***JLink Warning: PC of target system has unexpected value of 0xFFFFFFD8 after reset.
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Failed to halt CPU core before ADI software reset.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+1, got 0x3 (TAP Command : 12) @ Off 0x14.
+JTAG speed: 5 kHz
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+compiling iap.c...
+compiling Hmi.c...
+linking...
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching main.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rtx_config.o(.bss).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching mbrtu.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rtx_config.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching iap.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_system.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_robin.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_timer.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rtx_config.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_task.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching hal_arm.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching portevent.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching mbfuncother.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_time.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching portserial.o(.data).
+PID.axf: Error: L6407E: Sections of aggregate size 0x80 bytes could not fit into .ANY selector(s).
+PID.axf: Not enough information to list image symbols.
+PID.axf: Not enough information to list the image map.
+PID.axf: Finished: 2 information, 0 warning and 16 error messages.
+Target not created
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+PID.axf: Error: L6218E: Undefined symbol abort (referred from mbascii.o).
+PID.axf: Not enough information to list image symbols.
+PID.axf: Finished: 1 information, 0 warning and 1 error messages.
+Target not created
+Build target 'Target 1'
+linking...
+PID.axf: Error: L6218E: Undefined symbol abort (referred from mbascii.o).
+PID.axf: Not enough information to produce a FEEDBACK file.
+PID.axf: Not enough information to list image symbols.
+PID.axf: Finished: 2 information, 0 warning and 1 error messages.
+Target not created
+Build target 'Target 1'
+linking...
+PID.axf: Error: L6218E: Undefined symbol abort (referred from mbascii.o).
+PID.axf: Not enough information to produce a FEEDBACK file.
+PID.axf: Not enough information to list image symbols.
+PID.axf: Finished: 2 information, 0 warning and 1 error messages.
+Target not created
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching main.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rtx_config.o(.bss).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching mbrtu.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rtx_config.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching iap.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_system.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_robin.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_timer.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rtx_config.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_task.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching hal_arm.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching portevent.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching mbfuncother.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_time.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching portserial.o(.data).
+PID.axf: Error: L6407E: Sections of aggregate size 0x80 bytes could not fit into .ANY selector(s).
+PID.axf: Not enough information to list image symbols.
+PID.axf: Not enough information to list the image map.
+PID.axf: Finished: 2 information, 0 warning and 16 error messages.
+Target not created
+Build target 'Target 1'
+compiling main.c...
+compiling iap.c...
+compiling Hmi.c...
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18672 RO-data=43884 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18672 RO-data=43884 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.222V
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+***JLink Warning: PC of target system has unexpected value of 0xFFFFFFD8 after reset.
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Failed to halt CPU core before ADI software reset.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+1, got 0x3 (TAP Command : 12) @ Off 0x14.
+JTAG speed: 5 kHz
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(50): error:  #20: identifier "cBuf" is undefined
+..\FlashEE\iap.c:               EepromWr((unsigned short)USER_ADD_START + i, cBuf[i]);
+..\FlashEE\iap.c:                                                            ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 0 warnings, 1 error
+Target not created
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18812 RO-data=43744 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18812 RO-data=43744 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.190V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(41): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]={0};
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 1 warning, 0 errors
+linking...
+Program Size: Code=18776 RO-data=43780 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 1 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.203V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.222V
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+***JLink Warning: PC of target system has unexpected value of 0xFFFFFFD8 after reset.
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Failed to halt CPU core before ADI software reset.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+1, got 0x3 (TAP Command : 12) @ Off 0x14.
+JTAG speed: 5 kHz
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(41): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]={0};
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 1 warning, 0 errors
+linking...
+Program Size: Code=18776 RO-data=43780 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 1 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.190V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling RTX_Config.c...
+compiling iap.c...
+..\FlashEE\iap.c(54): warning:  #177-D: function "erase_page" was declared but never referenced
+..\FlashEE\iap.c:   static void erase_page(unsigned short addr)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 1 warning, 0 errors
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18640 RO-data=43916 RW-data=460 ZI-data=7388  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18640 RO-data=43916 RW-data=460 ZI-data=7388  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18640 RO-data=43916 RW-data=460 ZI-data=7388  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+..\FlashEE\iap.c(54): warning:  #177-D: function "erase_page" was declared but never referenced
+..\FlashEE\iap.c:   static void erase_page(unsigned short addr)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 1 warning, 0 errors
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18640 RO-data=43916 RW-data=460 ZI-data=7388  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 1 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.222V
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+***JLink Warning: PC of target system has unexpected value of 0xFFFFFFD8 after reset.
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Failed to halt CPU core before ADI software reset.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+1, got 0x3 (TAP Command : 12) @ Off 0x14.
+JTAG speed: 5 kHz
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(54): warning:  #177-D: function "erase_page" was declared but never referenced
+..\FlashEE\iap.c:   static void erase_page(unsigned short addr)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 1 warning, 0 errors
+linking...
+Program Size: Code=18640 RO-data=43916 RW-data=460 ZI-data=7388  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18640 RO-data=43916 RW-data=460 ZI-data=7388  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.222V
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+***JLink Warning: PC of target system has unexpected value of 0xFFFFFFD8 after reset.
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0x14.
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Failed to halt CPU core before ADI software reset.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+1, got 0x3 (TAP Command : 12) @ Off 0x14.
+JTAG speed: 5 kHz
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(41): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[512]={0};
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c(54): warning:  #177-D: function "erase_page" was declared but never referenced
+..\FlashEE\iap.c:   static void erase_page(unsigned short addr)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=18748 RO-data=43808 RW-data=460 ZI-data=7388  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 2 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.190V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(41): warning:  #177-D: variable "cBuf" was declared but never referenced
+..\FlashEE\iap.c:       unsigned char  cBuf[256]={0};
+..\FlashEE\iap.c:                      ^
+..\FlashEE\iap.c(54): warning:  #177-D: function "erase_page" was declared but never referenced
+..\FlashEE\iap.c:   static void erase_page(unsigned short addr)
+..\FlashEE\iap.c:               ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=18744 RO-data=43812 RW-data=460 ZI-data=7388  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 2 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.190V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18792 RO-data=43764 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18792 RO-data=43764 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18792 RO-data=43764 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+compiling iap.c...
+compiling Hmi.c...
+linking...
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching main.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rtx_config.o(.bss).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching mbrtu.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rtx_config.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching iap.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_system.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_robin.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_timer.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rtx_config.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_task.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching hal_arm.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching portevent.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching mbfuncother.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching rt_time.o(.data).
+PID.axf: Error: L6406E: No space in execution regions with .ANY selector matching portserial.o(.data).
+PID.axf: Error: L6407E: Sections of aggregate size 0x80 bytes could not fit into .ANY selector(s).
+PID.axf: Not enough information to list image symbols.
+PID.axf: Not enough information to list the image map.
+PID.axf: Finished: 2 information, 0 warning and 16 error messages.
+Target not created
+Build target 'Target 1'
+compiling main.c...
+compiling iap.c...
+compiling Hmi.c...
+linking...
+Program Size: Code=18792 RO-data=43764 RW-data=464 ZI-data=7600  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18792 RO-data=43764 RW-data=464 ZI-data=7600  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+compiling iap.c...
+compiling Hmi.c...
+linking...
+Program Size: Code=18792 RO-data=43764 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18792 RO-data=43764 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18668 RO-data=43888 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+..\src\main.c(328): error:  #154: expression must have struct or union type
+..\src\main.c:           g_UnitCfg.buf[i]    = g_UnitCfgInFlash.buf[i]; 
+..\src\main.c:                                 ^
+..\src\main.c: ..\src\main.c: 0 warnings, 1 error
+Target not created
+Build target 'Target 1'
+compiling main.c...
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.203V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.183V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.196V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.196V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.254V
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Error: Could not find supported CPU core on JTAG chain
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.203V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.203V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.190V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.170V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.196V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.164V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.254V
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Error: Could not find supported CPU core on JTAG chain
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.196V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x7B5.
+Info: Could not measure total IR len. TDO is constant high.
+***JLink Warning: No matching core found.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Could not measure total IR len. TDO is constant high.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+..\FlashEE\iap.c(52): error:  #20: identifier "status" is undefined
+..\FlashEE\iap.c:       status = FEESTA&0x03;
+..\FlashEE\iap.c:       ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 0 warnings, 1 error
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+Target not created
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+..\FlashEE\iap.c(34): error:  #20: identifier "status" is undefined
+..\FlashEE\iap.c:       status = FEESTA&0x03;
+..\FlashEE\iap.c:       ^
+..\FlashEE\iap.c(51): error:  #20: identifier "status" is undefined
+..\FlashEE\iap.c:       status = FEESTA&0x03;
+..\FlashEE\iap.c:       ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 0 warnings, 2 errors
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+Target not created
+Build target 'Target 1'
+compiling iap.c...
+..\FlashEE\iap.c(34): error:  #20: identifier "status" is undefined
+..\FlashEE\iap.c:       status = FEESTA&0x03;
+..\FlashEE\iap.c:       ^
+..\FlashEE\iap.c(51): error:  #20: identifier "status" is undefined
+..\FlashEE\iap.c:       status = FEESTA&0x03;
+..\FlashEE\iap.c:       ^
+..\FlashEE\iap.c: ..\FlashEE\iap.c: 0 warnings, 2 errors
+Target not created
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling iap.c...
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.203V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x7B5.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Warning: No matching core found.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Could not find supported CPU core on JTAG chain
+DLL version V4.15n, compiled Jun 18 2010 19:55:09
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 2048
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 5 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK is not connected
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbascii.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdiag.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+linking...
+Program Size: Code=18668 RO-data=44308 RW-data=464 ZI-data=7384  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).

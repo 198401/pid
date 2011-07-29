@@ -118,7 +118,7 @@ enum
 	MENU_INPUT_10,
 	MENU_INPUT_5,
 	MENU_INPUT_END,
-	// In Set
+	// In Set Menu
 	MENU_INSET_CHARACT,
 	MENU_INSET_CUTOFF,
 	MENU_INSET_DIRCMD,
@@ -131,14 +131,14 @@ enum
 	MENU_XSET_XCONTRL,
 	MENU_XSET_XTUNE,
 	MENU_XSET_END,
-	// System
+	// System Menu
 	MENU_SYSTEM_SAFEPOS,
 	MENU_SYSTEM_SIGERR,
 	MENU_SYSTEM_SERIO,
 	MENU_SYSTEM_CODE,
 	MENU_SYSTEM_SETFACT,
 	MENU_SYSTEM_END,
-	// Input Menu
+	// Contrl Menu
 	MENU_CONTRL_BININ,
 	MENU_CONTRL_OUTPUT,
 	MENU_CONTRL_CALUSER,
@@ -323,6 +323,19 @@ static void MainMenu_DisplayHandler()
 	DisplayMenu();
 }
 
+static void ActSngl_OpeningHandler()
+{
+	clearLCD();
+	display_char("DDDDDDDD");
+	clearLCD();	
+}
+
+static void ActDoub_OpeningHandler()
+{
+	clearLCD();
+	display_char("DDDDDDDD");
+	clearLCD();	
+}
 //static void ZeroConfig_KeyboardHandler(BYTE byKeyCode)
 //{
 //	if (byKeyCode == KEY_1)
@@ -495,7 +508,7 @@ void HMI_Init()
 	m_aMenuItems[MENU_ACT_SNGL].pParentMenu					= &m_aMenuItems[MENU_MAIN_ACT];
 	m_aMenuItems[MENU_ACT_SNGL].KeyboardHandler				= MainMenu_KeyboardHandler;
 	m_aMenuItems[MENU_ACT_SNGL].DisplayHandler				= MainMenu_DisplayHandler;
-	m_aMenuItems[MENU_ACT_SNGL].OnOpeningHandler			= NULL;
+	m_aMenuItems[MENU_ACT_SNGL].OnOpeningHandler			= ActSngl_OpeningHandler;
 
 	m_aMenuItems[MENU_ACT_DOUB].byMenuItemID				= MENU_ACT_DOUB;
 	m_aMenuItems[MENU_ACT_DOUB].byChildMenuItems			= 3;
@@ -503,7 +516,7 @@ void HMI_Init()
 	m_aMenuItems[MENU_ACT_DOUB].pParentMenu					= &m_aMenuItems[MENU_MAIN_ACT];
 	m_aMenuItems[MENU_ACT_DOUB].KeyboardHandler				= MainMenu_KeyboardHandler;
 	m_aMenuItems[MENU_ACT_DOUB].DisplayHandler				= MainMenu_DisplayHandler;
-	m_aMenuItems[MENU_ACT_DOUB].OnOpeningHandler			= NULL;
+	m_aMenuItems[MENU_ACT_DOUB].OnOpeningHandler			= ActDoub_OpeningHandler;
 
 	m_aMenuItems[MENU_ACT_END].byMenuItemID					= MENU_ACT_END;
 	m_aMenuItems[MENU_ACT_END].byChildMenuItems				= 3;
