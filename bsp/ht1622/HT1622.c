@@ -598,7 +598,7 @@ void display_digital(BYTE * data,BYTE dotp,BYTE shine)
 {
     if ((shine >0)&&(shine <6))
     {
-        for(unsigned short i =0; i < 5; i++)
+        for(unsigned short i =0; i < 8; i++)
 		{
 			digital(data,dotp);
 	        Delay50ms();      
@@ -627,7 +627,8 @@ void display_digital(BYTE * data,BYTE dotp,BYTE shine)
 		    default:
 				break;
 		    } 
-	        Delay50ms();  
+	        Delay50ms();
+			Delay50ms();  
 			digital(data,dotp);
 		}
     }
@@ -712,7 +713,7 @@ static void Reset_1622(void)
     clrSK_1622;//SK_1622=0;    
 }
 
-void floattochar(float fdata,BYTE disbuf[6],BYTE dotp)
+void floattochar(const float fdata,BYTE disbuf[6],BYTE dotp)
 {
     long int temp_int;
     float temp_float;

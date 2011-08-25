@@ -114,7 +114,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>0</UseSimulator>
+            <UseSimulator>1</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -125,7 +125,7 @@
             <LimitSpeedToRealTime>1</LimitSpeedToRealTime>
           </Simulator>
           <Target>
-            <UseTarget>1</UseTarget>
+            <UseTarget>0</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -135,7 +135,7 @@
             <RestoreToolbox>1</RestoreToolbox>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>6</TargetSelection>
+          <TargetSelection>2</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -339,7 +339,7 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>0</wLevel>
+            <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
@@ -426,11 +426,6 @@
               <FilePath>..\modbus\mb.c</FilePath>
             </File>
             <File>
-              <FileName>mbascii.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\modbus\ascii\mbascii.c</FilePath>
-            </File>
-            <File>
               <FileName>mbcrc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\modbus\rtu\mbcrc.c</FilePath>
@@ -444,11 +439,6 @@
               <FileName>mbfunccoils.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\modbus\functions\mbfunccoils.c</FilePath>
-            </File>
-            <File>
-              <FileName>mbfuncdiag.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\modbus\functions\mbfuncdiag.c</FilePath>
             </File>
             <File>
               <FileName>mbfuncdisc.c</FileName>
@@ -475,6 +465,16 @@
               <FileType>1</FileType>
               <FilePath>..\modbus\functions\mbutils.c</FilePath>
             </File>
+            <File>
+              <FileName>mbascii.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\modbus\ascii\mbascii.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbfuncdiag.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\modbus\functions\mbfuncdiag.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -484,6 +484,11 @@
               <FileName>RTX_Config.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\rtos\RTX_Config.c</FilePath>
+            </File>
+            <File>
+              <FileName>RTX_ARM_L.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\rtos\RTX_ARM_L.lib</FilePath>
             </File>
           </Files>
         </Group>
