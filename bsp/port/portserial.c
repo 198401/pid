@@ -2,13 +2,13 @@
 
  Author        : Yu
 
- Date          : 2011.5
+ Date          : 
 
- File          : 
+ File          : portserial
                                       
- Hardware      : ADuC7024
+ Hardware      : ADuC702x
 
- Description   : 
+ Description   : portserial
 *************************************************************************************************/
 #include <RTL.h>
 #include <ADuC7024.H>

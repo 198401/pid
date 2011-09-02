@@ -51,6 +51,7 @@ typedef union _UNIT_CFG
 		uint16_t   	iAd5V0;
 		uint16_t   	iAd5V5;
 		uint16_t   	iAd5V10;
+		uint16_t   	iCode;
 
         uint8_t   	byMbAddr;
 
@@ -63,19 +64,22 @@ typedef union _UNIT_CFG
 		int8_t		byXtimeClose;
 		int8_t		byXtimeOpen;
 		int8_t		bySafePos;
-		int8_t		byDbnd;	   // div 10
+		int8_t		byDbnd;	   	// div 10
+		int8_t		byPidDbnd;  // div 10
 		int8_t		byKxD;	   
 		int8_t		byKxU;
 		int8_t		byYbU;	   
 		int8_t		byYeU;
 		int8_t		byAirOpen;	   
 		int8_t		byAirClose;	   
-		int8_t		byN;	   
+		int8_t		byN;
+		int8_t		byFilt;	   
 		int8_t		byCha[21];
 		
 		uint8_t   	byMode;	   //0 positioner 1 processer other positioner
 		uint8_t   	byTemp;	   //0 pt100 1 voltage 2 current other pt100
 		uint8_t   	byInp;	   //0 4-20ma 1 0-20ma 2 0-5V 3 0-10V other pt100
+		uint8_t   	byErr;	   //0 none 1 pos safe pos 2 pos zero other none
 
 		mbBOOL		bIsManual;
 		mbBOOL		bIsActInverse;
@@ -83,6 +87,7 @@ typedef union _UNIT_CFG
 		mbBOOL  	bIsChaFree;
 		mbBOOL  	bIsP1Voltage;
 		mbBOOL  	bIsP2Voltage;
+		mbBOOL  	bIsReboot;
 		mbBOOL  	bZZZZ;    
     } dat;
     uint16_t    	buf[sizeof(struct _UNIT_CFG_)/sizeof(short)];

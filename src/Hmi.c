@@ -2,13 +2,13 @@
 
  Author        : Yu
 
- Date          : 2011.4
+ Date          : 
 
- File          : 
+ File          : hmi
                                       
- Hardware      : ADuC7060
+ Hardware      : ADuC702x
 
- Description   : 
+ Description   : hmi
 *************************************************************************************************/
 #include <aduc7024.h>
 #include <stdio.h>
@@ -22,7 +22,7 @@
 
 #include "HT1622.h"
 #include "AppTypes.h"
-
+														  	
 typedef unsigned char           BYTE;       /* Prefix: by	*/
 typedef unsigned short          U16;       /* Prefix: by	*/
 typedef unsigned int	        WORD;       /* Prefix: w	*/
@@ -220,6 +220,7 @@ STACK_MCB						m_stackMenuCtlBlock;
 static BYTE						m_byPageNo					= 0;
 static BYTE						m_byCursorPos				= 0;
 static BYTE						m_byCursorPage				= 0;
+
 static BYTE						m_bufKeyboard[KB_BUF_SIZE];
 
 enum
@@ -727,8 +728,8 @@ static void InsetCutoff_KeyboardHandler(BYTE byKeyCode)
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
 
-	   		g_UnitCfg.dat.byCutoffMin = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0];
-			g_UnitCfg.dat.byCutoffMax = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3];
+	   		g_UnitCfg.dat.byCutoffMin = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
+			g_UnitCfg.dat.byCutoffMax = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
 
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
@@ -755,9 +756,13 @@ static void InsetCutoff_DisplayHandler()
 	{
 		display_char("[CUT[MIN");
 	}
-	if (m_byCursorPage == 1)
+	else if (m_byCursorPage == 1)
 	{
 		display_char("[CUT[MAX");
+	}
+	else
+	{
+		display_char("[[[[DONE");
 	}
 }
 
@@ -796,8 +801,8 @@ static void InsetSpltrng_KeyboardHandler(BYTE byKeyCode)
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
 	   		
-			g_UnitCfg.dat.bySrD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0];
-			g_UnitCfg.dat.bySrU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3];
+			g_UnitCfg.dat.bySrD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
+			g_UnitCfg.dat.bySrU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
 
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
@@ -824,9 +829,13 @@ static void InsetSpltrng_DisplayHandler()
 	{
 		display_char("[[[[[SRD");
 	}
-	if (m_byCursorPage == 1)
+	else if (m_byCursorPage == 1)
 	{
 		display_char("[[[[[SRU");
+	}
+	else
+	{
+		display_char("[[[[DONE");
 	}
 }
 
@@ -865,8 +874,8 @@ static void XsetXlimit_KeyboardHandler(BYTE byKeyCode)
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
 	   		
-			g_UnitCfg.dat.byLimD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0];
-			g_UnitCfg.dat.byLimU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3];
+			g_UnitCfg.dat.byLimD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
+			g_UnitCfg.dat.byLimU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
 
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
@@ -893,9 +902,13 @@ static void XsetXlimit_DisplayHandler()
 	{
 		display_char("[[[[LIMD");
 	}
-	if (m_byCursorPage == 1)
+	else if (m_byCursorPage == 1)
 	{
 		display_char("[[[[LIMU");
+	}
+	else
+	{
+		display_char("[[[[DONE");
 	}
 }
 
@@ -934,8 +947,8 @@ static void XsetXtime_KeyboardHandler(BYTE byKeyCode)
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
 
-	   		g_UnitCfg.dat.byXtimeOpen = m_bufKeyboard[1]*10 + m_bufKeyboard[0];
-			g_UnitCfg.dat.byXtimeClose = m_bufKeyboard[3]*10 + m_bufKeyboard[2];
+	   		g_UnitCfg.dat.byXtimeOpen = m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 528;
+			g_UnitCfg.dat.byXtimeClose = m_bufKeyboard[3]*10 + m_bufKeyboard[2] - 528;
 
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
@@ -962,9 +975,13 @@ static void XsetXtime_DisplayHandler()
 	{
 		display_char("[[[[[OPN");
 	}
-	if (m_byCursorPage == 1)
+	else if (m_byCursorPage == 1)
 	{
 		display_char("[[[[[CLS");
+	}
+	else
+	{
+		display_char("[[[[DONE");
 	}
 }
 
@@ -1001,7 +1018,7 @@ static void SystemSafepos_KeyboardHandler(BYTE byKeyCode)
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
 
-	   		g_UnitCfg.dat.bySafePos = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0];
+	   		g_UnitCfg.dat.bySafePos = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
 
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
@@ -1021,10 +1038,15 @@ static void SystemSafepos_DisplayHandler()
 	byNum[4] = m_bufKeyboard[3*m_byCursorPage + 1];
 	byNum[5] = m_bufKeyboard[3*m_byCursorPage];
 	if (m_byCursorPos < 3)
+	{
 		display_digital(byNum,0,m_byCursorPos - 3*m_byCursorPage + 1);
+		display_char("[[[[SPOS");
+	}
 	else
+	{
 		display_digital("::::::",0,0);
-	display_char("[[[[SPOS");
+		display_char("[[[[DONE");
+	}
 }
 
 static void SystemSafepos_OpeningHandler()
@@ -1045,6 +1067,7 @@ static void SystemSetfact_OpeningHandler()
 static void Charact11_OpeningHandler()
 {
 	clearLCD();
+	g_UnitCfg.dat.bIsChaFree = FALSE;
 	g_UnitCfg.dat.byN = 0;
 	display_char("DDDDDDDD");
 	clearLCD();	
@@ -1133,7 +1156,7 @@ static void CharactFree_KeyboardHandler(BYTE byKeyCode)
 	   		
 			g_UnitCfg.dat.bIsChaFree = TRUE;
 			for(uint16_t i = 0; i < 21; i++)
-				g_UnitCfg.dat.byCha[i] = m_bufKeyboard[3*i + 2]*100 + m_bufKeyboard[3*i + 1]*10 + m_bufKeyboard[3*i];
+				g_UnitCfg.dat.byCha[i] = m_bufKeyboard[3*i + 2]*100 + m_bufKeyboard[3*i + 1]*10 + m_bufKeyboard[3*i] - 5328;
 
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
@@ -1152,11 +1175,17 @@ static void CharactFree_DisplayHandler()
 	byNum[3] = m_bufKeyboard[3*m_byCursorPage + 2];
 	byNum[4] = m_bufKeyboard[3*m_byCursorPage + 1];
 	byNum[5] = m_bufKeyboard[3*m_byCursorPage];
-	display_char("CHA[FREE");
+	
 	if (m_byCursorPos < 63)
+	{
 		display_digital(byNum,0,m_byCursorPos - 3*m_byCursorPage + 1);
+		display_char("CHA[FREE");
+	}	
 	else
+	{
 		display_digital("::::::",0,0);
+		display_char("[[[[DONE");
+	}
 }
 
 static void CharactFree_OpeningHandler()
@@ -1199,6 +1228,7 @@ static void DiractFall_OpeningHandler()
 	display_char("DDDDDDDD");
 	clearLCD();	
 }
+
 static void XcontrolDbnd_KeyboardHandler(BYTE byKeyCode)
 {
 	if (byKeyCode == KEY_1)
@@ -1224,7 +1254,7 @@ static void XcontrolDbnd_KeyboardHandler(BYTE byKeyCode)
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
 
-	   		g_UnitCfg.dat.byDbnd = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0];
+	   		g_UnitCfg.dat.byDbnd = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
 
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
@@ -1244,10 +1274,16 @@ static void XcontrolDbnd_DisplayHandler()
 	byNum[4] = m_bufKeyboard[3*m_byCursorPage + 1];
 	byNum[5] = m_bufKeyboard[3*m_byCursorPage];
 	if (m_byCursorPos < 3)
-		display_digital(byNum,1,m_byCursorPos - 3*m_byCursorPage + 1);
+	{
+		display_digital(byNum,1,m_byCursorPos - 3*m_byCursorPage + 1); 
+		display_char("[[[[DBND");
+	}
 	else
+	{
 		display_digital("::::::",0,0);
-	display_char("[[[[DBND");
+		display_char("[[[[DONE");
+	}
+	
 }
 
 static void XcontrolDbnd_OpeningHandler()
@@ -1285,8 +1321,8 @@ static void XcontrolPara_KeyboardHandler(BYTE byKeyCode)
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
 	   		
-			g_UnitCfg.dat.byKxD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0];
-			g_UnitCfg.dat.byKxU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3];
+			g_UnitCfg.dat.byKxD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
+			g_UnitCfg.dat.byKxU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
 
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
@@ -1313,9 +1349,13 @@ static void XcontrolPara_DisplayHandler()
 	{
 		display_char("[[[[[KXD");
 	}
-	if (m_byCursorPage == 1)
+	else if (m_byCursorPage == 1)
 	{
 		display_char("[[[[[KXU");
+	}
+	else
+	{
+		display_char("[[[[DONE");
 	}
 }
 
@@ -1327,69 +1367,50 @@ static void XcontrolPara_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
+#define   ABS(x)   ((x)> 0?(x):-(x)) 
+
 extern void SetPwmDutyCycle2(int32_t uiDutyCycle);
 
 static void XtuneAuto_OpeningHandler()
 {
 	clearLCD();
 	display_char("DDDDDDDD");
-	clearLCD();	
-}
 
-static void XtunePos_KeyboardHandler(BYTE byKeyCode)
-{
-	if (byKeyCode == KEY_1)
-	{
-		SetPwmDutyCycle2(-950);
-	}
-	else if (byKeyCode == KEY_2)
-	{
-		SetPwmDutyCycle2(950);
-	}
-	else if (byKeyCode == KEY_3)
-	{
-		if (m_byCursorPage == 0)
-		{
-			g_UnitCfg.dat.iAd4Min = g_UnitData.dat.iAD4;
-			m_byCursorPage++;
-		}
-		else if (m_byCursorPage == 1)
-		{
-			g_UnitCfg.dat.iAd4Max = g_UnitData.dat.iAD4;
-			m_byCursorPage++;
-		}
-		else
-		{
-			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
+	static float fDiff	= 100;
+	static float fPos	= 0;
+	static float fLast	= 0;
+	uint16_t temp1,temp2;	
 
-	   		g_UnitCfg.dat.bIsManual = FALSE;
+	SetPwmDutyCycle2(-0x900);
 
-			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-			m_mcbCurrent.pMenu 						= pMenuItem;
-			m_mcbCurrent.byStartMenuItemID			= 0;
-		}
-	}
-}
-
-static void XtunePos_DisplayHandler()
-{
-	BYTE byNum[6];
-	floattochar (g_UnitData.dat.fPos/10, byNum,0);
-	display_digital(byNum,0,0);	
-	if (m_byCursorPage == 0)
+	while(ABS(fDiff) > 5)
 	{
-		display_char("[[[[[MIN");
+	   	fPos	= g_UnitData.dat.fPos;
+		fDiff	= fPos - fLast;
+		fLast	= fPos;
 	}
-	if (m_byCursorPage == 1)
-	{
-		display_char("[[[[[MAX");
-	}
-}
 
-static void XtunePos_OpeningHandler()
-{
-	g_UnitCfg.dat.bIsManual = TRUE;
-	m_byCursorPage	 	= 0;
+	temp1 = g_UnitData.dat.iAD4;
+
+	fDiff	= 100;
+	fPos	= 0;
+	fLast	= 0;
+
+	SetPwmDutyCycle2(0x900);
+
+	while(ABS(fDiff) > 5)
+	{
+	   	fPos	= g_UnitData.dat.fPos;
+		fDiff	= fPos - fLast;
+		fLast	= fPos;
+	}
+
+	temp2 = g_UnitData.dat.iAD4;
+
+	g_UnitCfg.dat.iAd4Min = temp1;
+	g_UnitCfg.dat.iAd4Max = temp2;
+
+	display_char("DDDDDDDD");
 }
 
 static void XtunePwm_KeyboardHandler(BYTE byKeyCode)
@@ -1419,8 +1440,8 @@ static void XtunePwm_KeyboardHandler(BYTE byKeyCode)
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
 	   		
-			g_UnitCfg.dat.byYbU = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0];
-			g_UnitCfg.dat.byYeU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3];
+			g_UnitCfg.dat.byYbU = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
+			g_UnitCfg.dat.byYeU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
 
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
@@ -1447,9 +1468,13 @@ static void XtunePwm_DisplayHandler()
 	{
 		display_char("[[[[[YBU");
 	}
-	if (m_byCursorPage == 1)
+	else if (m_byCursorPage == 1)
 	{
 		display_char("[[[[[YEU");
+	}
+	else
+	{
+		display_char("[[[[DONE");
 	}
 }
 
@@ -1488,8 +1513,8 @@ static void XtuneAir_KeyboardHandler(BYTE byKeyCode)
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
 
-	   		g_UnitCfg.dat.byAirOpen = m_bufKeyboard[1]*10 + m_bufKeyboard[0];
-			g_UnitCfg.dat.byAirClose = m_bufKeyboard[3]*10 + m_bufKeyboard[2];
+	   		g_UnitCfg.dat.byAirOpen = m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 528;
+			g_UnitCfg.dat.byAirClose = m_bufKeyboard[3]*10 + m_bufKeyboard[2] - 528;
 
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
@@ -1516,9 +1541,13 @@ static void XtuneAir_DisplayHandler()
 	{
 		display_char("[[[[[OPN");
 	}
-	if (m_byCursorPage == 1)
+	else if (m_byCursorPage == 1)
 	{
 		display_char("[[[[[CLS");
+	}
+	else
+	{
+		display_char("[[[[DONE");
 	}
 }
 
@@ -1533,6 +1562,7 @@ static void XtuneAir_OpeningHandler()
 static void SigerrFunon_OpeningHandler()
 {
 	clearLCD();
+	g_UnitCfg.dat.byErr = 2;
 	display_char("DDDDDDDD");
 	clearLCD();	
 }
@@ -1540,6 +1570,7 @@ static void SigerrFunon_OpeningHandler()
 static void SigerrPoson_OpeningHandler()
 {
 	clearLCD();
+	g_UnitCfg.dat.byErr = 1;
 	display_char("DDDDDDDD");
 	clearLCD();	
 }
@@ -1547,6 +1578,7 @@ static void SigerrPoson_OpeningHandler()
 static void SigerrOff_OpeningHandler()
 {
 	clearLCD();
+	g_UnitCfg.dat.byErr = 0;
 	display_char("DDDDDDDD");
 	clearLCD();	
 }
@@ -1554,6 +1586,7 @@ static void SigerrOff_OpeningHandler()
 static void Serio9600_OpeningHandler()
 {
 	clearLCD();
+	g_UnitCfg.dat.uBau = 9600;
 	display_char("DDDDDDDD");
 	clearLCD();	
 }
@@ -1561,6 +1594,7 @@ static void Serio9600_OpeningHandler()
 static void Serio19200_OpeningHandler()
 {
 	clearLCD();
+	g_UnitCfg.dat.uBau = 19200;
 	display_char("DDDDDDDD");
 	clearLCD();	
 }
@@ -1568,6 +1602,7 @@ static void Serio19200_OpeningHandler()
 static void Serio38400_OpeningHandler()
 {
 	clearLCD();
+	g_UnitCfg.dat.uBau = 38400;
 	display_char("DDDDDDDD");
 	clearLCD();	
 }
@@ -1575,6 +1610,7 @@ static void Serio38400_OpeningHandler()
 static void Serio1200_OpeningHandler()
 {
 	clearLCD();
+	g_UnitCfg.dat.uBau = 1200;
 	display_char("DDDDDDDD");
 	clearLCD();	
 }
@@ -1582,6 +1618,7 @@ static void Serio1200_OpeningHandler()
 static void Serio2400_OpeningHandler()
 {
 	clearLCD();
+	g_UnitCfg.dat.uBau = 2400;
 	display_char("DDDDDDDD");
 	clearLCD();	
 }
@@ -1589,6 +1626,7 @@ static void Serio2400_OpeningHandler()
 static void Serio4800_OpeningHandler()
 {
 	clearLCD();
+	g_UnitCfg.dat.uBau = 4800;
 	display_char("DDDDDDDD");
 	clearLCD();	
 }
@@ -1600,15 +1638,17 @@ static void CodeKey_KeyboardHandler(BYTE byKeyCode)
 		if (m_byCursorPos > 0)
 		{
 			m_byCursorPos--;
+			m_byCursorPage	 = m_byCursorPos/4;
 		}
 	}
 	else if (byKeyCode == KEY_2)
 	{
 		m_byCursorPos++;
+		m_byCursorPage	 = m_byCursorPos/4;
 	}
 	else if (byKeyCode == KEY_3)
 	{
-		if (m_byCursorPos < 5)
+		if (m_byCursorPos < 4)
 		{
 			m_bufKeyboard[m_byCursorPos]++;
 			if (m_bufKeyboard[m_byCursorPos] > '9')
@@ -1617,7 +1657,9 @@ static void CodeKey_KeyboardHandler(BYTE byKeyCode)
 		else
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-	   		//add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action
+
+	   		g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328;
+
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
 			m_mcbCurrent.byStartMenuItemID			= 0;
@@ -1629,22 +1671,30 @@ static void CodeKey_DisplayHandler()
 {
 	BYTE byNum[6];
 		
-	for(U16 i = 0; i < 5; i++)
-		byNum[5 - i] = m_bufKeyboard[i];
-	display_char("[[[[SPOS");
-	display_digital(byNum,0,m_byCursorPos + 1);	
+	byNum[0] = '+';
+	byNum[1] = ':';
+	byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
+	byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
+	byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
+	byNum[5] = m_bufKeyboard[4*m_byCursorPage];
+	if (m_byCursorPos < 4)
+	{
+		display_digital(byNum,0,m_byCursorPos - 4*m_byCursorPage + 1);
+		display_char("[[[[CODE");
+	}
+	else
+	{
+		display_digital("::::::",0,0);
+		display_char("[[[[DONE");
+	}	
 }
 
 static void CodeKey_OpeningHandler()
 {
 	m_byCursorPos = 0;
-	
-	clearLCD();
-	m_bufKeyboard[0] = '0';
-	m_bufKeyboard[1] = '0';
-	m_bufKeyboard[2] = '0';
-	m_bufKeyboard[3] = '0';
-	m_bufKeyboard[4] = '0';
+	for(uint16_t i = 0; i < 4; i++)
+		m_bufKeyboard[i] = '0';
+	m_byCursorPage	 = 0;
 }
 
 static void CodeMenu_KeyboardHandler(BYTE byKeyCode)
@@ -1654,15 +1704,17 @@ static void CodeMenu_KeyboardHandler(BYTE byKeyCode)
 		if (m_byCursorPos > 0)
 		{
 			m_byCursorPos--;
+			m_byCursorPage	 = m_byCursorPos/4;
 		}
 	}
 	else if (byKeyCode == KEY_2)
 	{
 		m_byCursorPos++;
+		m_byCursorPage	 = m_byCursorPos/4;
 	}
 	else if (byKeyCode == KEY_3)
 	{
-		if (m_byCursorPos < 5)
+		if (m_byCursorPos < 4)
 		{
 			m_bufKeyboard[m_byCursorPos]++;
 			if (m_bufKeyboard[m_byCursorPos] > '9')
@@ -1671,7 +1723,9 @@ static void CodeMenu_KeyboardHandler(BYTE byKeyCode)
 		else
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-	   		//add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action
+
+	   		g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328;
+
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
 			m_mcbCurrent.byStartMenuItemID			= 0;
@@ -1683,22 +1737,31 @@ static void CodeMenu_DisplayHandler()
 {
 	BYTE byNum[6];
 		
-	for(U16 i = 0; i < 5; i++)
-		byNum[5 - i] = m_bufKeyboard[i];
-	display_char("[[[[SPOS");
-	display_digital(byNum,0,m_byCursorPos + 1);	
+	byNum[0] = '+';
+	byNum[1] = ':';
+	byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
+	byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
+	byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
+	byNum[5] = m_bufKeyboard[4*m_byCursorPage];
+	if (m_byCursorPos < 4)
+	{
+		display_digital(byNum,0,m_byCursorPos - 4*m_byCursorPage + 1);
+		display_char("[[[[CODE");
+	}
+	else
+	{
+		display_digital("::::::",0,0);
+		display_char("[[[[DONE");
+	}
+		
 }
 
 static void CodeMenu_OpeningHandler()
 {
 	m_byCursorPos = 0;
-	
-	clearLCD();
-	m_bufKeyboard[0] = '0';
-	m_bufKeyboard[1] = '0';
-	m_bufKeyboard[2] = '0';
-	m_bufKeyboard[3] = '0';
-	m_bufKeyboard[4] = '0';
+	for(uint16_t i = 0; i < 4; i++)
+		m_bufKeyboard[i] = '0';
+	m_byCursorPage	 = 0;
 }
 
 static void CodeGlob_KeyboardHandler(BYTE byKeyCode)
@@ -1708,15 +1771,17 @@ static void CodeGlob_KeyboardHandler(BYTE byKeyCode)
 		if (m_byCursorPos > 0)
 		{
 			m_byCursorPos--;
+			m_byCursorPage	 = m_byCursorPos/4;
 		}
 	}
 	else if (byKeyCode == KEY_2)
 	{
 		m_byCursorPos++;
+		m_byCursorPage	 = m_byCursorPos/4;
 	}
 	else if (byKeyCode == KEY_3)
 	{
-		if (m_byCursorPos < 5)
+		if (m_byCursorPos < 4)
 		{
 			m_bufKeyboard[m_byCursorPos]++;
 			if (m_bufKeyboard[m_byCursorPos] > '9')
@@ -1725,7 +1790,9 @@ static void CodeGlob_KeyboardHandler(BYTE byKeyCode)
 		else
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-	   		//add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action
+
+	   		g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328;
+
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
 			m_mcbCurrent.byStartMenuItemID			= 0;
@@ -1737,51 +1804,65 @@ static void CodeGlob_DisplayHandler()
 {
 	BYTE byNum[6];
 		
-	for(U16 i = 0; i < 5; i++)
-		byNum[5 - i] = m_bufKeyboard[i];
-	display_char("[[[[SPOS");
-	display_digital(byNum,0,m_byCursorPos + 1);	
+	byNum[0] = '+';
+	byNum[1] = ':';
+	byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
+	byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
+	byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
+	byNum[5] = m_bufKeyboard[4*m_byCursorPage];
+	if (m_byCursorPos < 4)
+	{
+		display_digital(byNum,0,m_byCursorPos - 4*m_byCursorPage + 1);
+		display_char("[[[[CODE");
+	}
+	else
+	{
+		display_digital("::::::",0,0);
+		display_char("[[[[DONE");
+	}	
 }
 
 static void CodeGlob_OpeningHandler()
 {
 	m_byCursorPos = 0;
-	
-	clearLCD();
-	m_bufKeyboard[0] = '0';
-	m_bufKeyboard[1] = '0';
-	m_bufKeyboard[2] = '0';
-	m_bufKeyboard[3] = '0';
-	m_bufKeyboard[4] = '0';
+	for(uint16_t i = 0; i < 4; i++)
+		m_bufKeyboard[i] = '0';
+	m_byCursorPage	 = 0;
 }
 
 static void CaluserPos_KeyboardHandler(BYTE byKeyCode)
 {
+	uint16_t temp1 = 0;
+	uint16_t temp2 = 100;	
+
 	if (byKeyCode == KEY_1)
 	{
-		if (m_byCursorPos > 0)
-		{
-			m_byCursorPos--;
-		}
+		SetPwmDutyCycle2(-0x900);
 	}
 	else if (byKeyCode == KEY_2)
 	{
-		m_byCursorPos++;
-		if (m_byCursorPos > 4)
-			m_byCursorPage	 = 1;
+		SetPwmDutyCycle2(0x900);
 	}
 	else if (byKeyCode == KEY_3)
 	{
-		if (m_byCursorPos < 10)
+		if (m_byCursorPage == 0)
 		{
-			m_bufKeyboard[m_byCursorPos]++;
-			if (m_bufKeyboard[m_byCursorPos] > '9')
-				m_bufKeyboard[m_byCursorPos] = '0';
+			temp1 = g_UnitData.dat.iAD4;
+			m_byCursorPage++;
+		}
+		else if (m_byCursorPage == 1)
+		{
+			temp2 = g_UnitData.dat.iAD4;
+			m_byCursorPage++;
 		}
 		else
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-	   		//add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action
+
+	   		g_UnitCfg.dat.iAd4Min = temp1;
+			g_UnitCfg.dat.iAd4Max = temp2;
+			g_UnitCfg.dat.bIsManual = FALSE;
+
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
 			m_mcbCurrent.byStartMenuItemID			= 0;
@@ -1791,69 +1872,65 @@ static void CaluserPos_KeyboardHandler(BYTE byKeyCode)
 
 static void CaluserPos_DisplayHandler()
 {
-	BYTE byNum[6];	
+	BYTE byNum[6];
+	
+	if (m_byCursorPage < 2)
+	{
+		floattochar (g_UnitData.dat.fPos/10, byNum,0);
+		display_digital(byNum,0,0);
+	}	
+	else
+		display_digital("::::::",0,0);
 	if (m_byCursorPage == 0)
 	{
-		for(U16 i = 0; i < 5; i++)
-			byNum[5 - i] = m_bufKeyboard[i];
 		display_char("[[[[[MIN");
-		display_digital(byNum,0,m_byCursorPos + 1);
 	}
-	if (m_byCursorPage == 1)
+	else if (m_byCursorPage == 1)
 	{
-		for(U16 i = 0; i < 5; i++)
-			byNum[5 - i] = m_bufKeyboard[5 + i];
 		display_char("[[[[[MAX");
-		display_digital(byNum,0,m_byCursorPos - 4);
 	}
+	else
+		display_char("[[[[DONE");
 }
 
 static void CaluserPos_OpeningHandler()
 {
-	m_byCursorPos = 0;
-	
-	clearLCD();
-	m_bufKeyboard[0] = '0';
-	m_bufKeyboard[1] = '0';
-	m_bufKeyboard[2] = '0';
-	m_bufKeyboard[3] = '0';
-	m_bufKeyboard[4] = '0';
-	m_bufKeyboard[5] = '0';
-	m_bufKeyboard[6] = '0';
-	m_bufKeyboard[7] = '0';
-	m_bufKeyboard[8] = '0';
-	m_bufKeyboard[9] = '0';
-	m_bufKeyboard[10]= '0';
-	m_byCursorPage	 = 0;
+	m_byCursorPage	 	= 0;
 }
 
 static void CaluserInp_KeyboardHandler(BYTE byKeyCode)
 {
+	uint16_t temp1 = 0;
+	uint16_t temp2 = 100;	
+
 	if (byKeyCode == KEY_1)
 	{
-		if (m_byCursorPos > 0)
-		{
-			m_byCursorPos--;
-		}
+		SetPwmDutyCycle2(-0x900);
 	}
 	else if (byKeyCode == KEY_2)
 	{
-		m_byCursorPos++;
-		if (m_byCursorPos > 4)
-			m_byCursorPage	 = 1;
+		SetPwmDutyCycle2(0x900);
 	}
 	else if (byKeyCode == KEY_3)
 	{
-		if (m_byCursorPos < 10)
+		if (m_byCursorPage == 0)
 		{
-			m_bufKeyboard[m_byCursorPos]++;
-			if (m_bufKeyboard[m_byCursorPos] > '9')
-				m_bufKeyboard[m_byCursorPos] = '0';
+			temp1 = g_UnitData.dat.iAD4;
+			m_byCursorPage++;
+		}
+		else if (m_byCursorPage == 1)
+		{
+			temp2 = g_UnitData.dat.iAD4;
+			m_byCursorPage++;
 		}
 		else
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-	   		//add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action
+
+	   		g_UnitCfg.dat.iAd4Min = temp1;
+			g_UnitCfg.dat.iAd4Max = temp2;
+			g_UnitCfg.dat.bIsManual = FALSE;
+
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
 			m_mcbCurrent.byStartMenuItemID			= 0;
@@ -1863,40 +1940,30 @@ static void CaluserInp_KeyboardHandler(BYTE byKeyCode)
 
 static void CaluserInp_DisplayHandler()
 {
-	BYTE byNum[6];	
+	BYTE byNum[6];
+	
+	if (m_byCursorPage < 2)
+	{
+		floattochar (g_UnitData.dat.fPos/10, byNum,0);
+		display_digital(byNum,0,0);
+	}	
+	else
+		display_digital("::::::",0,0);
 	if (m_byCursorPage == 0)
 	{
-		for(U16 i = 0; i < 5; i++)
-			byNum[5 - i] = m_bufKeyboard[i];
 		display_char("[[[[[MIN");
-		display_digital(byNum,0,m_byCursorPos + 1);
 	}
-	if (m_byCursorPage == 1)
+	else if (m_byCursorPage == 1)
 	{
-		for(U16 i = 0; i < 5; i++)
-			byNum[5 - i] = m_bufKeyboard[5 + i];
 		display_char("[[[[[MAX");
-		display_digital(byNum,0,m_byCursorPos - 4);
 	}
+	else
+		display_char("[[[[DONE");
 }
 
 static void CaluserInp_OpeningHandler()
 {
-	m_byCursorPos = 0;
-	
-	clearLCD();
-	m_bufKeyboard[0] = '0';
-	m_bufKeyboard[1] = '0';
-	m_bufKeyboard[2] = '0';
-	m_bufKeyboard[3] = '0';
-	m_bufKeyboard[4] = '0';
-	m_bufKeyboard[5] = '0';
-	m_bufKeyboard[6] = '0';
-	m_bufKeyboard[7] = '0';
-	m_bufKeyboard[8] = '0';
-	m_bufKeyboard[9] = '0';
-	m_bufKeyboard[10]= '0';
-	m_byCursorPage	 = 0;
+	m_byCursorPage	 	= 0;
 }
 
 static void CaluserFact_OpeningHandler()
@@ -1921,7 +1988,7 @@ static void PcontrlDbnd_KeyboardHandler(BYTE byKeyCode)
 	}
 	else if (byKeyCode == KEY_3)
 	{
-		if (m_byCursorPos < 5)
+		if (m_byCursorPos < 3)
 		{
 			m_bufKeyboard[m_byCursorPos]++;
 			if (m_bufKeyboard[m_byCursorPos] > '9')
@@ -1930,7 +1997,9 @@ static void PcontrlDbnd_KeyboardHandler(BYTE byKeyCode)
 		else
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-	   		//add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action
+
+	   		g_UnitCfg.dat.byPidDbnd = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
+
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
 			m_mcbCurrent.byStartMenuItemID			= 0;
@@ -1942,24 +2011,27 @@ static void PcontrlDbnd_DisplayHandler()
 {
 	BYTE byNum[6];
 		
-	for(U16 i = 0; i < 5; i++)
-		byNum[5 - i] = m_bufKeyboard[i];
+	byNum[0] = '+';
+	byNum[1] = ':';
+	byNum[2] = ':';
+	byNum[3] = m_bufKeyboard[3*m_byCursorPage + 2];
+	byNum[4] = m_bufKeyboard[3*m_byCursorPage + 1];
+	byNum[5] = m_bufKeyboard[3*m_byCursorPage];
+	if (m_byCursorPos < 3)
+		display_digital(byNum,1,m_byCursorPos - 3*m_byCursorPage + 1);
+	else
+		display_digital("::::::",0,0);
 	display_char("[[[[DBND");
-	display_digital(byNum,1,m_byCursorPos + 1);	
 }
 
 static void PcontrlDbnd_OpeningHandler()
 {
 	m_byCursorPos = 0;
-	
-	clearLCD();
-	m_bufKeyboard[0] = '0';
-	m_bufKeyboard[1] = '0';
-	m_bufKeyboard[2] = '0';
-	m_bufKeyboard[3] = '0';
-	m_bufKeyboard[4] = '0';
+	for(uint16_t i = 0; i < 3; i++)
+		m_bufKeyboard[i] = '0';
+	m_byCursorPage	 = 0;
 }
-
+  
 static void PcontrlPara_KeyboardHandler(BYTE byKeyCode)
 {
 	if (byKeyCode == KEY_1)
@@ -1967,21 +2039,17 @@ static void PcontrlPara_KeyboardHandler(BYTE byKeyCode)
 		if (m_byCursorPos > 0)
 		{
 			m_byCursorPos--;
+			m_byCursorPage	 = m_byCursorPos/4;
 		}
 	}
 	else if (byKeyCode == KEY_2)
 	{
 		m_byCursorPos++;
-		if (m_byCursorPos > 4)
-			m_byCursorPage	 = 1;
-		if (m_byCursorPos > 9)
-			m_byCursorPage	 = 2;
-		if (m_byCursorPos > 14)
-			m_byCursorPage	 = 3;
+		m_byCursorPage	 = m_byCursorPos/4;
 	}
 	else if (byKeyCode == KEY_3)
 	{
-		if (m_byCursorPos < 20)
+		if (m_byCursorPos < 16)
 		{
 			m_bufKeyboard[m_byCursorPos]++;
 			if (m_bufKeyboard[m_byCursorPos] > '9')
@@ -1990,7 +2058,10 @@ static void PcontrlPara_KeyboardHandler(BYTE byKeyCode)
 		else
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-	   		//add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action
+	   		
+//			g_UnitCfg.dat.byLimD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
+//			g_UnitCfg.dat.byLimU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
+
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
 			m_mcbCurrent.byStartMenuItemID			= 0;
@@ -2000,63 +2071,47 @@ static void PcontrlPara_KeyboardHandler(BYTE byKeyCode)
 
 static void PcontrlPara_DisplayHandler()
 {
-	BYTE byNum[6];	
+	BYTE byNum[6];
+		
+	byNum[0] = '+';
+	byNum[1] = ':';
+	byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+	byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
+	byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
+	byNum[5] = m_bufKeyboard[4*m_byCursorPage];
+
 	if (m_byCursorPage == 0)
 	{
-		for(U16 i = 0; i < 5; i++)
-			byNum[5 - i] = m_bufKeyboard[i];
 		display_char("[[[[[[KP");
-		display_digital(byNum,0,m_byCursorPos + 1);
+		display_digital(byNum,2,m_byCursorPos - 4*m_byCursorPage + 1);
 	}
-	if (m_byCursorPage == 1)
+	else if (m_byCursorPage == 1)
 	{
-		for(U16 i = 0; i < 5; i++)
-			byNum[5 - i] = m_bufKeyboard[5 + i];
 		display_char("[[[[[[TN");
-		display_digital(byNum,0,m_byCursorPos - 4);
+		display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
 	}
-	if (m_byCursorPage == 2)
+	else if (m_byCursorPage == 2)
 	{
-		for(U16 i = 0; i < 5; i++)
-			byNum[5 - i] = m_bufKeyboard[10 + i];
 		display_char("[[[[[[TV");
-		display_digital(byNum,0,m_byCursorPos - 9);
+		display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
 	}
-	if (m_byCursorPage == 3)
+	else if (m_byCursorPage == 3)
 	{
-		for(U16 i = 0; i < 5; i++)
-			byNum[5 - i] = m_bufKeyboard[15 + i];
 		display_char("[[[[[[XO");
-		display_digital(byNum,0,m_byCursorPos - 14);
+		display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
+	}
+	else
+	{
+		display_char("[[[[DONE");
+		display_digital("::::::",0,0);
 	}
 }
 
 static void PcontrlPara_OpeningHandler()
 {
 	m_byCursorPos = 0;
-	
-	clearLCD();
-	m_bufKeyboard[0] = '0';
-	m_bufKeyboard[1] = '0';
-	m_bufKeyboard[2] = '0';
-	m_bufKeyboard[3] = '0';
-	m_bufKeyboard[4] = '0';
-	m_bufKeyboard[5] = '0';
-	m_bufKeyboard[6] = '0';
-	m_bufKeyboard[7] = '0';
-	m_bufKeyboard[8] = '0';
-	m_bufKeyboard[9] = '0';
-	m_bufKeyboard[10] = '0';
-	m_bufKeyboard[11] = '0';
-	m_bufKeyboard[12] = '0';
-	m_bufKeyboard[13] = '0';
-	m_bufKeyboard[14] = '0';
-	m_bufKeyboard[15] = '0';
-	m_bufKeyboard[16] = '0';
-	m_bufKeyboard[17] = '0';
-	m_bufKeyboard[18] = '0';
-	m_bufKeyboard[19] = '0';
-	m_bufKeyboard[20]= '0';
+	for(uint16_t i = 0; i < 16; i++)
+		m_bufKeyboard[i] = '0';
 	m_byCursorPage	 = 0;
 }
 
@@ -2075,7 +2130,7 @@ static void PcontrlFilt_KeyboardHandler(BYTE byKeyCode)
 	}
 	else if (byKeyCode == KEY_3)
 	{
-		if (m_byCursorPos < 5)
+		if (m_byCursorPos < 1)
 		{
 			m_bufKeyboard[m_byCursorPos]++;
 			if (m_bufKeyboard[m_byCursorPos] > '9')
@@ -2084,7 +2139,9 @@ static void PcontrlFilt_KeyboardHandler(BYTE byKeyCode)
 		else
 		{
 			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-	   		//add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action
+	   		
+			g_UnitCfg.dat.byFilt = m_bufKeyboard[0] - 48;
+
 			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
 			m_mcbCurrent.pMenu 						= pMenuItem;
 			m_mcbCurrent.byStartMenuItemID			= 0;
@@ -2096,22 +2153,28 @@ static void PcontrlFilt_DisplayHandler()
 {
 	BYTE byNum[6];
 		
-	for(U16 i = 0; i < 5; i++)
-		byNum[5 - i] = m_bufKeyboard[i];
-	display_char("[[[[FILT");
-	display_digital(byNum,0,m_byCursorPos + 1);	
+	byNum[0] = '+';
+	byNum[1] = ':';
+	byNum[2] = ':';
+	byNum[3] = ':';
+	byNum[4] = ':';
+	byNum[5] = m_bufKeyboard[0];
+	if (m_byCursorPos < 1)
+	{
+		display_digital(byNum,0,1);
+		display_char("[[[[FILT");
+	}
+	else
+	{
+		display_digital("::::::",0,0);
+		display_char("[[[[DONE");
+	} 		
 }
 
 static void PcontrlFilt_OpeningHandler()
 {
 	m_byCursorPos = 0;
-	
-	clearLCD();
 	m_bufKeyboard[0] = '0';
-	m_bufKeyboard[1] = '0';
-	m_bufKeyboard[2] = '0';
-	m_bufKeyboard[3] = '0';
-	m_bufKeyboard[4] = '0';
 }
 
 static void PcontrlKv_KeyboardHandler(BYTE byKeyCode)
@@ -3348,9 +3411,9 @@ void HMI_Init()
 	m_aMenuItems[MENU_XTUNE_POS].byChildMenuItems			= 5;
 	m_aMenuItems[MENU_XTUNE_POS].pChildMenu					= NULL;
 	m_aMenuItems[MENU_XTUNE_POS].pParentMenu				= &m_aMenuItems[MENU_XSET_XTUNE];
-	m_aMenuItems[MENU_XTUNE_POS].KeyboardHandler			= XtunePos_KeyboardHandler;
-	m_aMenuItems[MENU_XTUNE_POS].DisplayHandler				= XtunePos_DisplayHandler;
-	m_aMenuItems[MENU_XTUNE_POS].OnOpeningHandler			= XtunePos_OpeningHandler;
+	m_aMenuItems[MENU_XTUNE_POS].KeyboardHandler			= CaluserPos_KeyboardHandler;
+	m_aMenuItems[MENU_XTUNE_POS].DisplayHandler				= CaluserPos_DisplayHandler;
+	m_aMenuItems[MENU_XTUNE_POS].OnOpeningHandler			= CaluserPos_OpeningHandler;
 
 	m_aMenuItems[MENU_XTUNE_PWM].byMenuItemID				= MENU_XTUNE_PWM;
 	m_aMenuItems[MENU_XTUNE_PWM].byChildMenuItems			= 5;

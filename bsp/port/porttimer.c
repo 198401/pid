@@ -2,13 +2,13 @@
 
  Author        : Yu
 
- Date          : 2011.5
+ Date          : 
 
- File          : 
+ File          : porttimer
                                       
  Hardware      : ADuC7024
 
- Description   : 
+ Description   : porttimer
 *************************************************************************************************/
 #include <ADuC7024.H>
 #include "port.h"

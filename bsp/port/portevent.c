@@ -2,13 +2,13 @@
 
  Author        : Yu
 
- Date          : 2011.5
+ Date          : 
 
- File          : 
+ File          : portevent
                                       
- Hardware      : ADuC7024
+ Hardware      : ADuC702x
 
- Description   : 
+ Description   : portevent
 *************************************************************************************************/
 #include "mb.h"
 #include "mbport.h"

@@ -2,13 +2,13 @@
 
  Author        : Yu
 
- Date          : 2011.5
+ Date          : 
 
- File          : 
+ File          : iap
                                       
- Hardware      : ADuC7024
+ Hardware      : ADuC702x
 
- Description   : 
+ Description   : iap
 *************************************************************************************************/
 
 #include <ADuC7024.H>
@@ -20,7 +20,6 @@
 extern UNIT_CFG        g_UnitCfg;
 #define CFG_NREGS      (sizeof(g_UnitCfg)/sizeof(short))
 
-static void erase_page(unsigned short paddrs);
 void Init_FEE(void)
 {
 	FEEMOD = 0x8;				// bit 3 should be set to allow erase/write command	
@@ -36,15 +35,6 @@ static void EepromWr( unsigned short addr, unsigned short  data)
 	while (!(status)) status = FEESTA&0x03;
 }
 
-void  EepromWr_n( unsigned short *pcData )
-{
-	erase_page((unsigned short)USER_ADD_START);
-	for(unsigned short i = 0; i < CFG_NREGS; i ++)
-	{
-		EepromWr((unsigned short)USER_ADD_START + 2 * i, pcData[i]);
-	}
-}
-
 static void erase_page(unsigned short addr)
 {
 	static unsigned int status;
@@ -52,4 +42,13 @@ static void erase_page(unsigned short addr)
 	FEECON = ERASE_PAGE;				// erase page command
 	status = FEESTA&0x03;
 	while (!(status)) status = FEESTA&0x03;
+}
+
+void  EepromWr_n( unsigned short *pcData )
+{
+	erase_page((unsigned short)USER_ADD_START);
+	for(unsigned short i = 0; i < CFG_NREGS; i ++)
+	{
+		EepromWr((unsigned short)USER_ADD_START + 2 * i, pcData[i]);
+	}
 }

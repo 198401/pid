@@ -1,10 +1,10 @@
 
 /********************************************************
- Author        : 
+ Author        : Yu
 
  Date          : 
 
- File          : lcd
+ File          : ht1622
 
  Hardware      : ADuC702X
 
@@ -20,7 +20,6 @@
 typedef unsigned char           BYTE;       /* Prefix: by	*/
 typedef unsigned int	        WORD;       /* Prefix: w	*/
 
-/********************LCD_HT1622端口定义***********************/
 //di ---p1.3
 #define setDI_1622   	GP1DAT |= 0x08080000
 #define clrDI_1622   	GP1DAT &= ~0x00080000 
@@ -31,29 +30,13 @@ typedef unsigned int	        WORD;       /* Prefix: w	*/
 #define setCS_1622  	GP4DAT |= 0x04040000  
 #define clrCS_1622   	GP4DAT &= ~0x00040000 
 
-/********************LCD_HT1622模式定义***********************/
-#define LCD_1622_BIAS		0X52 //LCD 1/3 偏置选择 4背级
-#define LCD_1622_SYSEN 		0X02 //打开系统振荡器
-#define LCD_1622_LCDON 		0X06 //打开LCD偏置发生器
-#define LCD_1622_SYSDIS 	0X00 //关闭系统振荡器和LCD偏置发生器
-#define LCD_1622_LCDOFF		0X04 //关闭LCD偏置发生器
-#define LCD_1622_CLRWDT 	0X1c //清零 WDT
-#define LCD_1622_TIMERDIS	0X08 //禁止时基输出
-
-//const unsigned char LED7Addr[]={
-//	0x0C4,		// 0 LSB
-//	0x0CC,		// 0 MSB
-//	0x004,		// 1 LSB
-//	0x0BC,		// 1 MSB
-//	0x014,		// 2 LSB
-//	0x00C,		// 2 MSB
-//	0x024,		// 3 LSB
-//	0x01C,		// 3 MSB
-//	0x034,		// 4 LSB
-//	0x02C,		// 4 MSB
-//	0x044,		// 5 LSB
-//	0x03C,		// 5 MSB
-//};
+#define LCD_1622_BIAS		0X52
+#define LCD_1622_SYSEN 		0X02 
+#define LCD_1622_LCDON 		0X06
+#define LCD_1622_SYSDIS 	0X00 
+#define LCD_1622_LCDOFF		0X04 
+#define LCD_1622_CLRWDT 	0X1c 
+#define LCD_1622_TIMERDIS	0X08 
 
 const unsigned char LED7Code[]={
 	0x0F0,		// 0 LSB
@@ -76,18 +59,6 @@ const unsigned char LED7Code[]={
 	0x070,		// 8 MSB
 	0x0F0,		// 9 LSB
 	0x030,		// 9 MSB
-//	0x070,		// A LSB
-//	0x070,		// A MSB
-//	0x0C0,		// B LSB
-//	0x070,		// B MSB
-//	0x090,		// C LSB
-//	0x050,		// C MSB
-//	0x0E0,		// D LSB
-//	0x060,		// D MSB
-//	0x090,		// E LSB
-//	0x070,		// E MSB
-//	0x010,		// F LSB
-//	0x070,		// F MSB
 	0x000,
 	0x000
 };
@@ -244,59 +215,52 @@ const unsigned char LED16Num[]={
 	0x090,		// 9 ...
 	0x0D0,		// 9 ...
 	0x030,		// 9 MSB
-//	0x010,		// A LSB
-//	0x010,		// A ...
-//	0x0D0,		// A ...
-//	0x0B0,		// A MSB
-//	0x080,		// B LSB
-//	0x080,		// B ...
-//	0x0C0,		// B ...
-//	0x0B0,		// B MSB
-//	0x090,		// C LSB
-//	0x090,		// C ...
-//	0x000,		// C ...
-//	0x090,		// C MSB
-//	0x0D0,		// D LSB
-//	0x0B0,		// D ...
-//	0x090,		// D ...
-//	0x000,		// D MSB
-//	0x090,		// E LSB
-//	0x090,		// E ...
-//	0x040,		// E ...
-//	0x0B0,		// E MSB
-//	0x010,		// F LSB
-//	0x010,		// F ...
-//	0x040,		// F ...
-//	0x0B0,		// F MSB
-//	0x000,
-//	0x000,
-//	0x000,
-//	0x000
 };
 
+static void SendBit_HT1622(BYTE op_data,BYTE num)
+{
+    BYTE temp1;
+    for (temp1=0;temp1<num;temp1++)
+    {
+        if ((op_data&0X80)== 0 )
+            clrDI_1622 ;
+        else
+        {
+            setDI_1622;
+        }   
+        setSK_1622;
+        setSK_1622;
+        setSK_1622;
+        setSK_1622;
+        clrSK_1622;     
+        op_data=op_data<<1;
+    }
+}
 
-static void SENDCOMB(BYTE address);
-static BYTE LCDWRITE_1622(const unsigned char data,BYTE Addr);
-static void SENDCOMA(BYTE command);
-static void SendBit_HT1622(BYTE op_data,BYTE num);
-static void Delay(int a);
-static void Reset_1622(void);
-static void Delay50ms(void);
+static void Reset_1622(void)
+{ 
+    setCS_1622;       
+    setSK_1622;       
+    setDI_1622;
+    clrCS_1622;   
+    clrCS_1622;          
+    clrSK_1622;
+    clrSK_1622;   
+}
 
 static void SENDCOMB(BYTE address)
 {
     Reset_1622();
-//    Delay(1);           /*delay 10us*/
-    SendBit_HT1622(0xA0,3);   /*ID=101 0*/
+    SendBit_HT1622(0xA0,3);   
     address=address;
-    SendBit_HT1622(address,6); /* send address*/
+    SendBit_HT1622(address,6);
 }
 
 static BYTE LCDWRITE_1622(const unsigned char data,BYTE Addr)
 {
-    SENDCOMB(Addr);//发送数据模式指令101，发送地址
+    SENDCOMB(Addr);
     SendBit_HT1622(data, 4);
-    setCS_1622;//CS_1622=1
+    setCS_1622;
     return(1);
 }
 
@@ -594,15 +558,16 @@ void digital(BYTE * data, BYTE dotp)
     } 
 }
 
+static BYTE byShine;
+
 void display_digital(BYTE * data,BYTE dotp,BYTE shine)
 {
-    if ((shine >0)&&(shine <6))
-    {
-        for(unsigned short i =0; i < 8; i++)
-		{
-			digital(data,dotp);
-	        Delay50ms();      
-		   	switch (shine)
+		digital(data,dotp);
+		byShine++;
+		if(byShine > 2)
+		{	
+			byShine = 0;
+			switch (shine)
 		    {
 			case 5:
 				LCDWRITE_1622(0,0x04);
@@ -626,91 +591,42 @@ void display_digital(BYTE * data,BYTE dotp,BYTE shine)
 				break;
 		    default:
 				break;
-		    } 
-	        Delay50ms();
-			Delay50ms();  
-			digital(data,dotp);
-		}
-    }
-    else   
-		digital(data,dotp);
+			}
+		} 
 }
 
 void clearLCD(void)
 {	 
     unsigned short i;
 
-	SENDCOMB(0);//发送数据模式指令101，发送地址
+	SENDCOMB(0);
     for(i = 0; i < 256; i++)
 		SendBit_HT1622(0, 8);
-    setCS_1622;//CS_1622=1
+    setCS_1622;
 }
 
 static void SENDCOMA(BYTE command)
 {
     Reset_1622();
-    SendBit_HT1622(0x80,4);         /*ID=100 0*/
-    SendBit_HT1622(command,8);  /* send command*/
+    SendBit_HT1622(0x80,4);     
+    SendBit_HT1622(command,8); 
 }
 
 void SENDCOMC(BYTE command)
 {
     Reset_1622();
-    SendBit_HT1622(0x90,4);         /*ID=100 1*/
-    SendBit_HT1622(command,8);  /* send command*/
+    SendBit_HT1622(0x90,4);        
+    SendBit_HT1622(command,8); 
 }
 
 void initLCD_1622(void)
 {
     Reset_1622();
-//    Delay(10);
-    SENDCOMA(LCD_1622_BIAS);    //背光灯
-    SENDCOMA(LCD_1622_SYSEN);   //开系统震荡
-    SENDCOMA(LCD_1622_LCDON);   //开LCD偏置
-    SENDCOMA(LCD_1622_TIMERDIS); //禁止时基输出
+    SENDCOMA(LCD_1622_BIAS);   
+    SENDCOMA(LCD_1622_SYSEN);   
+    SENDCOMA(LCD_1622_LCDON);   
+    SENDCOMA(LCD_1622_TIMERDIS); 
 
-}
-
-static void SendBit_HT1622(BYTE op_data,BYTE num)
-{
-    BYTE temp1;
-    for (temp1=0;temp1<num;temp1++)
-    {
-        if ((op_data&0X80)== 00 )
-            clrDI_1622 ;
-        else
-        {
-            setDI_1622;
-        }   
-        setSK_1622;
-        setSK_1622;
-        setSK_1622;
-        setSK_1622;//SK_1622=1; SK_1622=1; SK_1622=1; SK_1622=1;
-        Delay(100);
-        clrSK_1622;       //SK_1622=0;
-        op_data=op_data<<1;
-    }
-}
-
-static void Delay(int a)
-{
-    int m;
-    for (m=0;m<a;m++)
-    {
-        ;
-    }
-}
-
-static void Reset_1622(void)
-{ 
-    setCS_1622;//CS_1622=1;        
-    setSK_1622;//SK_1622=1;       
-    setDI_1622;//DI_1622=1; 
-    Delay(200);    
-    clrCS_1622;//CS_1622=0;    
-    clrCS_1622;//CS_1622=0;          
-    clrSK_1622;//SK_1622=0; 
-    clrSK_1622;//SK_1622=0;    
 }
 
 void floattochar(const float fdata,BYTE disbuf[6],BYTE dotp)
@@ -719,7 +635,7 @@ void floattochar(const float fdata,BYTE disbuf[6],BYTE dotp)
     float temp_float;
     if (fdata <0)
     {
-        temp_float = fdata *(-1.0);
+        temp_float = fdata *(-1.0f);
         disbuf[0]='-';             
     }
     else
@@ -727,15 +643,15 @@ void floattochar(const float fdata,BYTE disbuf[6],BYTE dotp)
         disbuf[0]='+';
         temp_float = fdata ;
     }           
-    temp_float = temp_float +0.00001;
+    temp_float = temp_float +0.00001f;
     if (dotp == 4)
-        temp_float = temp_float*10000.0;
+        temp_float = temp_float*10000.0f;
     if (dotp == 3)
-        temp_float = temp_float*1000.0;
+        temp_float = temp_float*1000.0f;
     if (dotp == 2)
-        temp_float = temp_float*100.0;
+        temp_float = temp_float*100.0f;
     if (dotp == 1)
-        temp_float = temp_float*10.0;
+        temp_float = temp_float*10.0f;
     if (temp_float>99999)
         temp_int = 99999;
     else
@@ -747,12 +663,3 @@ void floattochar(const float fdata,BYTE disbuf[6],BYTE dotp)
     disbuf[4]= temp_int%100/10 + '0';
     disbuf[5]= temp_int%10 + '0';
 }
-
-static void Delay50ms(void)
-{
-    for (int i=0; i < 6600; i++)
-    {
-        ;
-    }
-}
-
