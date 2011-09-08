@@ -3,6 +3,9 @@
 
 #include "port.h"
 
+#define  MAX( x, y ) ( ((x) > (y)) ? (x) : (y) ) 
+#define  MIN( x, y ) ( ((x) < (y)) ? (x) : (y) ) 
+
 typedef union _UNIT_DATA
 {
     __packed struct  _UNIT_DATA_
@@ -33,15 +36,22 @@ typedef union _UNIT_CFG
 {
     __packed struct _UNIT_CFG_
     {
-		float   	fPress1_Lic[2];
-		float   	fPress1_cLic[2];
-		float   	fPress2_Lic[2];
-		float   	fPress2_cLic[2];
-		float   	fTemp_Lic[2];
-		float   	fTemp_vLic[2];
-		float   	fTemp_cLic[2];
-		
 		uint32_t 	uBau;
+		
+	    //! Summation of errors, used for integrate calculations
+	    int32_t sumError;
+		//! Maximum allowed sumerror, avoid overflow
+	    int32_t maxSumError;
+	    //! The Proportional tuning constant, multiplied with SCALING_FACTOR
+	    int16_t P_Factor;		// P_Factor*128
+	    //! The Integral tuning constant, multiplied with SCALING_FACTOR
+	    int16_t I_Factor;		// P_Factor*128*0.05/Ti
+	    //! The Derivative tuning constant, multiplied with SCALING_FACTOR
+	    int16_t D_Factor;		// P_Factor*Td*128
+		//! Last process value, used to find derivative of process value.
+	    int16_t lastProcessValue;
+	    //! Maximum allowed error, avoid overflow
+	    int16_t maxError;  	    
 
 		uint16_t   	iAd4Max;
 		uint16_t   	iAd4Min;
@@ -51,6 +61,14 @@ typedef union _UNIT_CFG
 		uint16_t   	iAd5V0;
 		uint16_t   	iAd5V5;
 		uint16_t   	iAd5V10;
+		uint16_t   	iAd6Ma4;
+		uint16_t   	iAd6Ma20;
+		uint16_t   	iAd7Ma4;
+		uint16_t   	iAd7Ma20;
+		uint16_t   	iAd8Ma4;
+		uint16_t   	iAd8Ma20;
+		uint16_t   	iAd8R100;
+		uint16_t   	iAd8R200;
 		uint16_t   	iCode;
 
         uint8_t   	byMbAddr;
@@ -59,6 +77,12 @@ typedef union _UNIT_CFG
 		int8_t		byLimU;
 		int8_t		bySrD;
 		int8_t		bySrU;
+		int8_t		byP1D;
+		int8_t		byP1U;
+		int8_t		byP2D;
+		int8_t		byP2U;
+		int8_t		byTempD;
+		int8_t		byTempU;
 		int8_t		byCutoffMin;
 		int8_t		byCutoffMax;
 		int8_t		byXtimeClose;
@@ -76,8 +100,7 @@ typedef union _UNIT_CFG
 		int8_t		byFilt;	   
 		int8_t		byCha[21];
 		
-		uint8_t   	byMode;	   //0 positioner 1 processer other positioner
-		uint8_t   	byTemp;	   //0 pt100 1 voltage 2 current other pt100
+		uint8_t   	byMode;	   //0 positioner 1 freq processer 2 pt100 processer 3 flow rate processer 2 inp processer other positioner
 		uint8_t   	byInp;	   //0 4-20ma 1 0-20ma 2 0-5V 3 0-10V other pt100
 		uint8_t   	byErr;	   //0 none 1 pos safe pos 2 pos zero other none
 
@@ -85,8 +108,7 @@ typedef union _UNIT_CFG
 		mbBOOL		bIsActInverse;
 		mbBOOL		bIsCmdInverse;
 		mbBOOL  	bIsChaFree;
-		mbBOOL  	bIsP1Voltage;
-		mbBOOL  	bIsP2Voltage;
+		mbBOOL  	bIsPt100;
 		mbBOOL  	bIsReboot;
 		mbBOOL  	bZZZZ;    
     } dat;
@@ -125,7 +147,6 @@ typedef union _UN_W_B_
         uint8_t  byLo;
     } S_B;
 } UN_W_B;
-
 
 typedef struct _MENU_ITEM
 {

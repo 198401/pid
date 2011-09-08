@@ -21,4 +21,5 @@ main.o: ..\modbus\include\mbport.h
 main.o: ..\modbus\include\mbproto.h
 main.o: ..\src\Hmi.h
 main.o: ..\src\ds18b20.h
+main.o: ..\src\pid.h
 main.o: ..\src\AppTypes.h

@@ -652,14 +652,18 @@ void floattochar(const float fdata,BYTE disbuf[6],BYTE dotp)
         temp_float = temp_float*100.0f;
     if (dotp == 1)
         temp_float = temp_float*10.0f;
-    if (temp_float>99999)
+    
+    temp_int = temp_float;
+
+	if(temp_float - temp_int >= 0.5f )
+		temp_int += 1;
+
+	if (temp_float > 99999)
         temp_int = 99999;
-    else
-        temp_int = temp_float;
 
     disbuf[1]= temp_int/10000 + '0';
     disbuf[2]= temp_int/1000%10 + '0';
     disbuf[3]= temp_int%1000/100 + '0';
-    disbuf[4]= temp_int%100/10 + '0';
-    disbuf[5]= temp_int%10 + '0';
+    disbuf[4]= temp_int%100/10 + '0';     	
+	disbuf[5]= temp_int%10 + '0';
 }

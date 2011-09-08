@@ -1369,6 +1369,9 @@ static void XcontrolPara_OpeningHandler()
 
 #define   ABS(x)   ((x)> 0?(x):-(x)) 
 
+static uint16_t temp1 = 0;
+static uint16_t temp2 = 100;
+
 extern void SetPwmDutyCycle2(int32_t uiDutyCycle);
 
 static void XtuneAuto_OpeningHandler()
@@ -1379,7 +1382,6 @@ static void XtuneAuto_OpeningHandler()
 	static float fDiff	= 100;
 	static float fPos	= 0;
 	static float fLast	= 0;
-	uint16_t temp1,temp2;	
 
 	SetPwmDutyCycle2(-0x900);
 
@@ -1832,9 +1834,6 @@ static void CodeGlob_OpeningHandler()
 
 static void CaluserPos_KeyboardHandler(BYTE byKeyCode)
 {
-	uint16_t temp1 = 0;
-	uint16_t temp2 = 100;	
-
 	if (byKeyCode == KEY_1)
 	{
 		SetPwmDutyCycle2(-0x900);
@@ -1900,9 +1899,6 @@ static void CaluserPos_OpeningHandler()
 
 static void CaluserInp_KeyboardHandler(BYTE byKeyCode)
 {
-	uint16_t temp1 = 0;
-	uint16_t temp2 = 100;	
-
 	if (byKeyCode == KEY_1)
 	{
 		SetPwmDutyCycle2(-0x900);

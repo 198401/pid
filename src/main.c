@@ -19,11 +19,9 @@
 #include "mbport.h"
 #include "Hmi.h"
 #include "ds18b20.h"
+#include "pid.h"
 
 #include "AppTypes.h"
-
-#define  MAX( x, y ) ( ((x) > (y)) ? (x) : (y) ) 
-#define  MIN( x, y ) ( ((x) < (y)) ? (x) : (y) ) 
 
 UNIT_DATA                       g_UnitData;
 UNIT_BUF                        g_UnitBuf;
@@ -37,7 +35,7 @@ const unsigned short            g_UnitCfgInFlash[256]    __at (EEPADDR);
 #define REG_HOLDING_START           0x0001
 #define REG_HOLDING_NREGS           sizeof(g_UnitCfg)/sizeof(short)
 
-OS_TID t_feeddog;                       /* assigned task id of task: feeddog */
+//OS_TID t_feeddog;                       /* assigned task id of task: feeddog */
 OS_TID t_pid;                           /* assigned task id of task: pid     */
 OS_TID t_modbus;                        /* assigned task id of task: modbus  */
 OS_TID t_adc;                           /* assigned task id of task: adc     */
@@ -48,14 +46,14 @@ void lpReset(void)
 	RSTSTA	|= 0x04;
 }
 
-__task void feeddog(void)
-{
-    while (1)
-    {
-        T3CLRI = 0x55;
-        os_dly_wait(5);
-    }
-}
+//__task void feeddog(void)
+//{
+//    while (1)
+//    {
+//        T3CLRI = 0x55;
+//        os_dly_wait(5);
+//    }
+//}
 
 #define PWM_DAT0VALUE           0x1000  /* set PWM freq to 5.5KHz */
 
@@ -133,66 +131,199 @@ void SetPwmDutyCycle2(S32 uiDutyCycle)
 
 volatile struct Controller_struct
 {
-	// controls coefficients
-	S32 Kp;				// proportional gain
-	S32 Ki;				// integral gain
-	S32 Kd;				// derivative gain
-	// state variables
-	S32 error;			// error (input-feedback)
-	S32 error_last;		// previous error
-	S32 error_integ;	// integral of error
-	S32 error_diff;		// derivative of error
-	// limits
-	S32 windupMax;		// integral wind-up limit
-	S32 outputMax;		// output clamp (limit)
 	// input and output
-	S32 output;			// output
-	S32 input;			// user input
-	S32 feedback;		// feedback
+	S16 output;			// output
+	S16 input;			// user input
+	S16 feedback;		// feedback
 	// counters
-	U32 counts;
-	// mode
-	U8 mode;			// control mode
+	U16 counts;
 } Controller;
 
-//volatile S32 EncoderLastPos=0;
+void posHandle(void)
+{
+	if(!g_UnitCfg.dat.bIsActInverse)
+	{
+		if(g_UnitCfg.dat.iAd4Max != g_UnitCfg.dat.iAd4Min)
+			g_UnitData.dat.fPos	  = 10.0f*g_UnitCfg.dat.byLimD 
+								  + 10.0f*(g_UnitCfg.dat.byLimU - g_UnitCfg.dat.byLimD)*(g_UnitData.dat.iAD4 - g_UnitCfg.dat.iAd4Min)/(g_UnitCfg.dat.iAd4Max - g_UnitCfg.dat.iAd4Min);
+	}
+	else
+	{
+		if(g_UnitCfg.dat.iAd4Max != g_UnitCfg.dat.iAd4Min)
+			g_UnitData.dat.fPos	  = 10.0f*g_UnitCfg.dat.byLimU 
+								  + 10.0f*(g_UnitCfg.dat.byLimD - g_UnitCfg.dat.byLimU)*(g_UnitData.dat.iAD4 - g_UnitCfg.dat.iAd4Min)/(g_UnitCfg.dat.iAd4Max - g_UnitCfg.dat.iAd4Min);
+	}
+}
+
+void p1Handle(void)
+{
+	if(g_UnitCfg.dat.iAd6Ma20 != g_UnitCfg.dat.iAd6Ma4)
+		g_UnitData.dat.fPress1	  = 10.0f*g_UnitCfg.dat.byP1D 
+							      + 10.0f*(g_UnitCfg.dat.byP1U - g_UnitCfg.dat.byP1D)*(g_UnitData.dat.iAD6 - g_UnitCfg.dat.iAd6Ma4)/(g_UnitCfg.dat.iAd6Ma20 - g_UnitCfg.dat.iAd6Ma4);
+}
+
+void p2Handle(void)
+{
+	if(g_UnitCfg.dat.iAd7Ma20 != g_UnitCfg.dat.iAd7Ma4)
+		g_UnitData.dat.fPress2	  = 10.0f*g_UnitCfg.dat.byP2D 
+							  	  + 10.0f*(g_UnitCfg.dat.byP2U - g_UnitCfg.dat.byP2D)*(g_UnitData.dat.iAD7 - g_UnitCfg.dat.iAd7Ma4)/(g_UnitCfg.dat.iAd7Ma20 - g_UnitCfg.dat.iAd7Ma4);
+}
+
+void tempHandle(void)
+{
+	if(g_UnitCfg.dat.byMode != 2)
+	{
+		if(g_UnitCfg.dat.iAd8Ma20 != g_UnitCfg.dat.iAd8Ma4)
+		g_UnitData.dat.fTemp  	  = 10.0f*g_UnitCfg.dat.byTempD 
+							      + 10.0f*(g_UnitCfg.dat.byTempU - g_UnitCfg.dat.byTempD)*(g_UnitData.dat.iAD8 - g_UnitCfg.dat.iAd8Ma4)/(g_UnitCfg.dat.iAd8Ma20 - g_UnitCfg.dat.iAd8Ma4);
+	}
+	else
+	{
+		if(g_UnitCfg.dat.iAd8R200 != g_UnitCfg.dat.iAd8R100)
+		g_UnitData.dat.fTemp      = 10.0f*g_UnitCfg.dat.byTempD 
+							      + 10.0f*(g_UnitCfg.dat.byTempU - g_UnitCfg.dat.byTempD)*(g_UnitData.dat.iAD8 - g_UnitCfg.dat.iAd8R100)/(g_UnitCfg.dat.iAd8R200 - g_UnitCfg.dat.iAd8R100);
+		g_UnitData.dat.fTemp  	  = ((float) -3.90802e-1+  sqrt((float)0.152726203204 - (float)4*((float)-5.80195e-5)*((float)100-g_UnitData.dat.fTemp)))/((float)-1.16039e-4);
+	}
+}
+
+void cmdHandle(float xd)
+{
+	if(g_UnitCfg.dat.byInp == 1)
+	{	
+		if(!g_UnitCfg.dat.bIsCmdInverse)
+		{
+			if(g_UnitCfg.dat.iAd5Ma0 != g_UnitCfg.dat.iAd5Ma20)
+				g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrD + xd 
+									  + 10.0f*(g_UnitCfg.dat.bySrU - g_UnitCfg.dat.bySrD)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5Ma0)/(g_UnitCfg.dat.iAd5Ma20 - g_UnitCfg.dat.iAd5Ma0);
+		}
+		else
+		{
+			if(g_UnitCfg.dat.iAd5Ma0 != g_UnitCfg.dat.iAd5Ma20)
+				g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrU - xd 
+									  + 10.0f*(g_UnitCfg.dat.bySrD - g_UnitCfg.dat.bySrU)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5Ma0)/(g_UnitCfg.dat.iAd5Ma20 - g_UnitCfg.dat.iAd5Ma0);
+		}
+	} 
+	else if(g_UnitCfg.dat.byInp == 2)
+	{	
+		if(!g_UnitCfg.dat.bIsCmdInverse)
+		{
+			if(g_UnitCfg.dat.iAd5V0 != g_UnitCfg.dat.iAd5V5)
+				g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrD + xd 
+									  + 10.0f*(g_UnitCfg.dat.bySrU - g_UnitCfg.dat.bySrD)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5V0)/(g_UnitCfg.dat.iAd5V5 - g_UnitCfg.dat.iAd5V0);
+		}
+		else
+		{
+			if(g_UnitCfg.dat.iAd5V0 != g_UnitCfg.dat.iAd5V5)
+				g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrU - xd 
+									  + 10.0f*(g_UnitCfg.dat.bySrD - g_UnitCfg.dat.bySrU)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5V0)/(g_UnitCfg.dat.iAd5V5 - g_UnitCfg.dat.iAd5V0);
+		}
+	}
+	else if(g_UnitCfg.dat.byInp == 3)
+	{	
+		if(!g_UnitCfg.dat.bIsCmdInverse)
+		{
+			if(g_UnitCfg.dat.iAd5V0 != g_UnitCfg.dat.iAd5V10)
+				g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrD + xd 
+									  + 10.0f*(g_UnitCfg.dat.bySrU - g_UnitCfg.dat.bySrD)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5V0)/(g_UnitCfg.dat.iAd5V10 - g_UnitCfg.dat.iAd5V0);
+		}
+		else
+		{
+			if(g_UnitCfg.dat.iAd5V0 != g_UnitCfg.dat.iAd5V10)
+				g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrU - xd 
+									  + 10.0f*(g_UnitCfg.dat.bySrD - g_UnitCfg.dat.bySrU)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5V0)/(g_UnitCfg.dat.iAd5V10 - g_UnitCfg.dat.iAd5V0);
+		}
+	}
+	else
+	{	
+		if(!g_UnitCfg.dat.bIsCmdInverse)
+		{
+			if(g_UnitCfg.dat.iAd5Ma4 != g_UnitCfg.dat.iAd5Ma20)
+				g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrD + xd 
+									  + 10.0f*(g_UnitCfg.dat.bySrU - g_UnitCfg.dat.bySrD)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5Ma4)/(g_UnitCfg.dat.iAd5Ma20 - g_UnitCfg.dat.iAd5Ma4);
+		}
+		else
+		{
+			if(g_UnitCfg.dat.iAd5Ma4 != g_UnitCfg.dat.iAd5Ma20)
+				g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrU - xd 
+									  + 10.0f*(g_UnitCfg.dat.bySrD - g_UnitCfg.dat.bySrU)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5Ma4)/(g_UnitCfg.dat.iAd5Ma20 - g_UnitCfg.dat.iAd5Ma4);
+		}
+	}	
+
+	if(!g_UnitCfg.dat.bIsChaFree)
+	{	
+		if(g_UnitCfg.dat.byN > 0)
+		{
+			if(g_UnitCfg.dat.byN*g_UnitData.dat.fInp/1000.0f > 1)
+				g_UnitData.dat.fCmd	= 1000.0f*log(g_UnitCfg.dat.byN*g_UnitData.dat.fInp/1000.0f)/log(g_UnitCfg.dat.byN);
+			else
+				g_UnitData.dat.fCmd	= 0;
+		}
+		else if(g_UnitCfg.dat.byN == 0)
+		{
+			g_UnitData.dat.fCmd	= g_UnitData.dat.fInp;
+		}
+		else
+		{
+			if((-1.0f/g_UnitCfg.dat.byN*g_UnitData.dat.fInp/1000.0f < 1)&&(-1.0f/g_UnitCfg.dat.byN*g_UnitData.dat.fInp/1000.0f > 0))
+				g_UnitData.dat.fCmd	= 1000.0f*log(-1.0f/g_UnitCfg.dat.byN*g_UnitData.dat.fInp/1000.0f)/log(-1.0f/g_UnitCfg.dat.byN);
+			else
+				g_UnitData.dat.fCmd	= 0;
+		}
+	}
+	else
+	{
+		 static U8	i;
+		 i	= (U8)(g_UnitData.dat.fInp/50);
+		 if(i > 19)
+		 	i	= 19;
+		 g_UnitData.dat.fCmd	= g_UnitCfg.dat.byCha[i]*10
+		 						+ (g_UnitCfg.dat.byCha[i + 1] - g_UnitCfg.dat.byCha[i])/5.0f*(g_UnitData.dat.fInp - i*50);
+	}
+}
 
 __task void pid(void)
 {
-    while (1)
+	while (1)
     {
-		S32 EncoderCurrentPos;
-
 		os_evt_wait_or (0x0001, 0xffff);
 
-	
-		// get setpoint
-		// **** set by user via commands
-		Controller.input	= (S32)g_UnitData.dat.fPid;
-		
-		// get feedback
-		// velocity feedback
-		EncoderCurrentPos 	= (S32)g_UnitData.dat.fPos;
-		Controller.feedback = EncoderCurrentPos;//-EncoderLastPos;
-//		EncoderLastPos = EncoderCurrentPos;
-	
-		// calculate error
-		Controller.error = Controller.input-Controller.feedback;
-		// calculate integral error
-		Controller.error_integ += Controller.error;
-		// clamp integral error (anti-windup)
-		Controller.error_integ = MAX(Controller.error_integ, -Controller.windupMax);
-		Controller.error_integ = MIN(Controller.error_integ,  Controller.windupMax);
-		// calculate differential error
-		Controller.error_diff = Controller.error - Controller.error_last;
-		Controller.error_last = Controller.error;
-		// do PID
-		Controller.output =	 ((Controller.Kp*Controller.error)>>8)
-							+((Controller.Ki*Controller.error_integ)>>8)
-							+((Controller.Kd*Controller.error_diff)>>8);
+		posHandle( );		
+
+		switch (g_UnitCfg.dat.byMode)
+        {
+        case 0:
+			cmdHandle(0);
+            break;
+        case 1:
+			//freq
+            break;
+		case 2:
+			tempHandle( );
+            break;
+        case 3:
+			p1Handle( );
+			p2Handle( );
+			tempHandle( );
+            break;
+		case 4:
+			tempHandle( );
+            break;
+        default:
+
+            break;
+        } 		
+
+		Controller.input	= (S16)g_UnitData.dat.fPid;
+		Controller.feedback = (S16)g_UnitData.dat.fPos;
+
+		if(Controller.counts > 20)
+			pid_Reset_Integrator(&g_UnitCfg);
+
+		Controller.output = pid_Controller(Controller.input, Controller.feedback, &g_UnitCfg);
+
 		// output value
-		Controller.output = MAX(Controller.output, -Controller.outputMax);
-		Controller.output = MIN(Controller.output,  Controller.outputMax);
+//		Controller.output = MAX(Controller.output, -1000);
+//		Controller.output = MIN(Controller.output,  1000);
 		// clamp output value (anti-windup)
 		if(!g_UnitCfg.dat.bIsManual)
 		{
@@ -217,7 +348,8 @@ U32 GetADC(U8 adc_channel)
     U16 adc_value[33];      
     U32 adc_value_ave      = 0; 
 
-    ADCCP                    = adc_channel;                     /*  select ADC channel          */
+    T3CLRI = 0x55;
+	ADCCP                    = adc_channel;                     /*  select ADC channel          */
     ADCCON                  |= (1UL<<7);                        /*  start continuous conversion */
     for (U16 i=0;i<33;i++)
     {
@@ -240,7 +372,6 @@ __task void adc(void)
 {
     while (1)
     {									   
-        static float temp;
 		if((g_UnitCfg.dat.byInp == 2)||(g_UnitCfg.dat.byInp == 3))
 			GP0DAT |= 0x40400000;
 		else
@@ -250,157 +381,8 @@ __task void adc(void)
 		g_UnitData.dat.iAD5 	= GetADC(5);
 		g_UnitData.dat.iAD6 	= GetADC(6);
 		g_UnitData.dat.iAD7 	= GetADC(7);
-		g_UnitData.dat.iAD8 	= GetADC(8);		
-		     
-		temp					= DS18B20_Temperature();
-		if (temp >= -55.0f && temp <= 125.0f)
-			g_UnitData.dat.fTem		= temp;
+		g_UnitData.dat.iAD8 	= GetADC(8);
 
-		if(!g_UnitCfg.dat.bIsActInverse)
-		{
-			if(g_UnitCfg.dat.iAd4Max != g_UnitCfg.dat.iAd4Min)
-				g_UnitData.dat.fPos	  = 10.0f*g_UnitCfg.dat.byLimD 
-									  + 10.0f*(g_UnitCfg.dat.byLimU - g_UnitCfg.dat.byLimD)*(g_UnitData.dat.iAD4 - g_UnitCfg.dat.iAd4Min)/(g_UnitCfg.dat.iAd4Max - g_UnitCfg.dat.iAd4Min);
-		}
-		else
-		{
-			if(g_UnitCfg.dat.iAd4Max != g_UnitCfg.dat.iAd4Min)
-				g_UnitData.dat.fPos	  = 10.0f*g_UnitCfg.dat.byLimU 
-									  + 10.0f*(g_UnitCfg.dat.byLimD - g_UnitCfg.dat.byLimU)*(g_UnitData.dat.iAD4 - g_UnitCfg.dat.iAd4Min)/(g_UnitCfg.dat.iAd4Max - g_UnitCfg.dat.iAd4Min);
-		}
-
-		if(g_UnitCfg.dat.byInp == 1)
-		{	
-			if(!g_UnitCfg.dat.bIsCmdInverse)
-			{
-				if(g_UnitCfg.dat.iAd5Ma0 != g_UnitCfg.dat.iAd5Ma20)
-					g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrD 
-										  + 10.0f*(g_UnitCfg.dat.bySrU - g_UnitCfg.dat.bySrD)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5Ma0)/(g_UnitCfg.dat.iAd5Ma20 - g_UnitCfg.dat.iAd5Ma0);
-			}
-			else
-			{
-				if(g_UnitCfg.dat.iAd5Ma0 != g_UnitCfg.dat.iAd5Ma20)
-					g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrU 
-										  + 10.0f*(g_UnitCfg.dat.bySrD - g_UnitCfg.dat.bySrU)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5Ma0)/(g_UnitCfg.dat.iAd5Ma20 - g_UnitCfg.dat.iAd5Ma0);
-			}
-		} 
-		else if(g_UnitCfg.dat.byInp == 2)
-		{	
-			if(!g_UnitCfg.dat.bIsCmdInverse)
-			{
-				if(g_UnitCfg.dat.iAd5V0 != g_UnitCfg.dat.iAd5V5)
-					g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrD 
-										  + 10.0f*(g_UnitCfg.dat.bySrU - g_UnitCfg.dat.bySrD)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5V0)/(g_UnitCfg.dat.iAd5V5 - g_UnitCfg.dat.iAd5V0);
-			}
-			else
-			{
-				if(g_UnitCfg.dat.iAd5V0 != g_UnitCfg.dat.iAd5V5)
-					g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrU 
-										  + 10.0f*(g_UnitCfg.dat.bySrD - g_UnitCfg.dat.bySrU)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5V0)/(g_UnitCfg.dat.iAd5V5 - g_UnitCfg.dat.iAd5V0);
-			}
-		}
-		else if(g_UnitCfg.dat.byInp == 3)
-		{	
-			if(!g_UnitCfg.dat.bIsCmdInverse)
-			{
-				if(g_UnitCfg.dat.iAd5V0 != g_UnitCfg.dat.iAd5V10)
-					g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrD 
-										  + 10.0f*(g_UnitCfg.dat.bySrU - g_UnitCfg.dat.bySrD)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5V0)/(g_UnitCfg.dat.iAd5V10 - g_UnitCfg.dat.iAd5V0);
-			}
-			else
-			{
-				if(g_UnitCfg.dat.iAd5V0 != g_UnitCfg.dat.iAd5V10)
-					g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrU 
-										  + 10.0f*(g_UnitCfg.dat.bySrD - g_UnitCfg.dat.bySrU)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5V0)/(g_UnitCfg.dat.iAd5V10 - g_UnitCfg.dat.iAd5V0);
-			}
-		}
-		else
-		{	
-			if(!g_UnitCfg.dat.bIsCmdInverse)
-			{
-				if(g_UnitCfg.dat.iAd5Ma4 != g_UnitCfg.dat.iAd5Ma20)
-					g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrD 
-										  + 10.0f*(g_UnitCfg.dat.bySrU - g_UnitCfg.dat.bySrD)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5Ma4)/(g_UnitCfg.dat.iAd5Ma20 - g_UnitCfg.dat.iAd5Ma4);
-			}
-			else
-			{
-				if(g_UnitCfg.dat.iAd5Ma4 != g_UnitCfg.dat.iAd5Ma20)
-					g_UnitData.dat.fInp	  = 10.0f*g_UnitCfg.dat.bySrU 
-										  + 10.0f*(g_UnitCfg.dat.bySrD - g_UnitCfg.dat.bySrU)*(g_UnitData.dat.iAD5 - g_UnitCfg.dat.iAd5Ma4)/(g_UnitCfg.dat.iAd5Ma20 - g_UnitCfg.dat.iAd5Ma4);
-			}
-		}	
-
-		if(!g_UnitCfg.dat.bIsChaFree)
-		{	
-			if(g_UnitCfg.dat.byN > 0)
-			{
-				if(g_UnitCfg.dat.byN*g_UnitData.dat.fInp/1000.0f > 1)
-					g_UnitData.dat.fCmd	= 1000.0f*log(g_UnitCfg.dat.byN*g_UnitData.dat.fInp/1000.0f)/log(g_UnitCfg.dat.byN);
-				else
-					g_UnitData.dat.fCmd	= 0;
-			}
-			else if(g_UnitCfg.dat.byN == 0)
-			{
-				g_UnitData.dat.fCmd	= g_UnitData.dat.fInp;
-			}
-			else
-			{
-				if((-1.0f/g_UnitCfg.dat.byN*g_UnitData.dat.fInp/1000.0f < 1)&&(-1.0f/g_UnitCfg.dat.byN*g_UnitData.dat.fInp/1000.0f > 0))
-					g_UnitData.dat.fCmd	= 1000.0f*log(-1.0f/g_UnitCfg.dat.byN*g_UnitData.dat.fInp/1000.0f)/log(-1.0f/g_UnitCfg.dat.byN);
-				else
-					g_UnitData.dat.fCmd	= 0;
-			}
-		}
-		else
-		{
-			 static U8	i;
-			 i	= (U8)(g_UnitData.dat.fInp/50);
-			 if(i > 19)
-			 	i	= 19;
-			 g_UnitData.dat.fCmd	= g_UnitCfg.dat.byCha[i]*10
-			 						+ (g_UnitCfg.dat.byCha[i + 1] - g_UnitCfg.dat.byCha[i])/5.0f*(g_UnitData.dat.fInp - i*50);
-		}
-
-		if(g_UnitCfg.dat.bIsP1Voltage)
-		{	
-			temp					= g_UnitData.dat.iAD6;
-			g_UnitData.dat.fPress1	= g_UnitCfg.dat.fPress1_Lic[0] + g_UnitCfg.dat.fPress1_Lic[1]*temp;
-		} 
-		else
-		{	
-			temp					= g_UnitData.dat.iAD6;
-			g_UnitData.dat.fPress1	= g_UnitCfg.dat.fPress1_cLic[0] + g_UnitCfg.dat.fPress1_cLic[1]*temp;
-		}
-
-		if(g_UnitCfg.dat.bIsP2Voltage)
-		{	
-			temp					= g_UnitData.dat.iAD7;
-			g_UnitData.dat.fPress2	= g_UnitCfg.dat.fPress2_Lic[0] + g_UnitCfg.dat.fPress2_Lic[1]*temp;
-		} 
-		else
-		{	
-			temp					= g_UnitData.dat.iAD7;
-			g_UnitData.dat.fPress2	= g_UnitCfg.dat.fPress2_cLic[0] + g_UnitCfg.dat.fPress2_cLic[1]*temp;
-		}
-		 
-		
-		if(g_UnitCfg.dat.byTemp == 1)
-		{	
-			temp					= g_UnitData.dat.iAD8;
-			g_UnitData.dat.fTemp	= g_UnitCfg.dat.fTemp_vLic[0] + g_UnitCfg.dat.fTemp_vLic[1]*temp;
-		} 
-		else if(g_UnitCfg.dat.byTemp == 2)
-		{	
-			temp					= g_UnitData.dat.iAD8;
-			g_UnitData.dat.fTemp	= g_UnitCfg.dat.fTemp_cLic[0] + g_UnitCfg.dat.fTemp_cLic[1]*temp;
-		}
-		else
-		{	
-			temp					= g_UnitData.dat.iAD8;
-			temp					= g_UnitCfg.dat.fTemp_Lic[0] + g_UnitCfg.dat.fTemp_Lic[1]*temp;
-			g_UnitData.dat.fTemp	= ((float) -3.90802e-1+  sqrt((float)0.152726203204 - (float)4*((float)-5.80195e-5)*((float)100-temp)))/((float)-1.16039e-4);
-		}
-			  
     	os_evt_set (0x0001, t_pid);
 
 		os_dly_wait(5);                /* programmed delay                  */
@@ -412,6 +394,10 @@ __task void hmi(void)
 	os_itv_set (11);
 	while(1)
 	{
+		static float temp;
+		temp					= DS18B20_Temperature();
+		if (temp >= -55.0f && temp <= 125.0f)
+			g_UnitData.dat.fTem		= temp;
 		HMI_Handler();
 		if(g_UnitCfg.dat.bIsReboot)
 			lpReset( );
@@ -470,23 +456,6 @@ __task void init(void)
 		g_UnitCfg.dat.bySrD = 0;
 	}
 
-	if ((g_UnitCfg.dat.fPress1_Lic[0] == 0)&&(g_UnitCfg.dat.fPress1_Lic[1] == 0))
-	{
-		g_UnitCfg.dat.fPress1_cLic[0] = 1;
-		g_UnitCfg.dat.fPress1_cLic[1] = 1;
-	}
-	if ((g_UnitCfg.dat.fPress2_Lic[0] == 0)&&(g_UnitCfg.dat.fPress2_Lic[1] == 0))
-	{
-		g_UnitCfg.dat.fPress2_cLic[0] = 1;
-		g_UnitCfg.dat.fPress2_cLic[1] = 1;
-	}
-	if ((g_UnitCfg.dat.fTemp_Lic[0] == 0)&&(g_UnitCfg.dat.fTemp_Lic[1] == 0))
-	{
-		g_UnitCfg.dat.fTemp_Lic[0] = 0.1;
-		g_UnitCfg.dat.fTemp_Lic[1] = 0.1;
-	}
-
-
 	Init_FEE( );
 
 	HMI_Init();
@@ -522,22 +491,9 @@ __task void init(void)
 	PWMDAT0 = PWM_DAT0VALUE;  		// Period register 182uS
 	PWMDAT1 = 0;    				// 0us Dead time
 	SetPwmDutyCycle2(0);
-	// controls coefficients
-	Controller.Kp			= 4000;
-	Controller.Ki			= 0;
-	Controller.Kd			= 0;
-	// limits
-	Controller.windupMax	= 0x2000UL<<8;
-	Controller.outputMax	= 0x900;
-	// state variables
-	Controller.error		= 0;
-	Controller.error_last	= 0;
-	Controller.error_integ	= 0;
-	Controller.error_diff	= 0;
-	// input and output
-	Controller.output		= 0;
-	Controller.input		= 0;
-	Controller.feedback		= 0;
+
+	pid_Init(400, 0, 0, &g_UnitCfg);
+	Controller.counts = 0;
 
 	// Initilize Timer 3 in WatchDog mode with timeout period of   second
     T3LD  = 0x00FF;         		//  clock ticks
@@ -545,10 +501,10 @@ __task void init(void)
     T3CLRI = 0x55;      			// Feed Dog
 
 
-	t_feeddog = os_tsk_create (feeddog, 2);      	/* start task 'feeddog'             */
-    t_pid = os_tsk_create (pid, 1);      			/* start task 'pid'                 */
+//	t_feeddog = os_tsk_create (feeddog, 254);      	/* start task 'feeddog'             */
+    t_pid = os_tsk_create (pid, 3);      			/* start task 'pid'                 */
 	
-    t_adc = os_tsk_create (adc, 1);          		/* start task 'adc'                 */
+    t_adc = os_tsk_create (adc, 2);          		/* start task 'adc'                 */
 	t_hmi = os_tsk_create (hmi, 1);          		/* start task 'lcd'                 */
 	
     os_tsk_delete_self();
