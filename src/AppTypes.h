@@ -12,6 +12,8 @@ typedef union _UNIT_DATA
     {
         float   	fPos;
 		float   	fInp;
+		float   	fSp;
+        float   	fPv;
         float   	fCmd;
         float   	fPress1;
         float   	fPress2;
@@ -77,6 +79,8 @@ typedef union _UNIT_CFG
 		int8_t		byLimU;
 		int8_t		bySrD;
 		int8_t		bySrU;
+		int8_t		bySpD;
+		int8_t		bySpU;
 		int8_t		byP1D;
 		int8_t		byP1U;
 		int8_t		byP2D;

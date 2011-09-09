@@ -542,6 +542,16 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>calc</GroupName>
+          <Files>
+            <File>
+              <FileName>calc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\calc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
   </Targets>

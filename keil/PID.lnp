@@ -1,4 +1,4 @@
---cpu ARM7TDMI ".\startup.o" "main.o" "portevent.o" "portserial.o" "porttimer.o" "mb.o" "mbcrc.o" "mbrtu.o" "mbfunccoils.o" "mbfuncdisc.o" "mbfuncholding.o" "mbfuncinput.o" "mbfuncother.o" "mbutils.o" "mbascii.o" "mbfuncdiag.o" "rtx_config.o" "..\rtos\RTX_ARM_L.lib" "iap.o" "ht1622.o" "hmi.o" "ds18b20.o" "pid.o" "C:\Keil\ARM\RV31\LIB\RTX_ARM_L.LIB" --strict --scatter "PID.sct" 
+--cpu ARM7TDMI ".\startup.o" "main.o" "portevent.o" "portserial.o" "porttimer.o" "mb.o" "mbcrc.o" "mbrtu.o" "mbfunccoils.o" "mbfuncdisc.o" "mbfuncholding.o" "mbfuncinput.o" "mbfuncother.o" "mbutils.o" "mbascii.o" "mbfuncdiag.o" "rtx_config.o" "..\rtos\RTX_ARM_L.lib" "iap.o" "ht1622.o" "hmi.o" "ds18b20.o" "pid.o" "calc.o" "C:\Keil\ARM\RV31\LIB\RTX_ARM_L.LIB" --strict --scatter "PID.sct" 
 --autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
 --info sizes --info totals --info unused --info veneers 
  --list ".\PID.map" -o "PID.axf"

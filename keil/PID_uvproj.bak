@@ -532,6 +532,16 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>pid</GroupName>
+          <Files>
+            <File>
+              <FileName>pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\pid.c</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
   </Targets>

@@ -666,4 +666,60 @@ void floattochar(const float fdata,BYTE disbuf[6],BYTE dotp)
     disbuf[3]= temp_int%1000/100 + '0';
     disbuf[4]= temp_int%100/10 + '0';     	
 	disbuf[5]= temp_int%10 + '0';
+	if (dotp == 4)
+	{
+		
+	}
+	else if (dotp == 3)
+	{
+		if(disbuf[1] == '0')
+		{
+			disbuf[1] = ':';
+		}
+	}
+	else if (dotp == 2)
+	{
+		if(disbuf[1] == '0')
+		{
+			disbuf[1] = ':';
+			if(disbuf[2] == '0')
+			{
+				disbuf[2] = ':';
+			}
+		}
+	}
+	else if (dotp == 1)
+	{
+		if(disbuf[1] == '0')
+		{
+			disbuf[1] = ':';
+			if(disbuf[2] == '0')
+			{
+				disbuf[2] = ':';
+				if(disbuf[3] == '0')
+				{
+					disbuf[3] = ':';
+				}
+			}
+		}
+	}
+	else
+	{
+		if(disbuf[1] == '0')
+		{
+			disbuf[1] = ':';
+			if(disbuf[2] == '0')
+			{
+				disbuf[2] = ':';
+				if(disbuf[3] == '0')
+				{
+					disbuf[3] = ':';
+					if(disbuf[4] == '0')
+					{
+						disbuf[4] = ':';
+					}
+				}
+			}
+		}
+	}
 }
