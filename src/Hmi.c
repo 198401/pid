@@ -12,8 +12,6 @@
 *************************************************************************************************/
 #include <aduc7024.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <stdbool.h>
 
 #include "Consts.h"
@@ -22,14 +20,6 @@
 
 #include "HT1622.h"
 #include "AppTypes.h"
-														  	
-typedef unsigned char           BYTE;       /* Prefix: by	*/
-typedef unsigned short          U16;       /* Prefix: by	*/
-typedef unsigned int	        WORD;       /* Prefix: w	*/
-
-// KEY0 : PORT3.1
-// KEY1 : PORT3.2
-// KEY2 : PORT3.3
 
 #define KEYS					3
 #define IS_KEY0_DOWN()			((GP3DAT & BIT01) == 0)
@@ -43,7 +33,7 @@ typedef unsigned int	        WORD;       /* Prefix: w	*/
 #define MENU_ITEMS				162
 #define KB_BUF_SIZE				63
 
-const BYTE display[][8] =	{
+const uint8_t display[][8] =	{
 							"ACT[FUNC",
 							"[[[INPUT",
 							"[[IN[SET",
@@ -210,18 +200,18 @@ const BYTE display[][8] =	{
 
 extern UNIT_DATA                g_UnitData;
 
-DEFINE_STACK(MENU_CTL_BLOCK, BYTE, STACK_MCB)
+DEFINE_STACK(MENU_CTL_BLOCK, uint8_t, STACK_MCB)
 
 MENU_ITEM						m_aMenuItems[MENU_ITEMS];
 MENU_CTL_BLOCK					m_mcbCurrent;
 STACK_MCB						m_stackMenuCtlBlock;
 
 // Indicate which page to be displayed
-static BYTE						m_byPageNo					= 0;
-static BYTE						m_byCursorPos				= 0;
-static BYTE						m_byCursorPage				= 0;
+static uint8_t						m_byPageNo					= 0;
+static uint8_t						m_byCursorPos				= 0;
+static uint8_t						m_byCursorPage				= 0;
 
-static BYTE						m_bufKeyboard[KB_BUF_SIZE];
+static uint8_t						m_bufKeyboard[KB_BUF_SIZE];
 
 enum
 {
@@ -429,11 +419,11 @@ enum
 extern UNIT_DATA				g_UnitData;
 extern UNIT_CFG					g_UnitCfg;
 
-static void OnKeyDown(BYTE byKeyCode)
+static void OnKeyDown(uint8_t byKeyCode)
 {
 }
 
-static void OnKeyUp(BYTE byKeyCode)
+static void OnKeyUp(uint8_t byKeyCode)
 {
 	if (m_mcbCurrent.pMenu == NULL)
 	{
@@ -464,7 +454,7 @@ static void OnKeyUp(BYTE byKeyCode)
 
 static void Display()
 {
-	BYTE byNum[7];
+	uint8_t byNum[7];
 	static float nVal;
 
 	if (nVal > 99999)
@@ -509,11 +499,10 @@ static void Display()
 
 static void CheckKeyboard()
 {
-	static BYTE _cnts[KEYS] = {0, 0, 0};
+	static uint8_t _cnts[KEYS] = {0, 0, 0};
 
-	BYTE	byKeyMask		= 0;
-	BYTE	byBitMask;
-	BYTE	i;
+	uint8_t	byKeyMask		= 0;
+	uint8_t	byBitMask;
 
 	if (IS_KEY0_DOWN())
 		byKeyMask |= BIT00;
@@ -522,7 +511,7 @@ static void CheckKeyboard()
 	if (IS_KEY2_DOWN())
 		byKeyMask |= BIT02;
 
- 	for(i = 0; i < KEYS; ++i)
+ 	for(uint8_t	i = 0; i < KEYS; ++i)
 	{
 		byBitMask = (1 << i);
 		if ((byKeyMask & byBitMask) != 0)
@@ -546,7 +535,7 @@ static void CheckKeyboard()
 
 static void DisplayMenu()
 {
-	U16	byMenuID = m_mcbCurrent.byStartMenuItemID;
+	uint16_t	byMenuID = m_mcbCurrent.byStartMenuItemID;
 
 	display_digital("::::::",0,0);
 	display_char((unsigned char *)display[byMenuID]);
@@ -559,7 +548,7 @@ static bool IsRetMenuItem(MENU_ITEM* pMenuItem)
 
 extern void EepromWr_n( unsigned short *pcData );
 
-static void MenuKeyboardHandler(BYTE byKeyCode)
+static void MenuKeyboardHandler(uint8_t byKeyCode)
 {
 	if ((byKeyCode == KEY_1) && 
 		(m_aMenuItems[m_mcbCurrent.byStartMenuItemID].pParentMenu == m_aMenuItems[m_mcbCurrent.byStartMenuItemID - 1].pParentMenu))
@@ -608,7 +597,7 @@ static void MenuKeyboardHandler(BYTE byKeyCode)
 	}
 }
 
-static void MainMenu_KeyboardHandler(BYTE byKeyCode)
+static void MainMenu_KeyboardHandler(uint8_t byKeyCode)
 {
 	MenuKeyboardHandler(byKeyCode);
 }
@@ -618,7 +607,7 @@ static void MainMenu_DisplayHandler()
 	DisplayMenu();
 }
 
-static void MENU_MAIN_MANUAL_KeyboardHandler(BYTE byKeyCode)
+static void MENU_MAIN_MANUAL_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -644,7 +633,7 @@ static void MENU_MAIN_MANUAL_KeyboardHandler(BYTE byKeyCode)
 
 static void MENU_MAIN_MANUAL_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	floattochar (g_UnitData.dat.fPos/10, byNum,0);
 	display_digital(byNum,0,0);
@@ -701,7 +690,7 @@ static void Input5_OpeningHandler()
 	display_char("DDDDDDDD");
 	clearLCD();	
 }
-static void InsetCutoff_KeyboardHandler(BYTE byKeyCode)
+static void InsetCutoff_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -740,7 +729,7 @@ static void InsetCutoff_KeyboardHandler(BYTE byKeyCode)
 
 static void InsetCutoff_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -774,7 +763,7 @@ static void InsetCutoff_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-static void InsetSpltrng_KeyboardHandler(BYTE byKeyCode)
+static void InsetSpltrng_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -813,7 +802,7 @@ static void InsetSpltrng_KeyboardHandler(BYTE byKeyCode)
 
 static void InsetSpltrng_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -847,7 +836,7 @@ static void InsetSpltrng_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-static void XsetXlimit_KeyboardHandler(BYTE byKeyCode)
+static void XsetXlimit_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -886,7 +875,7 @@ static void XsetXlimit_KeyboardHandler(BYTE byKeyCode)
 
 static void XsetXlimit_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -920,7 +909,7 @@ static void XsetXlimit_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-static void XsetXtime_KeyboardHandler(BYTE byKeyCode)
+static void XsetXtime_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -959,7 +948,7 @@ static void XsetXtime_KeyboardHandler(BYTE byKeyCode)
 
 static void XsetXtime_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -993,7 +982,7 @@ static void XsetXtime_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-static void SystemSafepos_KeyboardHandler(BYTE byKeyCode)
+static void SystemSafepos_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -1029,7 +1018,7 @@ static void SystemSafepos_KeyboardHandler(BYTE byKeyCode)
 
 static void SystemSafepos_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -1127,7 +1116,7 @@ static void Charact501_OpeningHandler()
 	clearLCD();	
 }
 
-static void CharactFree_KeyboardHandler(BYTE byKeyCode)
+static void CharactFree_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -1167,7 +1156,7 @@ static void CharactFree_KeyboardHandler(BYTE byKeyCode)
 
 static void CharactFree_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = '0' + (m_byCursorPage/2);
@@ -1229,7 +1218,7 @@ static void DiractFall_OpeningHandler()
 	clearLCD();	
 }
 
-static void XcontrolDbnd_KeyboardHandler(BYTE byKeyCode)
+static void XcontrolDbnd_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -1265,7 +1254,7 @@ static void XcontrolDbnd_KeyboardHandler(BYTE byKeyCode)
 
 static void XcontrolDbnd_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -1294,7 +1283,7 @@ static void XcontrolDbnd_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-static void XcontrolPara_KeyboardHandler(BYTE byKeyCode)
+static void XcontrolPara_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -1333,7 +1322,7 @@ static void XcontrolPara_KeyboardHandler(BYTE byKeyCode)
 
 static void XcontrolPara_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -1415,7 +1404,7 @@ static void XtuneAuto_OpeningHandler()
 	display_char("DDDDDDDD");
 }
 
-static void XtunePwm_KeyboardHandler(BYTE byKeyCode)
+static void XtunePwm_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -1454,7 +1443,7 @@ static void XtunePwm_KeyboardHandler(BYTE byKeyCode)
 
 static void XtunePwm_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -1488,7 +1477,7 @@ static void XtunePwm_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-static void XtuneAir_KeyboardHandler(BYTE byKeyCode)
+static void XtuneAir_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -1527,7 +1516,7 @@ static void XtuneAir_KeyboardHandler(BYTE byKeyCode)
 
 static void XtuneAir_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -1633,7 +1622,7 @@ static void Serio4800_OpeningHandler()
 	clearLCD();	
 }
 
-static void CodeKey_KeyboardHandler(BYTE byKeyCode)
+static void CodeKey_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -1671,7 +1660,7 @@ static void CodeKey_KeyboardHandler(BYTE byKeyCode)
 
 static void CodeKey_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -1699,7 +1688,7 @@ static void CodeKey_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-static void CodeMenu_KeyboardHandler(BYTE byKeyCode)
+static void CodeMenu_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -1737,7 +1726,7 @@ static void CodeMenu_KeyboardHandler(BYTE byKeyCode)
 
 static void CodeMenu_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -1766,7 +1755,7 @@ static void CodeMenu_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-static void CodeGlob_KeyboardHandler(BYTE byKeyCode)
+static void CodeGlob_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -1804,7 +1793,7 @@ static void CodeGlob_KeyboardHandler(BYTE byKeyCode)
 
 static void CodeGlob_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -1832,7 +1821,7 @@ static void CodeGlob_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-static void CaluserPos_KeyboardHandler(BYTE byKeyCode)
+static void CaluserPos_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -1871,7 +1860,7 @@ static void CaluserPos_KeyboardHandler(BYTE byKeyCode)
 
 static void CaluserPos_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 	
 	if (m_byCursorPage < 2)
 	{
@@ -1897,7 +1886,7 @@ static void CaluserPos_OpeningHandler()
 	m_byCursorPage	 	= 0;
 }
 
-static void CaluserInp_KeyboardHandler(BYTE byKeyCode)
+static void CaluserInp_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -1936,7 +1925,7 @@ static void CaluserInp_KeyboardHandler(BYTE byKeyCode)
 
 static void CaluserInp_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 	
 	if (m_byCursorPage < 2)
 	{
@@ -1969,7 +1958,7 @@ static void CaluserFact_OpeningHandler()
 	clearLCD();	
 }
 
-static void PcontrlDbnd_KeyboardHandler(BYTE byKeyCode)
+static void PcontrlDbnd_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -2005,7 +1994,7 @@ static void PcontrlDbnd_KeyboardHandler(BYTE byKeyCode)
 
 static void PcontrlDbnd_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -2028,7 +2017,7 @@ static void PcontrlDbnd_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
   
-static void PcontrlPara_KeyboardHandler(BYTE byKeyCode)
+static void PcontrlPara_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -2067,7 +2056,7 @@ static void PcontrlPara_KeyboardHandler(BYTE byKeyCode)
 
 static void PcontrlPara_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -2111,7 +2100,7 @@ static void PcontrlPara_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-static void PcontrlFilt_KeyboardHandler(BYTE byKeyCode)
+static void PcontrlFilt_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -2147,7 +2136,7 @@ static void PcontrlFilt_KeyboardHandler(BYTE byKeyCode)
 
 static void PcontrlFilt_DisplayHandler()
 {
-	BYTE byNum[6];
+	uint8_t byNum[6];
 		
 	byNum[0] = '+';
 	byNum[1] = ':';
@@ -2173,7 +2162,7 @@ static void PcontrlFilt_OpeningHandler()
 	m_bufKeyboard[0] = '0';
 }
 
-static void PcontrlKv_KeyboardHandler(BYTE byKeyCode)
+static void PcontrlKv_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -2213,31 +2202,31 @@ static void PcontrlKv_KeyboardHandler(BYTE byKeyCode)
 
 static void PcontrlKv_DisplayHandler()
 {
-	BYTE byNum[6];	
+	uint8_t byNum[6];	
 	if (m_byCursorPage == 0)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[i];
 		display_char("[[[[[[KP");
 		display_digital(byNum,0,m_byCursorPos + 1);
 	}
 	if (m_byCursorPage == 1)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[5 + i];
 		display_char("[[[[[[TN");
 		display_digital(byNum,0,m_byCursorPos - 4);
 	}
 	if (m_byCursorPage == 2)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[10 + i];
 		display_char("[[[[[[TV");
 		display_digital(byNum,0,m_byCursorPos - 9);
 	}
 	if (m_byCursorPage == 3)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[15 + i];
 		display_char("[[[[[[XO");
 		display_digital(byNum,0,m_byCursorPos - 14);
@@ -2371,7 +2360,7 @@ static void AnlSet5_OpeningHandler()
 	clearLCD();	
 }
 
-static void ScalS_KeyboardHandler(BYTE byKeyCode)
+static void ScalS_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -2411,31 +2400,31 @@ static void ScalS_KeyboardHandler(BYTE byKeyCode)
 
 static void ScalS_DisplayHandler()
 {
-	BYTE byNum[6];	
+	uint8_t byNum[6];	
 	if (m_byCursorPage == 0)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[i];
 		display_char("[[[[[[KP");
 		display_digital(byNum,0,m_byCursorPos + 1);
 	}
 	if (m_byCursorPage == 1)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[5 + i];
 		display_char("[[[[[[TN");
 		display_digital(byNum,0,m_byCursorPos - 4);
 	}
 	if (m_byCursorPage == 2)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[10 + i];
 		display_char("[[[[[[TV");
 		display_digital(byNum,0,m_byCursorPos - 9);
 	}
 	if (m_byCursorPage == 3)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[15 + i];
 		display_char("[[[[[[XO");
 		display_digital(byNum,0,m_byCursorPos - 14);
@@ -2471,7 +2460,7 @@ static void ScalS_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-static void ScalF_KeyboardHandler(BYTE byKeyCode)
+static void ScalF_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -2511,31 +2500,31 @@ static void ScalF_KeyboardHandler(BYTE byKeyCode)
 
 static void ScalF_DisplayHandler()
 {
-	BYTE byNum[6];	
+	uint8_t byNum[6];	
 	if (m_byCursorPage == 0)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[i];
 		display_char("[[[[[[KP");
 		display_digital(byNum,0,m_byCursorPos + 1);
 	}
 	if (m_byCursorPage == 1)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[5 + i];
 		display_char("[[[[[[TN");
 		display_digital(byNum,0,m_byCursorPos - 4);
 	}
 	if (m_byCursorPage == 2)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[10 + i];
 		display_char("[[[[[[TV");
 		display_digital(byNum,0,m_byCursorPos - 9);
 	}
 	if (m_byCursorPage == 3)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[15 + i];
 		display_char("[[[[[[XO");
 		display_digital(byNum,0,m_byCursorPos - 14);
@@ -2571,7 +2560,7 @@ static void ScalF_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-static void ScalT_KeyboardHandler(BYTE byKeyCode)
+static void ScalT_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -2611,31 +2600,31 @@ static void ScalT_KeyboardHandler(BYTE byKeyCode)
 
 static void ScalT_DisplayHandler()
 {
-	BYTE byNum[6];	
+	uint8_t byNum[6];	
 	if (m_byCursorPage == 0)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[i];
 		display_char("[[[[[[KP");
 		display_digital(byNum,0,m_byCursorPos + 1);
 	}
 	if (m_byCursorPage == 1)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[5 + i];
 		display_char("[[[[[[TN");
 		display_digital(byNum,0,m_byCursorPos - 4);
 	}
 	if (m_byCursorPage == 2)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[10 + i];
 		display_char("[[[[[[TV");
 		display_digital(byNum,0,m_byCursorPos - 9);
 	}
 	if (m_byCursorPage == 3)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[15 + i];
 		display_char("[[[[[[XO");
 		display_digital(byNum,0,m_byCursorPos - 14);
@@ -2671,7 +2660,7 @@ static void ScalT_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-static void ScalP_KeyboardHandler(BYTE byKeyCode)
+static void ScalP_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -2711,31 +2700,31 @@ static void ScalP_KeyboardHandler(BYTE byKeyCode)
 
 static void ScalP_DisplayHandler()
 {
-	BYTE byNum[6];	
+	uint8_t byNum[6];	
 	if (m_byCursorPage == 0)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[i];
 		display_char("[[[[[[KP");
 		display_digital(byNum,0,m_byCursorPos + 1);
 	}
 	if (m_byCursorPage == 1)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[5 + i];
 		display_char("[[[[[[TN");
 		display_digital(byNum,0,m_byCursorPos - 4);
 	}
 	if (m_byCursorPage == 2)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[10 + i];
 		display_char("[[[[[[TV");
 		display_digital(byNum,0,m_byCursorPos - 9);
 	}
 	if (m_byCursorPage == 3)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[15 + i];
 		display_char("[[[[[[XO");
 		display_digital(byNum,0,m_byCursorPos - 14);
@@ -2820,7 +2809,7 @@ static void LeakNot_OpeningHandler()
 	clearLCD();	
 }
 
-static void LeakMeas_KeyboardHandler(BYTE byKeyCode)
+static void LeakMeas_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
@@ -2860,31 +2849,31 @@ static void LeakMeas_KeyboardHandler(BYTE byKeyCode)
 
 static void LeakMeas_DisplayHandler()
 {
-	BYTE byNum[6];	
+	uint8_t byNum[6];	
 	if (m_byCursorPage == 0)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[i];
 		display_char("[[[[[[KP");
 		display_digital(byNum,0,m_byCursorPos + 1);
 	}
 	if (m_byCursorPage == 1)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[5 + i];
 		display_char("[[[[[[TN");
 		display_digital(byNum,0,m_byCursorPos - 4);
 	}
 	if (m_byCursorPage == 2)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[10 + i];
 		display_char("[[[[[[TV");
 		display_digital(byNum,0,m_byCursorPos - 9);
 	}
 	if (m_byCursorPage == 3)
 	{
-		for(U16 i = 0; i < 5; i++)
+		for(uint16_t i = 0; i < 5; i++)
 			byNum[5 - i] = m_bufKeyboard[15 + i];
 		display_char("[[[[[[XO");
 		display_digital(byNum,0,m_byCursorPos - 14);

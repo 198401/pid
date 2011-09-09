@@ -13,7 +13,6 @@
 
 #include <ADuC7024.H>
 #include "AppTypes.h"
-#include <string.h>
 
 #define USER_ADD_START 0x8F400
 #define USER_ADD_END   0x8F5FF
@@ -25,9 +24,9 @@ void Init_FEE(void)
 	FEEMOD = 0x8;				// bit 3 should be set to allow erase/write command	
 }
 
-static void EepromWr( unsigned short addr, unsigned short  data)
+static void EepromWr( uint16_t addr, uint16_t  data)
 {
-	static unsigned int status;
+	uint8_t status;
 	FEEADR = addr;				// set data address
 	FEEDAT = data;				// set data value
 	FEECON = WRITE_HALF_WORD;				// single Write command
@@ -35,20 +34,20 @@ static void EepromWr( unsigned short addr, unsigned short  data)
 	while (!(status)) status = FEESTA&0x03;
 }
 
-static void erase_page(unsigned short addr)
+static void erase_page(uint16_t addr)
 {
-	static unsigned int status;
+	uint8_t status;
 	FEEADR = addr;				// set data address
 	FEECON = ERASE_PAGE;				// erase page command
 	status = FEESTA&0x03;
 	while (!(status)) status = FEESTA&0x03;
 }
 
-void  EepromWr_n( unsigned short *pcData )
+void  EepromWr_n( uint16_t *pcData )
 {
-	erase_page((unsigned short)USER_ADD_START);
-	for(unsigned short i = 0; i < CFG_NREGS; i ++)
+	erase_page((uint16_t)USER_ADD_START);
+	for(uint16_t i = 0; i < CFG_NREGS; i ++)
 	{
-		EepromWr((unsigned short)USER_ADD_START + 2 * i, pcData[i]);
+		EepromWr((uint16_t)USER_ADD_START + 2 * i, pcData[i]);
 	}
 }

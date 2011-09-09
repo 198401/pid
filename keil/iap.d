@@ -14,4 +14,3 @@ iap.o: ..\bsp\port\port.h
 iap.o: C:\Keil\ARM\RV31\INC\assert.h
 iap.o: C:\Keil\ARM\RV31\INC\inttypes.h
 iap.o: C:\Keil\ARM\RV31\INC\stdint.h
-iap.o: C:\Keil\ARM\RV31\INC\string.h

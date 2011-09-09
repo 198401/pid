@@ -4,19 +4,17 @@
 
  Date          : 
 
- File          : 
+ File          : main
                                       
  Hardware      : ADuC702x
 
- Description   : 
+ Description   : main
 *************************************************************************************************/
 #include <RTL.h>
 #include <ADuC7024.H> 
 #include <absacc.h>
-#include <math.h>
 
 #include "mb.h"
-#include "mbport.h"
 #include "Hmi.h"
 #include "ds18b20.h"
 #include "pid.h"
@@ -29,7 +27,7 @@ UNIT_BUF                        g_UnitBuf;
 UNIT_CFG                        g_UnitCfg;
 
 #define EEPADDR 				0x8F400
-const unsigned short            g_UnitCfgInFlash[256]    __at (EEPADDR);
+const U16            			g_UnitCfgInFlash[256]    __at (EEPADDR);
 
 #define REG_INPUT_START             0x0001
 #define REG_INPUT_NREGS             sizeof(g_UnitData)/sizeof(short)
@@ -156,14 +154,17 @@ __task void pid(void)
             break;
 		case 2:
 			tempHandle( );
+			g_UnitData.dat.fPv	= g_UnitData.dat.fTemp;
             break;
         case 3:
 			p1Handle( );
 			p2Handle( );
 			tempHandle( );
+			g_UnitData.dat.fPv	= g_UnitData.dat.fTemp + g_UnitData.dat.fPress1 + g_UnitData.dat.fPress2;
             break;
 		case 4:
 			tempHandle( );
+			g_UnitData.dat.fPv	= g_UnitData.dat.fTemp;
             break;
         default:
 			cmdHandle(0);

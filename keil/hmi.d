@@ -10,8 +10,6 @@ hmi.o: C:\Keil\ARM\INC\ADI\GPIO.h
 hmi.o: C:\Keil\ARM\INC\ADI\flash.h
 hmi.o: C:\Keil\ARM\INC\ADI\pwm.h
 hmi.o: C:\Keil\ARM\RV31\INC\stdio.h
-hmi.o: C:\Keil\ARM\RV31\INC\stdlib.h
-hmi.o: C:\Keil\ARM\RV31\INC\string.h
 hmi.o: C:\Keil\ARM\RV31\INC\stdbool.h
 hmi.o: ..\src\Consts.h
 hmi.o: ..\src\Stack.h

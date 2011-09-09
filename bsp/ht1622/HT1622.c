@@ -1,4 +1,3 @@
-
 /********************************************************
  Author        : Yu
 
@@ -10,15 +9,8 @@
 
  Description   : LCD_HT1622
 *************************************************************/
-
 #include <aduc7024.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-
-typedef unsigned char           BYTE;       /* Prefix: by	*/
-typedef unsigned int	        WORD;       /* Prefix: w	*/
+#include <inttypes.h>
 
 //di ---p1.3
 #define setDI_1622   	GP1DAT |= 0x08080000
@@ -38,7 +30,7 @@ typedef unsigned int	        WORD;       /* Prefix: w	*/
 #define LCD_1622_CLRWDT 	0X1c 
 #define LCD_1622_TIMERDIS	0X08 
 
-const unsigned char LED7Code[]={
+const uint8_t LED7Code[]={
 	0x0F0,		// 0 LSB
 	0x050,		// 0 MSB
 	0x060,		// 1 LSB
@@ -63,7 +55,7 @@ const unsigned char LED7Code[]={
 	0x000
 };
 
-const unsigned char LED16Char[]={		
+const uint8_t LED16Char[]={		
 	0x010,		// A LSB
 	0x010,		// A ...
 	0x0D0,		// A ...
@@ -174,7 +166,7 @@ const unsigned char LED16Char[]={
 	0x000
 };
  
-const unsigned char LED16Num[]={		
+const uint8_t LED16Num[]={		
 	0x090,		// 0 LSB
 	0x090,		// 0 ...
 	0x090,		// 0 ...
@@ -217,10 +209,9 @@ const unsigned char LED16Num[]={
 	0x030,		// 9 MSB
 };
 
-static void SendBit_HT1622(BYTE op_data,BYTE num)
+static void SendBit_HT1622(uint8_t op_data,uint8_t num)
 {
-    BYTE temp1;
-    for (temp1=0;temp1<num;temp1++)
+    for (uint8_t temp1=0;temp1<num;temp1++)
     {
         if ((op_data&0X80)== 0 )
             clrDI_1622 ;
@@ -248,7 +239,7 @@ static void Reset_1622(void)
     clrSK_1622;   
 }
 
-static void SENDCOMB(BYTE address)
+static void SENDCOMB(uint8_t address)
 {
     Reset_1622();
     SendBit_HT1622(0xA0,3);   
@@ -256,7 +247,7 @@ static void SENDCOMB(BYTE address)
     SendBit_HT1622(address,6);
 }
 
-static BYTE LCDWRITE_1622(const unsigned char data,BYTE Addr)
+static uint8_t LCDWRITE_1622(const uint8_t data,uint8_t Addr)
 {
     SENDCOMB(Addr);
     SendBit_HT1622(data, 4);
@@ -264,7 +255,7 @@ static BYTE LCDWRITE_1622(const unsigned char data,BYTE Addr)
     return(1);
 }
 
-void display_char(unsigned char * temp)   
+void display_char(const uint8_t * temp)   
 {
    	if(*(temp + 0) >= 'A' && *(temp + 0) <= '[')
 	{
@@ -451,7 +442,7 @@ void display_char(unsigned char * temp)
 	}
 }
 
-void digital(BYTE * data, BYTE dotp)
+void digital(const uint8_t * data, uint8_t dotp)
 {
    	LCDWRITE_1622(0,0xC4);
     if(*data == '-')		
@@ -558,9 +549,9 @@ void digital(BYTE * data, BYTE dotp)
     } 
 }
 
-static BYTE byShine;
+static uint8_t byShine;
 
-void display_digital(BYTE * data,BYTE dotp,BYTE shine)
+void display_digital(const uint8_t * data,uint8_t dotp,uint8_t shine)
 {
 		digital(data,dotp);
 		byShine++;
@@ -597,22 +588,20 @@ void display_digital(BYTE * data,BYTE dotp,BYTE shine)
 
 void clearLCD(void)
 {	 
-    unsigned short i;
-
 	SENDCOMB(0);
-    for(i = 0; i < 256; i++)
+    for(uint8_t i = 0; i < 208; i++)
 		SendBit_HT1622(0, 8);
     setCS_1622;
 }
 
-static void SENDCOMA(BYTE command)
+static void SENDCOMA(uint8_t command)
 {
     Reset_1622();
     SendBit_HT1622(0x80,4);     
     SendBit_HT1622(command,8); 
 }
 
-void SENDCOMC(BYTE command)
+void SENDCOMC(uint8_t command)
 {
     Reset_1622();
     SendBit_HT1622(0x90,4);        
@@ -629,9 +618,9 @@ void initLCD_1622(void)
 
 }
 
-void floattochar(const float fdata,BYTE disbuf[6],BYTE dotp)
+void floattochar(float fdata,uint8_t disbuf[6],uint8_t dotp)
 {
-    long int temp_int;
+    uint32_t temp_int;
     float temp_float;
     if (fdata <0)
     {

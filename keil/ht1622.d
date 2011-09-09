@@ -9,7 +9,5 @@ ht1622.o: C:\Keil\ARM\INC\ADI\PLA.H
 ht1622.o: C:\Keil\ARM\INC\ADI\GPIO.h
 ht1622.o: C:\Keil\ARM\INC\ADI\flash.h
 ht1622.o: C:\Keil\ARM\INC\ADI\pwm.h
-ht1622.o: C:\Keil\ARM\RV31\INC\stdio.h
-ht1622.o: C:\Keil\ARM\RV31\INC\stdlib.h
-ht1622.o: C:\Keil\ARM\RV31\INC\string.h
-ht1622.o: C:\Keil\ARM\RV31\INC\math.h
+ht1622.o: C:\Keil\ARM\RV31\INC\inttypes.h
+ht1622.o: C:\Keil\ARM\RV31\INC\stdint.h
