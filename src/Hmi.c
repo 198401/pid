@@ -10,6 +10,7 @@
 
  Description   : hmi
 *************************************************************************************************/
+#include <RTL.h>
 #include <aduc7024.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -22,13 +23,10 @@
 #include "AppTypes.h"
 
 #define KEYS					3
-#define IS_KEY0_DOWN()			((GP3DAT & BIT01) == 0)
-#define IS_KEY1_DOWN()			((GP3DAT & BIT02) == 0)
-#define IS_KEY2_DOWN()			((GP3DAT & BIT03) == 0)
 
-//#define IS_KEY0_DOWN()			((GP3DAT & BIT03) == 0)
-//#define IS_KEY1_DOWN()			((GP0DAT & BIT03) == 0)
-//#define IS_KEY2_DOWN()			((GP0DAT & BIT04) == 0)
+#define IS_KEY0_DOWN()			((GP3DAT & BIT03) == 0)
+#define IS_KEY1_DOWN()			((GP0DAT & BIT03) == 0)
+#define IS_KEY2_DOWN()			((GP0DAT & BIT04) == 0)
 
 #define MENU_ITEMS				162
 #define KB_BUF_SIZE				63
@@ -425,6 +423,8 @@ static void OnKeyDown(uint8_t byKeyCode)
 
 static void OnKeyUp(uint8_t byKeyCode)
 {
+	GP3DAT  &= ~0x00020000;
+	g_UnitData.dat.iCnt = 0;
 	if (m_mcbCurrent.pMenu == NULL)
 	{
 		if (byKeyCode == KEY_1)
@@ -611,23 +611,35 @@ static void MENU_MAIN_MANUAL_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
-		g_UnitData.dat.fPid -= 10;
-		if (g_UnitData.dat.fPid < 0)
-			g_UnitData.dat.fPid = 0;
+		if (m_byCursorPos > 0)
+		{
+			m_byCursorPos--;
+			m_byCursorPage	 = m_byCursorPos/3;
+		}
 	}
 	else if (byKeyCode == KEY_2)
 	{
-		g_UnitData.dat.fPid += 10;
-		if (g_UnitData.dat.fPid > 1000)
-			g_UnitData.dat.fPid = 1000;
+		m_byCursorPos++;
+		m_byCursorPage	 = m_byCursorPos/3;
 	}
 	else if (byKeyCode == KEY_3)
 	{
-		MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-   		//add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action
-		S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-		m_mcbCurrent.pMenu 						= pMenuItem;
-		m_mcbCurrent.byStartMenuItemID			= 0;
+		if (m_byCursorPos < 3)
+		{
+			m_bufKeyboard[m_byCursorPos]++;
+			if (m_bufKeyboard[m_byCursorPos] > '9')
+				m_bufKeyboard[m_byCursorPos] = '0';
+		}
+		else
+		{
+			MENU_ITEM*	pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
+
+	   		g_UnitData.dat.fPid = (m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328)*10;
+
+			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
+			m_mcbCurrent.pMenu 						= pMenuItem;
+			m_mcbCurrent.byStartMenuItemID			= 0;
+		}
 	}
 }
 
@@ -635,14 +647,33 @@ static void MENU_MAIN_MANUAL_DisplayHandler()
 {
 	uint8_t byNum[6];
 		
-	floattochar (g_UnitData.dat.fPos/10, byNum,0);
-	display_digital(byNum,0,0);
-	display_char("[[[[[POS");	
+	byNum[0] = '+';
+	byNum[1] = ':';
+	byNum[2] = ':';
+	byNum[3] = m_bufKeyboard[3*m_byCursorPage + 2];
+	byNum[4] = m_bufKeyboard[3*m_byCursorPage + 1];
+	byNum[5] = m_bufKeyboard[3*m_byCursorPage];
+	if (m_byCursorPos < 3)
+		display_digital(byNum,0,m_byCursorPos - 3*m_byCursorPage + 1);
+	if (m_byCursorPage == 0)
+	{
+		display_char("[[[[[POS");
+	}
+	else
+	{
+		floattochar (g_UnitData.dat.fPos/10, byNum,0);
+		display_digital(byNum,0,0);
+		display_char("[[[[[POS");
+	}	
 }
 
 static void MENU_MAIN_MANUAL_OpeningHandler()
 {
-	g_UnitData.dat.fPid = 0; 	
+//	g_UnitData.dat.fPid = 0;
+	m_byCursorPos = 0;
+	for(uint16_t i = 0; i < 6; i++)
+		m_bufKeyboard[i] = '0';
+	m_byCursorPage	 = 0; 	
 }
 
 static void ActSngl_OpeningHandler()
@@ -690,6 +721,7 @@ static void Input5_OpeningHandler()
 	display_char("DDDDDDDD");
 	clearLCD();	
 }
+
 static void InsetCutoff_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
@@ -1356,12 +1388,10 @@ static void XcontrolPara_OpeningHandler()
 	m_byCursorPage	 = 0;
 }
 
-#define   ABS(x)   ((x)> 0?(x):-(x)) 
-
 static uint16_t temp1 = 0;
 static uint16_t temp2 = 100;
 
-extern void SetPwmDutyCycle2(int32_t uiDutyCycle);
+extern void SetPwmDutyCycle1(int16_t uiDutyCycle);
 
 static void XtuneAuto_OpeningHandler()
 {
@@ -1372,11 +1402,16 @@ static void XtuneAuto_OpeningHandler()
 	static float fPos	= 0;
 	static float fLast	= 0;
 
-	SetPwmDutyCycle2(-0x900);
+	g_UnitCfg.dat.bIsManual = TRUE;
+
+	SetPwmDutyCycle1(-1000);
+
+	os_dly_wait(200);
 
 	while(ABS(fDiff) > 5)
 	{
-	   	fPos	= g_UnitData.dat.fPos;
+	   	os_dly_wait(100);
+		fPos	= g_UnitData.dat.fPos;
 		fDiff	= fPos - fLast;
 		fLast	= fPos;
 	}
@@ -1387,11 +1422,12 @@ static void XtuneAuto_OpeningHandler()
 	fPos	= 0;
 	fLast	= 0;
 
-	SetPwmDutyCycle2(0x900);
+	SetPwmDutyCycle1(1000);
 
 	while(ABS(fDiff) > 5)
 	{
-	   	fPos	= g_UnitData.dat.fPos;
+	   	os_dly_wait(100);
+		fPos	= g_UnitData.dat.fPos;
 		fDiff	= fPos - fLast;
 		fLast	= fPos;
 	}
@@ -1400,6 +1436,8 @@ static void XtuneAuto_OpeningHandler()
 
 	g_UnitCfg.dat.iAd4Min = temp1;
 	g_UnitCfg.dat.iAd4Max = temp2;
+
+	g_UnitCfg.dat.bIsManual = FALSE;
 
 	display_char("DDDDDDDD");
 }
@@ -1825,11 +1863,11 @@ static void CaluserPos_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
-		SetPwmDutyCycle2(-0x900);
+		SetPwmDutyCycle1(-950);
 	}
 	else if (byKeyCode == KEY_2)
 	{
-		SetPwmDutyCycle2(0x900);
+		SetPwmDutyCycle1(950);
 	}
 	else if (byKeyCode == KEY_3)
 	{
@@ -1884,17 +1922,18 @@ static void CaluserPos_DisplayHandler()
 static void CaluserPos_OpeningHandler()
 {
 	m_byCursorPage	 	= 0;
+	g_UnitCfg.dat.bIsManual = TRUE;
 }
 
 static void CaluserInp_KeyboardHandler(uint8_t byKeyCode)
 {
 	if (byKeyCode == KEY_1)
 	{
-		SetPwmDutyCycle2(-0x900);
+		SetPwmDutyCycle1(-900);
 	}
 	else if (byKeyCode == KEY_2)
 	{
-		SetPwmDutyCycle2(0x900);
+		SetPwmDutyCycle1(900);
 	}
 	else if (byKeyCode == KEY_3)
 	{
@@ -2920,9 +2959,8 @@ void HMI_Init()
 {
 	initLCD_1622();
 	// Enable internal pull-up resister
-	GP3CON	&= ~0x00003330;
-//	GP3CON	&= ~0x00003000;
-//	GP0CON	&= ~0x00033000;
+	GP3CON	&= ~0x00003000;
+	GP0CON	&= ~0x00033000;
 
 	// Init Main Menu
 	m_aMenuItems[MENU_MAIN_ACT].byMenuItemID				= MENU_MAIN_ACT;

@@ -1,4 +1,5 @@
 hmi.o: ..\src\Hmi.c
+hmi.o: C:\Keil\ARM\RV31\INC\RTL.h
 hmi.o: C:\Keil\ARM\INC\ADI\aduc7024.h
 hmi.o: C:\Keil\ARM\INC\ADI\irq.h
 hmi.o: C:\Keil\ARM\INC\ADI\timer.h

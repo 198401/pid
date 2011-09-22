@@ -4,7 +4,8 @@
 #include "port.h"
 
 #define  MAX( x, y ) ( ((x) > (y)) ? (x) : (y) ) 
-#define  MIN( x, y ) ( ((x) < (y)) ? (x) : (y) ) 
+#define  MIN( x, y ) ( ((x) < (y)) ? (x) : (y) )
+#define  ABS(x)   (x)> 0?(x):-(x)  
 
 typedef union _UNIT_DATA
 {
@@ -26,6 +27,7 @@ typedef union _UNIT_DATA
         uint16_t    iAD6;
 		uint16_t    iAD7;
         uint16_t    iAD8;
+		uint16_t    iCnt;
 
         mbBOOL    	bOK;
         mbBOOL    	bZ;

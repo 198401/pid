@@ -34,7 +34,6 @@ const U16            			g_UnitCfgInFlash[256]    __at (EEPADDR);
 #define REG_HOLDING_START           0x0001
 #define REG_HOLDING_NREGS           sizeof(g_UnitCfg)/sizeof(short)
 
-//OS_TID t_feeddog;                       /* assigned task id of task: feeddog */
 OS_TID t_pid;                           /* assigned task id of task: pid     */
 OS_TID t_modbus;                        /* assigned task id of task: modbus  */
 OS_TID t_adc;                           /* assigned task id of task: adc     */
@@ -45,59 +44,47 @@ void lpReset(void)
 	RSTSTA	|= 0x04;
 }
 
-//__task void feeddog(void)
-//{
-//    while (1)
-//    {
-//        T3CLRI = 0x55;
-//        os_dly_wait(5);
-//    }
-//}
+#define PWM_DAT0VALUE           0x2000  /* set PWM freq to 5.5KHz */
 
-#define PWM_DAT0VALUE           0x1000  /* set PWM freq to 5.5KHz */
-
-//void SetPwmDutyCycle0(float uiDutyCycle)
-//{
-//    if(uiDutyCycle > 0.5f)
-//	{
-//		PWMEN  &= ~0x100;
-//		PWMDAT0	= PWM_DAT0VALUE;
-//		PWMCH0 	= PWM_DAT0VALUE * (uiDutyCycle - 0.5f);
-//	}
-//	else
-//	{
-//		PWMEN  |= 0x100;
-//		PWMDAT0	= PWM_DAT0VALUE;
-//		PWMCH0 	= PWM_DAT0VALUE * (0.5 - uiDutyCycle);
-//	}
-//}
-//
-//void SetPwmDutyCycle1(float uiDutyCycle)
-//{
-//    if(uiDutyCycle > 0.5f)
-//	{
-//		PWMEN  &= ~0x080;
-//		PWMDAT0	= PWM_DAT0VALUE;
-//		PWMCH1 	= PWM_DAT0VALUE * (uiDutyCycle - 0.5f);
-//	}
-//	else
-//	{
-//		PWMEN  |= 0x080;
-//		PWMDAT0	= PWM_DAT0VALUE;
-//		PWMCH1 	= PWM_DAT0VALUE * (0.5 - uiDutyCycle);
-//	}
-//}
-
-void SetPwmDutyCycle2(S32 uiDutyCycle)
+void SetPwmDutyCycle1(S16 uiDutyCycle)
 {
-    if(uiDutyCycle > 0x800)
+    if(uiDutyCycle > 500)	   
+	{
+		PWMEN   = 0x0A8;
+		PWMCH0 	= 0;		 //不放气
+		PWMCH1 	= PWM_DAT0VALUE * (-0.5f + (float)uiDutyCycle/1000.0f);
+	}
+	else if(uiDutyCycle > 0)
+	{
+		PWMEN   = 0x28;
+		PWMCH0 	= 0;		  //不放气
+		PWMCH1 	= PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);
+	}
+	else if(uiDutyCycle > -500)	 
+	{
+		PWMEN   = 0x28;
+		PWMCH1 	= PWM_DAT0VALUE * 0.5f;		  //不进气
+		PWMCH0 	= PWM_DAT0VALUE * 0.3;//(-(float)uiDutyCycle/1000.0f);
+	}
+	else
+	{
+		PWMEN   = 0x28;
+		PWMCH1 	= PWM_DAT0VALUE * 0.5f;		  //不进气
+		PWMCH0 	= PWM_DAT0VALUE * 0.5f;
+	}
+}
+
+void SetPwmDutyCycle2(S16 uiDutyCycle)
+{
+    if(uiDutyCycle > 500)	   //p3.5 l
 	{
 		GP3CON &= ~0x00010000;
 		GP3CON |= 0x00100000;
-		GP3DAT |= 0x10000000;
+		GP3DAT |= 0x10000000;  //p3.4 0
 		PWMEN  	= 0x07D;
-		PWMDAT0	= PWM_DAT0VALUE;
-		PWMCH2 	= PWM_DAT0VALUE * (uiDutyCycle/1000 - 0.5f);
+		PWMDAT0 = PWM_DAT0VALUE;  		// Period register 182uS
+		PWMDAT1 = 0;    				// 0us Dead time
+		PWMCH2 	= PWM_DAT0VALUE * ((float)uiDutyCycle/1000.0f - 0.5f);
 	}
 	else if(uiDutyCycle > 0)
 	{
@@ -105,26 +92,27 @@ void SetPwmDutyCycle2(S32 uiDutyCycle)
 		GP3CON |= 0x00100000;
 		GP3DAT |= 0x10000000;
 		PWMEN  	= 0x03D;
-		PWMDAT0	= PWM_DAT0VALUE;
-		PWMCH2 	= PWM_DAT0VALUE * (uiDutyCycle/1000 - 0.5f);
+		PWMDAT0 = PWM_DAT0VALUE;  		// Period register 182uS
+		PWMDAT1 = 0;    				// 0us Dead time
+		PWMCH2 	= PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);
 	}
-	else if(uiDutyCycle > -0x800)
+	else if(uiDutyCycle > -500)	 //p3.4	h
 	{
 		GP3CON &= ~0x00100000;
 		GP3CON |= 0x00010000;
-		GP3DAT |= 0x20200000;
 		PWMEN  	= 0x07E;
-		PWMDAT0	= PWM_DAT0VALUE;
-		PWMCH2 	= PWM_DAT0VALUE * (-uiDutyCycle/1000 - 0.5f);
+		PWMDAT0 = PWM_DAT0VALUE;  		// Period register 182uS
+		PWMDAT1 = 0;    				// 0us Dead time
+		PWMCH2 	= PWM_DAT0VALUE * ((float)uiDutyCycle/1000.0f + 0.5f);
 	}
 	else
 	{
 		GP3CON &= ~0x00100000;
 		GP3CON |= 0x00010000;
-		GP3DAT |= 0x20200000;
 		PWMEN  	= 0x03E;
-		PWMDAT0	= PWM_DAT0VALUE;
-		PWMCH2 	= PWM_DAT0VALUE * (0.5 + uiDutyCycle/1000);
+		PWMDAT0 = PWM_DAT0VALUE;  		// Period register 182uS
+		PWMDAT1 = 0;    				// 0us Dead time
+		PWMCH2 	= PWM_DAT0VALUE * (0.5f + (float)uiDutyCycle/1000.0f);
 	}
 }
 
@@ -155,37 +143,48 @@ __task void pid(void)
 		case 2:
 			tempHandle( );
 			g_UnitData.dat.fPv	= g_UnitData.dat.fTemp;
+			Controller.input	= (S16)g_UnitData.dat.fSp;
+			Controller.feedback = (S16)g_UnitData.dat.fPv;
             break;
         case 3:
 			p1Handle( );
 			p2Handle( );
 			tempHandle( );
 			g_UnitData.dat.fPv	= g_UnitData.dat.fTemp + g_UnitData.dat.fPress1 + g_UnitData.dat.fPress2;
+			Controller.input	= (S16)g_UnitData.dat.fSp;
+			Controller.feedback = (S16)g_UnitData.dat.fPv;
             break;
 		case 4:
 			tempHandle( );
 			g_UnitData.dat.fPv	= g_UnitData.dat.fTemp;
+			Controller.input	= (S16)g_UnitData.dat.fSp;
+			Controller.feedback = (S16)g_UnitData.dat.fPv;
             break;
         default:
 			cmdHandle(0);
+			Controller.input	= (S16)g_UnitData.dat.fPid;
+			Controller.feedback = (S16)g_UnitData.dat.fPos;
             break;
         } 		
-
-		Controller.input	= (S16)g_UnitData.dat.fSp;
-		Controller.feedback = (S16)g_UnitData.dat.fPv;
 
 		if(Controller.counts > 20)
 			pid_Reset_Integrator(&g_UnitCfg);
 
 		Controller.output = pid_Controller(Controller.input, Controller.feedback, &g_UnitCfg);
 
+		if(Controller.output > 0)
+			Controller.output += 280;
+		if(Controller.output < -5)
+			Controller.output  = -1000;
 		// output value
-//		Controller.output = MAX(Controller.output, -1000);
-//		Controller.output = MIN(Controller.output,  1000);
+		Controller.output = MAX(Controller.output, -1000);
+		Controller.output = MIN(Controller.output,  1000);
 		// clamp output value (anti-windup)
+//		if(ABS(Controller.output) < 2*10)
+//				Controller.output = 0;
 		if(!g_UnitCfg.dat.bIsManual)
 		{
-			SetPwmDutyCycle2(Controller.output);
+			SetPwmDutyCycle1(Controller.output);
 		}
 		// counters
 		Controller.counts++;
@@ -253,6 +252,15 @@ __task void hmi(void)
 	while(1)
 	{
 		static float temp;
+		if(g_UnitData.dat.iCnt < 1001)
+		{
+			g_UnitData.dat.iCnt++;
+			if(g_UnitData.dat.iCnt == 1000)
+			{
+				GP3DAT  |= 0x00020000;
+				g_UnitData.dat.iCnt++;
+			}
+		}
 		temp					= DS18B20_Temperature();
 		if (temp >= -55.0f && temp <= 125.0f)
 			g_UnitData.dat.fTem		= temp;
@@ -298,6 +306,9 @@ __task void init(void)
 	if (g_UnitCfg.dat.uBau == 0)
 		g_UnitCfg.dat.uBau = 19200;
 
+	if (g_UnitCfg.dat.P_Factor == 0)
+		g_UnitCfg.dat.P_Factor = 10*128;	
+
 	if (g_UnitCfg.dat.iAd4Min == g_UnitCfg.dat.iAd4Max)
 	{
 		g_UnitCfg.dat.iAd4Max = 3069;
@@ -318,8 +329,7 @@ __task void init(void)
 
 	HMI_Init();
 
-	GP3DAT  = 0x01000000;		//p3.0 output 0,to light the lcd
-//	GP3DAT  = 0x02000000;	
+	GP3DAT  = 0x02000000;	
 
 	adctest	= GetADC(0);
 
@@ -344,11 +354,13 @@ __task void init(void)
 	}	
 
 	// Setup the PWM
-	GP3CON |= 0x00110000;				// Enable the PWM outputs to the GPIO
+	GP3CON |= 0x00110101;				// Enable the PWM outputs to the GPIO
 	PWMCON 	= 0x01;   				// Ext ASYNC disabled
+	PWMEN  	= 0x028;
 	PWMDAT0 = PWM_DAT0VALUE;  		// Period register 182uS
 	PWMDAT1 = 0;    				// 0us Dead time
-	SetPwmDutyCycle2(0);
+//	SetPwmDutyCycle1(0);
+//	SetPwmDutyCycle2(0);
 
 	pid_Init(400, 0, 0, &g_UnitCfg);
 	Controller.counts = 0;
