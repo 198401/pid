@@ -3,7 +3,7 @@
 <title>Static Call Graph - [F:\object\PID\keil\PID.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image F:\object\PID\keil\PID.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Thu Sep 22 13:39:58 2011
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Fri Sep 23 13:41:13 2011
 <BR><P>
 <H3>Maximum Stack Usage =        232 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -419,14 +419,13 @@ Global Symbols
 <LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pid
 </UL>
 
-<P><STRONG><a name="[d2]"></a>SetPwmDutyCycle2</STRONG> (Thumb, 220 bytes, Stack size 24 bytes, main.o(.text), UNUSED)
+<P><STRONG><a name="[d2]"></a>SetPwmDutyCycle2</STRONG> (Thumb, 190 bytes, Stack size 24 bytes, main.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scalbnf (via Veneer)
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f (via Veneer)
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2uiz (via Veneer)
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv (via Veneer)
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub (via Veneer)
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_frsub (via Veneer)
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd (via Veneer)
 </UL>
 
 <P><STRONG><a name="[16]"></a>pid</STRONG> (Thumb, 298 bytes, Stack size 32 bytes, main.o(.text))
@@ -470,7 +469,7 @@ Global Symbols
 <LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;adc
 </UL>
 
-<P><STRONG><a name="[17]"></a>adc</STRONG> (Thumb, 96 bytes, Stack size 0 bytes, main.o(.text))
+<P><STRONG><a name="[17]"></a>adc</STRONG> (Thumb, 98 bytes, Stack size 0 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = adc &rArr; GetADC
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;os_evt_set
@@ -479,7 +478,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text)
 </UL>
-<P><STRONG><a name="[18]"></a>hmi</STRONG> (Thumb, 104 bytes, Stack size 0 bytes, main.o(.text))
+<P><STRONG><a name="[18]"></a>hmi</STRONG> (Thumb, 102 bytes, Stack size 0 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80 + Unknown Stack Size
 <LI>Call Chain = hmi &rArr; HMI_Handler &rArr; Display &rArr; floattochar &rArr; __aeabi_fmul
 </UL>
@@ -496,7 +495,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init
 </UL>
 
-<P><STRONG><a name="[19]"></a>init</STRONG> (Thumb, 458 bytes, Stack size 8 bytes, main.o(.text))
+<P><STRONG><a name="[19]"></a>init</STRONG> (Thumb, 446 bytes, Stack size 8 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96 + Unknown Stack Size
 <LI>Call Chain = init &rArr; GetADC
 </UL>
@@ -527,7 +526,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;eMBFuncReadInputRegister
 </UL>
 
-<P><STRONG><a name="[f1]"></a>eMBRegHoldingCB</STRONG> (Thumb, 102 bytes, Stack size 24 bytes, main.o(.text))
+<P><STRONG><a name="[f1]"></a>eMBRegHoldingCB</STRONG> (Thumb, 98 bytes, Stack size 24 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = eMBRegHoldingCB &rArr; EepromWr_n
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EepromWr_n
@@ -2164,7 +2163,6 @@ Global Symbols
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;p1Handle (via Veneer)
 <LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cmdHandle (via Veneer)
 <LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pid (via Veneer)
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetPwmDutyCycle2 (via Veneer)
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetPwmDutyCycle1 (via Veneer)
 </UL>
 

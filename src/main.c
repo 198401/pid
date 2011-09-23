@@ -64,7 +64,7 @@ void SetPwmDutyCycle1(S16 uiDutyCycle)
 	{
 		PWMEN   = 0x28;
 		PWMCH1 	= PWM_DAT0VALUE * 0.5f;		  //²»½øÆø
-		PWMCH0 	= PWM_DAT0VALUE * 0.3;//(-(float)uiDutyCycle/1000.0f);
+		PWMCH0 	= PWM_DAT0VALUE * 0.3f;//(-(float)uiDutyCycle/1000.0f);
 	}
 	else
 	{
@@ -73,7 +73,7 @@ void SetPwmDutyCycle1(S16 uiDutyCycle)
 		PWMCH0 	= PWM_DAT0VALUE * 0.5f;
 	}
 }
-
+																																		
 void SetPwmDutyCycle2(S16 uiDutyCycle)
 {
     if(uiDutyCycle > 500)	   //p3.5 l
@@ -81,7 +81,7 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)
 		GP3CON &= ~0x00010000;
 		GP3CON |= 0x00100000;
 		GP3DAT |= 0x10000000;  //p3.4 0
-		PWMEN  	= 0x07D;
+		PWMEN  	= 0x03D;
 		PWMDAT0 = PWM_DAT0VALUE;  		// Period register 182uS
 		PWMDAT1 = 0;    				// 0us Dead time
 		PWMCH2 	= PWM_DAT0VALUE * ((float)uiDutyCycle/1000.0f - 0.5f);
@@ -91,7 +91,7 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)
 		GP3CON &= ~0x00010000;
 		GP3CON |= 0x00100000;
 		GP3DAT |= 0x10000000;
-		PWMEN  	= 0x03D;
+		PWMEN  	= 0x07D;
 		PWMDAT0 = PWM_DAT0VALUE;  		// Period register 182uS
 		PWMDAT1 = 0;    				// 0us Dead time
 		PWMCH2 	= PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);
@@ -100,19 +100,15 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)
 	{
 		GP3CON &= ~0x00100000;
 		GP3CON |= 0x00010000;
-		PWMEN  	= 0x07E;
-		PWMDAT0 = PWM_DAT0VALUE;  		// Period register 182uS
-		PWMDAT1 = 0;    				// 0us Dead time
-		PWMCH2 	= PWM_DAT0VALUE * ((float)uiDutyCycle/1000.0f + 0.5f);
+		PWMEN  	= 0x03E;
+		PWMCH2 	= PWM_DAT0VALUE * 0.3f;
 	}
 	else
 	{
 		GP3CON &= ~0x00100000;
 		GP3CON |= 0x00010000;
 		PWMEN  	= 0x03E;
-		PWMDAT0 = PWM_DAT0VALUE;  		// Period register 182uS
-		PWMDAT1 = 0;    				// 0us Dead time
-		PWMCH2 	= PWM_DAT0VALUE * (0.5f + (float)uiDutyCycle/1000.0f);
+		PWMCH2 	= PWM_DAT0VALUE * 0.5f;
 	}
 }
 
