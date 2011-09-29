@@ -1,0 +1,11 @@
+ds18b20.o: ..\src\ds18b20.c
+ds18b20.o: C:\Keil\ARM\INC\ADI\ADuC7024.H
+ds18b20.o: C:\Keil\ARM\INC\ADI\irq.h
+ds18b20.o: C:\Keil\ARM\INC\ADI\timer.h
+ds18b20.o: C:\Keil\ARM\INC\ADI\dac.h
+ds18b20.o: C:\Keil\ARM\INC\ADI\uart.h
+ds18b20.o: C:\Keil\ARM\INC\ADI\I2C.h
+ds18b20.o: C:\Keil\ARM\INC\ADI\PLA.H
+ds18b20.o: C:\Keil\ARM\INC\ADI\GPIO.h
+ds18b20.o: C:\Keil\ARM\INC\ADI\flash.h
+ds18b20.o: C:\Keil\ARM\INC\ADI\pwm.h

@@ -44,9 +44,9 @@ void lpReset(void)
 	RSTSTA	|= 0x04;
 }
 
-#define PWM_DAT0VALUE           0x2000  /* set PWM freq to 5.5KHz */
+#define PWM_DAT0VALUE           0x2000  /* set PWM freq to 2.7KHz */
 
-void SetPwmDutyCycle1(S16 uiDutyCycle)
+void SetPwmDutyCycle1(S16 uiDutyCycle)	/* set sngl PWM */
 {
     if(uiDutyCycle > 500)	   
 	{
@@ -74,41 +74,45 @@ void SetPwmDutyCycle1(S16 uiDutyCycle)
 	}
 }
 																																		
-void SetPwmDutyCycle2(S16 uiDutyCycle)
+void SetPwmDutyCycle2(S16 uiDutyCycle)	/* set double PWM */
 {
     if(uiDutyCycle > 500)	   //p3.5 l
 	{
 		GP3CON &= ~0x00010000;
 		GP3CON |= 0x00100000;
 		GP3DAT |= 0x10000000;  //p3.4 0
-		PWMEN  	= 0x03D;
-		PWMDAT0 = PWM_DAT0VALUE;  		// Period register 182uS
-		PWMDAT1 = 0;    				// 0us Dead time
-		PWMCH2 	= PWM_DAT0VALUE * ((float)uiDutyCycle/1000.0f - 0.5f);
+		PWMEN  	= 0x0AA;
+		PWMCH0 	= 0;		 //不放气
+		PWMCH2 	= PWM_DAT0VALUE * (-0.5f + (float)uiDutyCycle/1000.0f);		
+		PWMCH1 	= PWM_DAT0VALUE * (-0.5f + (float)uiDutyCycle/1000.0f);
 	}
 	else if(uiDutyCycle > 0)
 	{
 		GP3CON &= ~0x00010000;
 		GP3CON |= 0x00100000;
 		GP3DAT |= 0x10000000;
-		PWMEN  	= 0x07D;
-		PWMDAT0 = PWM_DAT0VALUE;  		// Period register 182uS
-		PWMDAT1 = 0;    				// 0us Dead time
-		PWMCH2 	= PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);
+		PWMEN  	= 0x06A; 
+		PWMCH0 	= 0;		  //不放气
+		PWMCH2 	= PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);		
+		PWMCH1 	= PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);
 	}
 	else if(uiDutyCycle > -500)	 //p3.4	h
 	{
 		GP3CON &= ~0x00100000;
 		GP3CON |= 0x00010000;
-		PWMEN  	= 0x03E;
-		PWMCH2 	= PWM_DAT0VALUE * 0.3f;
+		PWMEN  	= 0x029;
+		PWMCH1 	= PWM_DAT0VALUE * 0.5f;		  //不进气
+		PWMCH2 	= PWM_DAT0VALUE * 0.3f;		
+		PWMCH0 	= PWM_DAT0VALUE * 0.3f;//(-(float)uiDutyCycle/1000.0f);
 	}
 	else
 	{
 		GP3CON &= ~0x00100000;
 		GP3CON |= 0x00010000;
-		PWMEN  	= 0x03E;
-		PWMCH2 	= PWM_DAT0VALUE * 0.5f;
+		PWMEN  	= 0x029; 
+		PWMCH1 	= PWM_DAT0VALUE * 0.5f;		  //不进气
+		PWMCH2 	= PWM_DAT0VALUE * 0.5f;		
+		PWMCH0 	= PWM_DAT0VALUE * 0.5f;
 	}
 }
 
@@ -180,7 +184,10 @@ __task void pid(void)
 //				Controller.output = 0;
 		if(!g_UnitCfg.dat.bIsManual)
 		{
-			SetPwmDutyCycle1(Controller.output);
+			if(!g_UnitCfg.dat.bIsDouble)
+				SetPwmDutyCycle1(Controller.output);
+			else
+				SetPwmDutyCycle2(Controller.output);	
 		}
 		// counters
 		Controller.counts++;
@@ -340,13 +347,13 @@ __task void init(void)
 		eMBEnable( );
 		t_modbus = os_tsk_create (modbus, 1);    /* start task 'modbus'              */
 	}
-	else if(adctest < 2460)
+	else if(adctest < 3680)
 	{
 		//can
 	}
 	else
 	{
-	   ;
+		//none;
 	}	
 
 	// Setup the PWM
@@ -435,8 +442,8 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs,
             }
             break;
 
-            /* Update current register values with new values from the
-             * protocol stack. */
+        /* Update current register values with new values from the
+         * protocol stack. */
         case MB_REG_WRITE:
             while ( usNRegs > 0 )
             {

@@ -342,7 +342,7 @@
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <VariousControls>
-              <MiscControls>--c99</MiscControls>
+              <MiscControls>--c99 --message_locale=zh_CN</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath>..\bsp\port;..\modbus\ascii;..\modbus\rtu;..\modbus\include;..\src;..\FlashEE;..\bsp\ht1622</IncludePath>
@@ -539,6 +539,16 @@
               <FileName>pid.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\pid.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>calc</GroupName>
+          <Files>
+            <File>
+              <FileName>calc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\calc.c</FilePath>
             </File>
           </Files>
         </Group>

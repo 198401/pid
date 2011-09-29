@@ -28,7 +28,6 @@
 #define IS_KEY1_DOWN()			((GP0DAT & BIT03) == 0)
 #define IS_KEY2_DOWN()			((GP0DAT & BIT04) == 0)
 
-#define MENU_ITEMS				162
 #define KB_BUF_SIZE				63
 
 const uint8_t display[][8] =	{
@@ -195,21 +194,6 @@ const uint8_t display[][8] =	{
 							"LEAKCHAR",
 							"LEAK[END",
 						  	};
-
-extern UNIT_DATA                g_UnitData;
-
-DEFINE_STACK(MENU_CTL_BLOCK, uint8_t, STACK_MCB)
-
-MENU_ITEM						m_aMenuItems[MENU_ITEMS];
-MENU_CTL_BLOCK					m_mcbCurrent;
-STACK_MCB						m_stackMenuCtlBlock;
-
-// Indicate which page to be displayed
-static uint8_t						m_byPageNo					= 0;
-static uint8_t						m_byCursorPos				= 0;
-static uint8_t						m_byCursorPage				= 0;
-
-static uint8_t						m_bufKeyboard[KB_BUF_SIZE];
 
 enum
 {
@@ -412,7 +396,24 @@ enum
 	MENU_LEAK_MEAS,
 	MENU_LEAK_CHAR,
 	MENU_LEAK_END,
+
+	MENU_ITEMS,
 };
+
+extern UNIT_DATA                g_UnitData;
+
+DEFINE_STACK(MENU_CTL_BLOCK, uint8_t, STACK_MCB)
+
+MENU_ITEM						m_aMenuItems[MENU_ITEMS];
+MENU_CTL_BLOCK					m_mcbCurrent;
+STACK_MCB						m_stackMenuCtlBlock;
+
+// Indicate which page to be displayed
+static uint8_t						m_byPageNo					= 0;
+static uint8_t						m_byCursorPos				= 0;
+static uint8_t						m_byCursorPage				= 0;
+
+static uint8_t						m_bufKeyboard[KB_BUF_SIZE];
 
 extern UNIT_DATA				g_UnitData;
 extern UNIT_CFG					g_UnitCfg;
@@ -679,6 +680,7 @@ static void MENU_MAIN_MANUAL_OpeningHandler()
 static void ActSngl_OpeningHandler()
 {
 	clearLCD();
+	g_UnitCfg.dat.bIsDouble = FALSE;
 	display_char("DDDDDDDD");
 	clearLCD();	
 }
@@ -686,6 +688,7 @@ static void ActSngl_OpeningHandler()
 static void ActDoub_OpeningHandler()
 {
 	clearLCD();
+	g_UnitCfg.dat.bIsDouble = TRUE;
 	display_char("DDDDDDDD");
 	clearLCD();	
 }

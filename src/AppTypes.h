@@ -110,6 +110,7 @@ typedef union _UNIT_CFG
 		uint8_t   	byInp;	   //0 4-20ma 1 0-20ma 2 0-5V 3 0-10V other pt100
 		uint8_t   	byErr;	   //0 none 1 pos safe pos 2 pos zero other none
 
+		mbBOOL  	bIsDouble;
 		mbBOOL		bIsManual;
 		mbBOOL		bIsActInverse;
 		mbBOOL		bIsCmdInverse;
