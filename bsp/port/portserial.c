@@ -24,12 +24,12 @@ vMBPortSerialEnable( mbBOOL xRxEnable, mbBOOL xTxEnable )
     if ( xRxEnable )
     {
         COMIEN0 |= 0x01;
-		/* delay 2 byte time */
-		for (ULONG i = 0; i < 2560; ++i)
-		{
-			;
-		}
-		GP1DAT &= ~0x00800000;
+        /* delay 2 byte time */
+        for (ULONG i = 0; i < 2560; ++i)
+        {
+            ;
+        }
+        GP1DAT &= ~0x00800000;
     }
     else
     {
@@ -38,7 +38,7 @@ vMBPortSerialEnable( mbBOOL xRxEnable, mbBOOL xTxEnable )
     if ( xTxEnable )
     {
         COMIEN0 |= 0x02;
-		GP1DAT |= 0x80800000;
+        GP1DAT |= 0x80800000;
     }
     else
     {
@@ -57,7 +57,7 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     ( void )ucPORT;
 
     GP1CON |= 0x011;       /* Setup tx & rx pins on P1.0 and P1.1 */
-	GP1DAT |= 0x80000000;       /* Setup tr pins on P1.7 */
+    GP1DAT |= 0x80000000;       /* Setup tr pins on P1.7 */
 
     switch ( ucDataBits )
     {
@@ -104,7 +104,7 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
         COMCON0 = 0x007;          /* Clear DLAB */
 
         /* Configure UART Interrupt */
-        IRQEN  |= UART_BIT;              // Enable UART IRQ
+        IRQEN  |= UART_BIT;              
     }
 
     return bInitialized;
@@ -128,14 +128,14 @@ void mb_uart_interrupt (void) __irq
 {
     static UCHAR    ucCOMIID0;
     ucCOMIID0 = COMIID0;
-    if ((ucCOMIID0 & BIT01) == BIT01)     // Tx Complete
+    if ((ucCOMIID0 & BIT01) == BIT01)
     {
-        // Sending Char
+        /* Sending Char*/
         pxMBFrameCBTransmitterEmpty(  );
     }
-    if ((ucCOMIID0 & BIT02) == BIT02)     // Rx Complete
+    if ((ucCOMIID0 & BIT02) == BIT02)
     {
-        // Receiving Char
+        /* Receiving Char*/
         pxMBFrameCBByteReceived(  );
     }
 

@@ -1,0 +1,14 @@
+can.o: ..\src\can.c
+can.o: ..\src\mcp2515.h
+can.o: C:\Keil\ARM\INC\ADI\aduc7024.h
+can.o: C:\Keil\ARM\INC\ADI\irq.h
+can.o: C:\Keil\ARM\INC\ADI\timer.h
+can.o: C:\Keil\ARM\INC\ADI\dac.h
+can.o: C:\Keil\ARM\INC\ADI\uart.h
+can.o: C:\Keil\ARM\INC\ADI\I2C.h
+can.o: C:\Keil\ARM\INC\ADI\PLA.H
+can.o: C:\Keil\ARM\INC\ADI\GPIO.h
+can.o: C:\Keil\ARM\INC\ADI\flash.h
+can.o: C:\Keil\ARM\INC\ADI\pwm.h
+can.o: C:\Keil\ARM\RV31\INC\inttypes.h
+can.o: C:\Keil\ARM\RV31\INC\stdint.h

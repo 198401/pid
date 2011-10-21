@@ -1,0 +1,1 @@
+ --thumb -c --cpu ARM7TDMI -D__RTX -g -O3 --apcs=interwork -I..\bsp\port -I..\modbus\ascii -I..\modbus\rtu -I..\modbus\include -I..\src -I..\FlashEE -I..\bsp\ht1622 --c99 -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\ADI" -o "main.o" --omf_browse "main.crf" --depend "main.d" "..\src\main.c"

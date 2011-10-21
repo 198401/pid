@@ -1,0 +1,14 @@
+mcp2515.o: ..\src\mcp2515.c
+mcp2515.o: ..\src\mcp2515.h
+mcp2515.o: C:\Keil\ARM\INC\ADI\aduc7024.h
+mcp2515.o: C:\Keil\ARM\INC\ADI\irq.h
+mcp2515.o: C:\Keil\ARM\INC\ADI\timer.h
+mcp2515.o: C:\Keil\ARM\INC\ADI\dac.h
+mcp2515.o: C:\Keil\ARM\INC\ADI\uart.h
+mcp2515.o: C:\Keil\ARM\INC\ADI\I2C.h
+mcp2515.o: C:\Keil\ARM\INC\ADI\PLA.H
+mcp2515.o: C:\Keil\ARM\INC\ADI\GPIO.h
+mcp2515.o: C:\Keil\ARM\INC\ADI\flash.h
+mcp2515.o: C:\Keil\ARM\INC\ADI\pwm.h
+mcp2515.o: C:\Keil\ARM\RV31\INC\inttypes.h
+mcp2515.o: C:\Keil\ARM\RV31\INC\stdint.h

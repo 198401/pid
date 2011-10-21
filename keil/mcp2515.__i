@@ -1,0 +1,1 @@
+ --thumb -c --cpu ARM7TDMI -D__RTX -g -O3 --apcs=interwork -I..\bsp\port -I..\modbus\ascii -I..\modbus\rtu -I..\modbus\include -I..\src -I..\FlashEE -I..\bsp\ht1622 --c99 -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\ADI" -o "mcp2515.o" --omf_browse "mcp2515.crf" --depend "mcp2515.d" "..\src\mcp2515.c"

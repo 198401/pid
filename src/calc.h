@@ -19,6 +19,6 @@ void spHandle(void);
 void p1Handle(void);
 void p2Handle(void);
 void tempHandle(void);
-void cmdHandle(float xd);
+void cmdHandle(void);
 
 #endif

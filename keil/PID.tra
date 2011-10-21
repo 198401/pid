@@ -25,15 +25,18 @@
 ### List of Objects: adding '"ds18b20.o"'
 ### List of Objects: adding '"pid.o"'
 ### List of Objects: adding '"calc.o"'
+### List of Objects: adding '"ad5422.o"'
+### List of Objects: adding '"mcp2515.o"'
+### List of Objects: adding '"can.o"'
 ### ADS-LD Command completed:
---cpu ARM7TDMI ".\startup.o" "main.o" "portevent.o" "portserial.o" "porttimer.o" "mb.o" "mbcrc.o" "mbrtu.o" "mbfunccoils.o" "mbfuncdisc.o" "mbfuncholding.o" "mbfuncinput.o" "mbfuncother.o" "mbutils.o" "mbascii.o" "mbfuncdiag.o" "rtx_config.o" "..\rtos\RTX_ARM_L.lib" "iap.o" "ht1622.o" "hmi.o" "ds18b20.o" "pid.o" "calc.o" "C:\Keil\ARM\RV31\LIB\RTX_ARM_L.LIB" --strict --scatter "PID.sct" 
+--cpu ARM7TDMI ".\startup.o" "main.o" "portevent.o" "portserial.o" "porttimer.o" "mb.o" "mbcrc.o" "mbrtu.o" "mbfunccoils.o" "mbfuncdisc.o" "mbfuncholding.o" "mbfuncinput.o" "mbfuncother.o" "mbutils.o" "mbascii.o" "mbfuncdiag.o" "rtx_config.o" "..\rtos\RTX_ARM_L.lib" "iap.o" "ht1622.o" "hmi.o" "ds18b20.o" "pid.o" "calc.o" "ad5422.o" "mcp2515.o" "can.o" "C:\Keil\ARM\RV31\LIB\RTX_ARM_L.LIB" --strict --scatter "PID.sct" 
 --autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
 --info sizes --info totals --info unused --info veneers 
  --list ".\PID.map" -o "PID.axf"### Preparing Environment (PrepEnvAds)
 ### ADS-LD Output File: 'PID.axf'
 ### ADS-LD Command File: 'PID.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile 'PID.lnp', Handle=0x0000025C
+### Creating CmdFile 'PID.lnp', Handle=0x0000082C
 ### Writing '.lnp' file
 ### ADS-LD Command file 'PID.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.

@@ -342,7 +342,7 @@
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <VariousControls>
-              <MiscControls>--c99 --message_locale=zh_CN</MiscControls>
+              <MiscControls>--c99</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath>..\bsp\port;..\modbus\ascii;..\modbus\rtu;..\modbus\include;..\src;..\FlashEE;..\bsp\ht1622</IncludePath>
@@ -549,6 +549,31 @@
               <FileName>calc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\calc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>anl</GroupName>
+          <Files>
+            <File>
+              <FileName>AD5422.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\AD5422.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mcp2515</GroupName>
+          <Files>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\mcp2515.c</FilePath>
+            </File>
+            <File>
+              <FileName>can.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\can.c</FilePath>
             </File>
           </Files>
         </Group>

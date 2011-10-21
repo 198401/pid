@@ -12,28 +12,28 @@
 *************************************************************************************************/
 #include "pid.h"
 
-void pid_Init(int16_t p_factor, int16_t i_factor, int16_t d_factor, UNIT_CFG *pid)
+void pid_init(int16_t p_factor, int16_t i_factor, int16_t d_factor, UNIT_CFG *pid)
 {
-    // Start values for PID controller
+    /* Start values for PID controller */
     pid->dat.sumError = 0;
     pid->dat.lastProcessValue = 0;
-    // Tuning constants for PID loop
+    /* Tuning constants for PID loop*/
     pid->dat.P_Factor = p_factor;
     pid->dat.I_Factor = i_factor;
     pid->dat.D_Factor = d_factor;
-    // Limits to avoid overflow
+    /* Limits to avoid overflow*/
     pid->dat.maxError = MAX_INT / (pid->dat.P_Factor + 1);
     pid->dat.maxSumError = MAX_I_TERM / (pid->dat.I_Factor + 1);
 }
 
-int16_t pid_Controller(int16_t setPoint, int16_t processValue, UNIT_CFG *pid)
+int16_t pid_controller(int16_t setPoint, int16_t processValue, UNIT_CFG *pid)
 {
     int16_t error, p_term, d_term;
     int32_t i_term, ret, temp;
 
     error = setPoint - processValue;
 
-    // Calculate Pterm and limit error overflow
+    /* Calculate Pterm and limit error overflow*/
     if (error > pid->dat.maxError)
     {
         p_term = MAX_INT;
@@ -47,7 +47,7 @@ int16_t pid_Controller(int16_t setPoint, int16_t processValue, UNIT_CFG *pid)
         p_term = pid->dat.P_Factor * error;
     }
 
-    // Calculate Iterm and limit integral runaway
+    /* Calculate Iterm and limit integral runaway*/
     temp = pid->dat.sumError + error;
     if (temp > pid->dat.maxSumError)
     {
@@ -65,7 +65,7 @@ int16_t pid_Controller(int16_t setPoint, int16_t processValue, UNIT_CFG *pid)
         i_term = pid->dat.I_Factor * pid->dat.sumError;
     }
 
-    // Calculate Dterm
+    /* Calculate Dterm*/
     d_term = pid->dat.D_Factor * (pid->dat.lastProcessValue - processValue);
 
     pid->dat.lastProcessValue = processValue;
@@ -83,7 +83,7 @@ int16_t pid_Controller(int16_t setPoint, int16_t processValue, UNIT_CFG *pid)
     return((int16_t)ret);
 }
 
-void pid_Reset_Integrator(UNIT_CFG *pid)
+void pid_reset_integrator(UNIT_CFG *pid)
 {
     pid->dat.sumError = 0;
 }

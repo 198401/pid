@@ -39,21 +39,21 @@ typedef unsigned short          WORD;
 #define    DS18B20_ConvertTemp 	0x44   
 #define    DS18B20_RecallEP    	0xB8   
 #define    DS18B20_ReadPower    0xB4   
- 
+
 static WORD QryCrc8(const BYTE *pBuffer, BYTE Length)  
 {
     BYTE i,j,bit0,cbit,cbyte,CRCValue;
 
     CRCValue=0;
-    for(i=0;i<Length;i++)
+    for (i=0;i<Length;i++)
     {
         cbyte=pBuffer[i];
-        for(j=0;j<8;j++)
+        for (j=0;j<8;j++)
         {
             cbit=CRCValue&0x01;
             bit0=cbyte&0x01;
             CRCValue>>=1;
-            if((cbit^bit0)==1)
+            if ((cbit^bit0)==1)
                 CRCValue^=0x8c;
             cbyte>>=1;
         }
@@ -66,10 +66,10 @@ static WORD QryCrc8(const BYTE *pBuffer, BYTE Length)
 static volatile void delay_5us(WORD count)      
 {
     WORD i;  
-    while(count)
+    while (count)
     {
         i =21;
-        while(i>0) i--;
+        while (i>0) i--;
         count--;
     }
 }
@@ -86,20 +86,20 @@ static BYTE Init_DS18B20(void)
     DS18B20_IN;
     delay_5us(16);
 
-    while(DS18B20_STU)
+    while (DS18B20_STU)
     {
         delay_5us(1);    
         errTime++;
-        if(errTime>20)
-            return 0;    
+        if (errTime>20)
+            return 0;
     }
     errTime=0;
-    while(!(DS18B20_STU))
+    while (!(DS18B20_STU))
     {
         delay_5us(1);   
         errTime++;
-        if(errTime>50)
-            return 0;     
+        if (errTime>50)
+            return 0;
     }
     return 0xff;
 }
@@ -110,7 +110,7 @@ static BYTE DS18B20_ReadByte(void)
     BYTE temp = 0;
 
     DS18B20_IN;
-    for(i=0;i<8;i++)
+    for (i=0;i<8;i++)
     {
         temp >>= 1;      
         DS18B20_OUT;
@@ -119,7 +119,7 @@ static BYTE DS18B20_ReadByte(void)
         DS18B20_H;
         DS18B20_IN;       
         delay_5us(2);
-        if(DS18B20_STU)
+        if (DS18B20_STU)
             temp |= 0x80;
         delay_5us(10);
         DS18B20_OUT;
@@ -134,14 +134,14 @@ static void DS18B20_WriteByte(BYTE Data)
     BYTE i;
     BYTE temp;
     DS18B20_IN;
-    for(i=0;i<8;i++)
+    for (i=0;i<8;i++)
     {
         DS18B20_OUT;
         DS18B20_L;
         delay_5us(1);
         temp = Data >> i;
         temp &= 0x01;               
-        if(temp)
+        if (temp)
             DS18B20_H;
         else
             DS18B20_L;
@@ -159,22 +159,22 @@ float DS18B20_Temperature(void)
     float temp = 0.0f;
 
     flag = Init_DS18B20();
-    if(flag == 0x00)
+    if (flag == 0x00)
         return -9999;
     DS18B20_WriteByte(DS18B20_SkipROM);
     DS18B20_WriteByte(DS18B20_ConvertTemp);
 
     flag = Init_DS18B20();
-    if(flag == 0x00)
+    if (flag == 0x00)
         return -9999;
 
     DS18B20_WriteByte(DS18B20_SkipROM);
     DS18B20_WriteByte(DS18B20_ReadSCR);
-    for(i = 0;i < 10;i++)
+    for (i = 0;i < 10;i++)
         a[i]  = DS18B20_ReadByte();
-    if(QryCrc8(a,8)==a[9])
+    if (QryCrc8(a,8)==a[9])
     {
-        if(a[1]&0xf0)
+        if (a[1]&0xf0)
         {
             temp= 0-(0xffff-(unsigned short)((a[1]<<8)+a[0])+1)*0.0625;
         }

@@ -24,7 +24,7 @@ static ULONG mb_timer;
 mbBOOL
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
-    mb_timer   = ((ULONG)(((double)OS_CLOCK*(double)OS_TICK)/1E6)-1);                       // Counter Value
+    mb_timer   = ((ULONG)(((double)OS_CLOCK*(double)OS_TICK)/1E6)-1);                       
     return TRUE;
 }
 
@@ -32,20 +32,20 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
 inline void
 vMBPortTimersEnable(  )
 {
-    T2CON  = 0x84;                       // Enabled,Free,Binary and CLK/16
-	T2LD   = mb_timer;
-	IRQEN |= WAKEUP_TIMER_BIT;              // Enable Timer1 IRQ
+    T2CON  = 0x84;                       
+    T2LD   = mb_timer;
+    IRQEN |= WAKEUP_TIMER_BIT;              
 }
 
 inline void
 vMBPortTimersDisable(  )
 {
-    IRQEN &= ~WAKEUP_TIMER_BIT;              // Enable Timer1 IRQ
+    IRQEN &= ~WAKEUP_TIMER_BIT;               
 }
 
 void mb_timer2_interrupt (void) __irq
 {
     ( void )pxMBPortCBTimerExpired(  );
-    T2CLRI = 0xFF;                             // Clear Timer IRQ
+    T2CLRI = 0xFF;                           
 }
 
