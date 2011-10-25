@@ -110,8 +110,7 @@ typedef union _UNIT_CFG
         int8_t      byCha[21];
 
         uint8_t     byMbAddr;
-        uint8_t     byMode;    /* 0 positioner 1 freq processer 2 pt100 processer 3 flow rate processer 4 inp processer 5 in set mode other positioner */
-        uint8_t     byOldMode;   
+        uint8_t     byMode;    /* 0 positioner 1 freq processer 2 pt100 processer 3 flow rate processer 4 inp processer 0x80 in set mode other positioner */
         uint8_t     byInp;     /* 0 4-20ma 1 0-20ma 2 0-5V 3 0-10V other pt100     */
         uint8_t     byErr;     /* 0 none 1 pos safe pos 2 pos zero other none     */
         uint8_t     byOut;

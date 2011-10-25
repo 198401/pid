@@ -500,11 +500,11 @@ static void CheckKeyboard()
 
 	if (byKeyMask == 7)
         byKeyMask  = BIT03;	/* key 1,2,3 */
-    if (byKeyMask == 6)
+    else if (byKeyMask == 6)
         byKeyMask  = BIT04;	/* key 2,3 */
-    if (byKeyMask == 5)
+    else if (byKeyMask == 5)
         byKeyMask  = BIT05;	/* key 1,3 */
-	if (byKeyMask == 3)
+	else if (byKeyMask == 3)
         byKeyMask  = BIT06; /* key 1,2 */  
 
     for (uint8_t i = 0; i < KEYS; ++i)
@@ -1480,7 +1480,7 @@ static void XtuneAuto_OpeningHandler()
     static float fPos   = 0;
     static float fLast  = 0;
 
-    g_UnitCfg.dat.byMode = 5;
+    g_UnitCfg.dat.byMode |= 0x80;
 
     SetPwmDutyCycle1(-1000);
 
@@ -1515,7 +1515,7 @@ static void XtuneAuto_OpeningHandler()
     g_UnitCfg.dat.iAd4Min = temp1;
     g_UnitCfg.dat.iAd4Max = temp2;
 
-    g_UnitCfg.dat.byMode = g_UnitCfg.dat.byOldMode;
+    g_UnitCfg.dat.byMode &= 0x7F;
 
     display_char("DDDDDDDD");
 }
@@ -1965,7 +1965,7 @@ static void CaluserPos_KeyboardHandler(uint8_t byKeyCode)
 
             g_UnitCfg.dat.iAd4Min = temp1;
             g_UnitCfg.dat.iAd4Max = temp2;
-            g_UnitCfg.dat.byMode = g_UnitCfg.dat.byOldMode;
+            g_UnitCfg.dat.byMode &= 0x7F;
 
             S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
             m_mcbCurrent.pMenu                      = pMenuItem;
@@ -2000,7 +2000,7 @@ static void CaluserPos_DisplayHandler()
 static void CaluserPos_OpeningHandler()
 {
     m_byCursorPage      = 0;
-    g_UnitCfg.dat.byMode = 5;
+    g_UnitCfg.dat.byMode |= 0x80;
 }
 
 static void CaluserInp_KeyboardHandler(uint8_t byKeyCode)

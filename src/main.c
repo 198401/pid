@@ -82,7 +82,7 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double PWM */
         GP3CON &= ~0x00010000;
         GP3CON |= 0x00100000;
         GP3DAT |= 0x10000000;  /* p3.4 0*/
-        PWMEN   = 0x0AA;
+        PWMEN   = 0x0A9;
         PWMCH0  = 0;         /* 不放气*/
         PWMCH2  = PWM_DAT0VALUE * (-0.5f + (float)uiDutyCycle/1000.0f);     
         PWMCH1  = PWM_DAT0VALUE * (-0.5f + (float)uiDutyCycle/1000.0f);
@@ -92,7 +92,7 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double PWM */
         GP3CON &= ~0x00010000;
         GP3CON |= 0x00100000;
         GP3DAT |= 0x10000000;
-        PWMEN   = 0x06A; 
+        PWMEN   = 0x069; 
         PWMCH0  = 0;          /* 不放气*/
         PWMCH2  = PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);      
         PWMCH1  = PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);
@@ -101,7 +101,7 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double PWM */
     {
         GP3CON &= ~0x00100000;
         GP3CON |= 0x00010000;
-        PWMEN   = 0x029;
+        PWMEN   = 0x02A;
         PWMCH1  = PWM_DAT0VALUE * 0.5f;       /* 不进气*/
         PWMCH2  = PWM_DAT0VALUE * 0.3f;     
         PWMCH0  = PWM_DAT0VALUE * 0.3f;//(-(float)uiDutyCycle/1000.0f);
@@ -110,7 +110,7 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double PWM */
     {
         GP3CON &= ~0x00100000;
         GP3CON |= 0x00010000;
-        PWMEN   = 0x029; 
+        PWMEN   = 0x02A; 
         PWMCH1  = PWM_DAT0VALUE * 0.5f;       /* 不进气*/
         PWMCH2  = PWM_DAT0VALUE * 0.5f;     
         PWMCH0  = PWM_DAT0VALUE * 0.5f;
@@ -165,7 +165,7 @@ __task void pid(void)
             Controller.feedback = (S16)g_UnitData.dat.fPv;
             break;
         case 5:
-            return;
+            break;
         default:
             spHandle( ); 
             Controller.input    = (S16)g_UnitData.dat.fSp;
@@ -197,10 +197,13 @@ __task void pid(void)
 //		if(ABS(Controller.output) < 2*10)
 //				Controller.output = 0;
 
-        if (!g_UnitCfg.dat.bIsDouble)
-            SetPwmDutyCycle1(Controller.output);
-        else
-            SetPwmDutyCycle2(Controller.output);    
+        if(g_UnitCfg.dat.byMode < 0x80)
+		{
+			if (!g_UnitCfg.dat.bIsDouble)
+	            SetPwmDutyCycle1(Controller.output);
+	        else
+	            SetPwmDutyCycle2(Controller.output); 
+		}   
 
         /* counters*/
         Controller.counts++;
@@ -267,6 +270,7 @@ __task void hmi(void)
     while (1)
     {
         static float temp;
+        static U8 byCntDs18b20;
         if (g_UnitData.dat.iCnt < 1001)
         {
             g_UnitData.dat.iCnt++;
@@ -276,9 +280,18 @@ __task void hmi(void)
                 g_UnitData.dat.iCnt++;
             }
         }
-        temp                    = DS18B20_Temperature();
-        if (temp >= -55.0f && temp <= 125.0f)
-            g_UnitData.dat.fTem     = temp;
+        if (byCntDs18b20 < 10)
+        {
+            byCntDs18b20++;
+        }
+        else
+        {
+            temp = DS18B20_Temperature();
+            if (temp >= -55.0f && temp <= 125.0f)
+                g_UnitData.dat.fTem = temp;
+            byCntDs18b20 = 0;
+        }
+        
         HMI_Handler();
         if (g_UnitCfg.dat.bIsReboot)
             lpReset( );
@@ -295,7 +308,7 @@ extern void iap_init(void);
 
 void adc_poweron(int time)
 {
-    ADCCON = 0x20;                                  /* power-on the ADC                                */
+    ADCCON = 0x20;                                   /* power-on the ADC                                */
     while (time >=0)                                 /* wait for ADC to be fully powered on             */
         time--;
 }
