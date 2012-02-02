@@ -44,34 +44,33 @@ void lpReset(void)
     RSTSTA  |= 0x04;
 }
 
-#define PWM_DAT0VALUE           0x2000  /* set PWM freq to 2.7KHz */
+#define PWM_DAT0VALUE           0x1000  /* set PWM freq to 5.5KHz */
 
 void SetPwmDutyCycle1(S16 uiDutyCycle)  /* set sngl PWM */
 {
     if (uiDutyCycle > 500)
     {
-        PWMEN   = 0x0A8;
-        PWMCH0  = 0;         /* 不放气*/
+        PWMEN   = 0x1A8;
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;         /* 不放气*/
         PWMCH1  = PWM_DAT0VALUE * (-0.5f + (float)uiDutyCycle/1000.0f);
     }
     else if (uiDutyCycle > 0)
     {
-        PWMEN   = 0x28;
-        PWMCH0  = 0;          /* 不放气*/
+        PWMEN   = 0x128;
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;          /* 不放气*/
         PWMCH1  = PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);
-
     }
     else if (uiDutyCycle > -500)
     {
-        PWMEN   = 0x28;
+        PWMEN   = 0x128;
         PWMCH1  = PWM_DAT0VALUE * 0.5f;       /* 不进气*/
-        PWMCH0  = PWM_DAT0VALUE * 0.3f;//(-(float)uiDutyCycle/1000.0f);
+        PWMCH0  = PWM_DAT0VALUE * (0.5f + (float)uiDutyCycle/1000.0f);
     }
     else
     {
-        PWMEN   = 0x28;
+        PWMEN   = 0x028;
         PWMCH1  = PWM_DAT0VALUE * 0.5f;       /* 不进气*/
-        PWMCH0  = PWM_DAT0VALUE * 0.5f;
+        PWMCH0  = PWM_DAT0VALUE * (-0.5f - (float)uiDutyCycle/1000.0f);
     }
 }
 
@@ -82,8 +81,8 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double PWM */
         GP3CON &= ~0x00010000;
         GP3CON |= 0x00100000;
         GP3DAT |= 0x10000000;  /* p3.4 0*/
-        PWMEN   = 0x0A9;
-        PWMCH0  = 0;         /* 不放气*/
+        PWMEN   = 0x1A9;
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;         /* 不放气*/
         PWMCH2  = PWM_DAT0VALUE * (-0.5f + (float)uiDutyCycle/1000.0f);     
         PWMCH1  = PWM_DAT0VALUE * (-0.5f + (float)uiDutyCycle/1000.0f);
     }
@@ -92,8 +91,8 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double PWM */
         GP3CON &= ~0x00010000;
         GP3CON |= 0x00100000;
         GP3DAT |= 0x10000000;
-        PWMEN   = 0x069; 
-        PWMCH0  = 0;          /* 不放气*/
+        PWMEN   = 0x169; 
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;          /* 不放气*/
         PWMCH2  = PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);      
         PWMCH1  = PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);
     }
@@ -101,10 +100,10 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double PWM */
     {
         GP3CON &= ~0x00100000;
         GP3CON |= 0x00010000;
-        PWMEN   = 0x02A;
+        PWMEN   = 0x16A;
         PWMCH1  = PWM_DAT0VALUE * 0.5f;       /* 不进气*/
-        PWMCH2  = PWM_DAT0VALUE * 0.3f;     
-        PWMCH0  = PWM_DAT0VALUE * 0.3f;//(-(float)uiDutyCycle/1000.0f);
+        PWMCH2  = PWM_DAT0VALUE * (0.5f + (float)uiDutyCycle/1000.0f);     
+        PWMCH0  = PWM_DAT0VALUE * (0.5f + (float)uiDutyCycle/1000.0f);
     }
     else
     {
@@ -112,8 +111,8 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double PWM */
         GP3CON |= 0x00010000;
         PWMEN   = 0x02A; 
         PWMCH1  = PWM_DAT0VALUE * 0.5f;       /* 不进气*/
-        PWMCH2  = PWM_DAT0VALUE * 0.5f;     
-        PWMCH0  = PWM_DAT0VALUE * 0.5f;
+        PWMCH2  = PWM_DAT0VALUE * (-0.5f - (float)uiDutyCycle/1000.0f);     
+        PWMCH0  = PWM_DAT0VALUE * (-0.5f - (float)uiDutyCycle/1000.0f);
     }
 }
 
@@ -138,6 +137,7 @@ __task void pid(void)
         os_evt_wait_or (0x0001, 0xffff);       
 
         posHandle( );
+		cmdHandle( ); 
 
         switch (g_UnitCfg.dat.byMode)
         {
@@ -166,9 +166,8 @@ __task void pid(void)
             break;
         case 5:
             break;
-        default:
-            spHandle( ); 
-            Controller.input    = (S16)g_UnitData.dat.fSp;
+        default:              
+            Controller.input    = (S16)g_UnitData.dat.fInp;
             Controller.feedback = (S16)g_UnitData.dat.fPos;
             break;
         }       
@@ -177,33 +176,39 @@ __task void pid(void)
             pid_reset_integrator(&g_UnitCfg);
 
 //        Controller.output = pid_Controller(Controller.input, Controller.feedback, &g_UnitCfg);
-        Controller.output   = 10.0f*(g_UnitData.dat.fPid - g_UnitData.dat.fPos);
-        if (g_UnitData.dat.bInput)
-        {
-            if (g_UnitCfg.dat.bIsSafePosOn)
-                Controller.output   = 10.0f*(g_UnitCfg.dat.bySafePos*10.0f - g_UnitData.dat.fPos);
-            else
-                m_mcbCurrent.pMenu  = NULL; 
-        }
+        Controller.output   = g_UnitData.dat.fPid - g_UnitData.dat.fPos;
+//		Controller.output   = Controller.input - Controller.feedback;
 
-        if (Controller.output > 0)
-            Controller.output += 280;
-        if (Controller.output < -5)
-            Controller.output  = -1000;
+		if(ABS(Controller.output) < g_UnitCfg.dat.iDbnd)
+				Controller.output = 0;
+
+		Controller.output  *= 1.0f;
+
+//        if (g_UnitData.dat.bInput)
+//        {
+//            if (g_UnitCfg.dat.bIsSafePosOn)
+//                Controller.output   = 10.0f*(g_UnitCfg.dat.bySafePos*10.0f - g_UnitData.dat.fPos);
+//            else
+//                m_mcbCurrent.pMenu  = NULL; 
+//        }
+
+        if (Controller.output > g_UnitCfg.dat.iDbnd)
+            Controller.output += (g_UnitCfg.dat.byYbU*10);
+        if (Controller.output < -g_UnitCfg.dat.iDbnd)
+            Controller.output -= (g_UnitCfg.dat.byYeU*10);
         /* output value*/
         Controller.output = MAX(Controller.output, -1000);
         Controller.output = MIN(Controller.output,  1000);
         /* clamp output value (anti-windup)*/
-//		if(ABS(Controller.output) < 2*10)
-//				Controller.output = 0;
+		
 
-        if(g_UnitCfg.dat.byMode < 0x80)
-		{
-			if (!g_UnitCfg.dat.bIsDouble)
-	            SetPwmDutyCycle1(Controller.output);
-	        else
-	            SetPwmDutyCycle2(Controller.output); 
-		}   
+        if (g_UnitCfg.dat.byMode < 0x80)
+        {
+            if (!g_UnitCfg.dat.bIsDouble)
+                SetPwmDutyCycle1(Controller.output);
+            else
+                SetPwmDutyCycle2(Controller.output); 
+        }
 
         /* counters*/
         Controller.counts++;
@@ -215,7 +220,7 @@ __task void modbus(void)
     while (1)
     {
         ( void )eMBPoll(  );
-        os_dly_wait(2); 
+        os_dly_wait(6); 
     }
 }
 
@@ -291,14 +296,14 @@ __task void hmi(void)
                 g_UnitData.dat.fTem = temp;
             byCntDs18b20 = 0;
         }
-        
+
         HMI_Handler();
         if (g_UnitCfg.dat.bIsReboot)
             lpReset( );
         if ((g_UnitCfg.dat.byIN & 0x30) != (GP4DAT & 0x30))
             g_UnitData.dat.bInput   = TRUE;
-		else
-			g_UnitData.dat.bInput   = FALSE;	
+        else
+            g_UnitData.dat.bInput   = FALSE;    
 
         os_itv_wait ();
     }
@@ -357,16 +362,16 @@ void data_init(void)
         g_UnitCfg.dat.bySrU = 100;
         g_UnitCfg.dat.bySrD = 0;
     }
-	if (g_UnitCfg.dat.byIN == 0)
-		g_UnitCfg.dat.byIN	= GP4DAT;
+    if (g_UnitCfg.dat.byIN == 0)
+        g_UnitCfg.dat.byIN  = GP4DAT;
 }
 
 __task void init(void)
 {
     U32 adctest;    
-                
+
     adc_init(); 
-    
+
     data_init();    
 
     iap_init();

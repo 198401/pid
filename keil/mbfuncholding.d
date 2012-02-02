@@ -1,10 +1,10 @@
 mbfuncholding.o: ..\modbus\functions\mbfuncholding.c
-mbfuncholding.o: C:\Keil\ARM\RV31\INC\stdlib.h
-mbfuncholding.o: C:\Keil\ARM\RV31\INC\string.h
+mbfuncholding.o: C:\Keil\ARM\RV31\Inc\stdlib.h
+mbfuncholding.o: C:\Keil\ARM\RV31\Inc\string.h
 mbfuncholding.o: ..\bsp\port\port.h
-mbfuncholding.o: C:\Keil\ARM\RV31\INC\assert.h
-mbfuncholding.o: C:\Keil\ARM\RV31\INC\inttypes.h
-mbfuncholding.o: C:\Keil\ARM\RV31\INC\stdint.h
+mbfuncholding.o: C:\Keil\ARM\RV31\Inc\assert.h
+mbfuncholding.o: C:\Keil\ARM\RV31\Inc\inttypes.h
+mbfuncholding.o: C:\Keil\ARM\RV31\Inc\stdint.h
 mbfuncholding.o: ..\modbus\include\mb.h
 mbfuncholding.o: ..\modbus\include\mbport.h
 mbfuncholding.o: ..\modbus\include\mbproto.h

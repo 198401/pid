@@ -5,7 +5,7 @@
 
 #define  MAX( x, y ) ( ((x) > (y)) ? (x) : (y) ) 
 #define  MIN( x, y ) ( ((x) < (y)) ? (x) : (y) )
-#define  ABS(x)   (x)> 0?(x):-(x)  
+#define  ABS(x) ((x)> 0?(x):-(x))  
 
 typedef union _UNIT_DATA
 {
@@ -39,7 +39,8 @@ typedef union _UNIT_CFG
 {
     __packed struct _UNIT_CFG_
     {
-        uint32_t    uBau;        
+        uint32_t    uBau; 
+		uint32_t    uMenu;        
 
         /* Summation of errors, used for integrate calculations*/
         int32_t sumError;
@@ -78,7 +79,9 @@ typedef union _UNIT_CFG
         uint16_t    iSpV0;
         uint16_t    iSpV5;
         uint16_t    iSpV10;
-        uint16_t    iCode;        
+        uint16_t    iCode;
+		uint16_t    iDbnd;    /* div 10       */
+		uint16_t    iPidDbnd; /* div 10       */        
 
         int8_t      byLimD;
         int8_t      byLimU;
@@ -96,9 +99,7 @@ typedef union _UNIT_CFG
         int8_t      byCutoffMax;
         int8_t      byXtimeClose;
         int8_t      byXtimeOpen;
-        int8_t      bySafePos;
-        int8_t      byDbnd;    /* div 10       */
-        int8_t      byPidDbnd; /* div 10       */
+        int8_t      bySafePos;        
         int8_t      byKxD;     
         int8_t      byKxU;
         int8_t      byYbU;     
@@ -166,9 +167,8 @@ typedef union _UNIT_BUF
         float   fVal2;
     } f_pair; 
     uint16_t    iVal;
-    float       buf[8];
-} UNIT_BUF;
-
+    uint8_t     buf[8];
+} UNIT_BUF;	  
 
 typedef union _VARIANT
 {

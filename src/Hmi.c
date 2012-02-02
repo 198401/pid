@@ -32,12 +32,28 @@ const uint8_t display[][8] =
 {
     "ACT[FUNC",
     "[[[INPUT",
-    "[[IN[SET",
-    "[[[X[SET",
-    "[[SYSTEM",
-    "[[CONTRL",
+    "[[CHRACT",
+    "[[CUTOFF",
+    "[DIR[CMD",
+    "[DIR[ACT",
+    "[SPLTRNG",
+    "[X[LIMIT",
+    "[[X[TIME",
+    "X[CONTRL",
+    "P[CONTRL",
+    "[[[[CODE",
+    "[SAFEPOS",
+    "[[SIGERR",
+    "[[BIN[IN",
+    "[[OUTPUT",
+    "CAL[USER",
+    "[SETFACT",
+    "[[SER[IO",
+    "ADDFUNCT",
     "[[MANUAL",
+    "[[X[TUNE",
     "[[[[[END",
+
     "FUNCSNGL",
     "FUNCDOUB",
     "[ACT[END",
@@ -46,28 +62,6 @@ const uint8_t display[][8] =
     "[[[0[10V",
     "[[[[0[5V",
     "INPUTEND",
-    "[[CHRACT",
-    "[[CUTOFF",
-    "[DIR[CMD",
-    "[DIR[ACT",
-    "[SPLTRNG",
-    "INSETEND",
-    "[[X[TUNE",
-    "[X[LIMIT",
-    "[[X[TIME",
-    "X[CONTRL",
-    "[XSETEND",
-    "[[SER[IO",
-    "[SAFEPOS",
-    "[[SIGERR",
-    "[[[[CODE",
-    "[SETFACT",
-    "[SYS[END",
-    "[[BIN[IN",
-    "[[OUTPUT",
-    "CAL[USER",
-    "P[CONTRL",
-    "CTRL[END",
     "[CHR[LIN",
     "CHR[1[25",
     "CHR[1[33",
@@ -210,11 +204,26 @@ enum
     /* Main Menu*/
     MENU_MAIN_ACT,
     MENU_MAIN_INPUT,
-    MENU_MAIN_INSET,
-    MENU_MAIN_XSET,
-    MENU_MAIN_SYSTEM,
-    MENU_MAIN_CONTRL,
+    MENU_MAIN_CHARACT,
+    MENU_MAIN_CUTOFF,
+    MENU_MAIN_DIRCMD,
+    MENU_MAIN_DIRACT,
+    MENU_MAIN_SPLTRNG,
+    MENU_MAIN_XLIMIT,
+    MENU_MAIN_XTIME,
+    MENU_MAIN_XCONTRL,
+    MENU_MAIN_PCONTRL,
+    MENU_MAIN_CODE,
+    MENU_MAIN_SAFEPOS,
+    MENU_MAIN_SIGERR,
+    MENU_MAIN_BININ,
+    MENU_MAIN_OUTPUT,
+    MENU_MAIN_CALUSER,
+    MENU_MAIN_SETFACT,
+    MENU_MAIN_SERIO,    
+    MENU_MAIN_ADDFUN,
     MENU_MAIN_MANUAL,
+    MENU_MAIN_XTUNE,
     MENU_MAIN_END,
     /* Act Menu*/
     MENU_ACT_SNGL,
@@ -226,32 +235,6 @@ enum
     MENU_INPUT_10,
     MENU_INPUT_5,
     MENU_INPUT_END,
-    /* In Set Menu*/
-    MENU_INSET_CHARACT,
-    MENU_INSET_CUTOFF,
-    MENU_INSET_DIRCMD,
-    MENU_INSET_DIRACT,
-    MENU_INSET_SPLTRNG,
-    MENU_INSET_END,
-    /* Input Menu*/
-    MENU_XSET_XTUNE,
-    MENU_XSET_XLIMIT,
-    MENU_XSET_XTIME,
-    MENU_XSET_XCONTRL,
-    MENU_XSET_END,
-    /* System Menu*/
-    MENU_SYSTEM_SERIO,
-    MENU_SYSTEM_SAFEPOS,
-    MENU_SYSTEM_SIGERR,
-    MENU_SYSTEM_CODE,
-    MENU_SYSTEM_SETFACT,
-    MENU_SYSTEM_END,
-    /* Contrl Menu*/
-    MENU_CONTRL_BININ,
-    MENU_CONTRL_OUTPUT,
-    MENU_CONTRL_CALUSER,
-    MENU_CONTRL_PCONTRL,
-    MENU_CONTRL_END,
     /* Charact Menu*/
     MENU_CHARACT_l_1,
     MENU_CHARACT_l_25,
@@ -533,6 +516,37 @@ static void CheckKeyboard()
     }
 }
 
+static void adj_display(void)
+{
+	if ((m_byCursorPos%3) == 2)
+	{
+		if (m_bufKeyboard[m_byCursorPos] > '1')
+            m_bufKeyboard[m_byCursorPos] = '0';
+		else if (m_bufKeyboard[m_byCursorPos] == '1')
+		{
+			m_bufKeyboard[m_byCursorPos] = '1';
+			m_bufKeyboard[m_byCursorPos - 1] = '0';
+			m_bufKeyboard[m_byCursorPos - 2] = '0';
+		}
+	}
+}
+
+static void menu_return(void)
+{
+	MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];            
+
+    S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
+    m_mcbCurrent.pMenu                      = pMenuItem;
+    m_mcbCurrent.byStartMenuItemID          = 0;
+}
+
+static void menu_display_done(void)
+{
+	display_digital("::::::",0,0);
+    display_char("[[[[DONE");
+	os_dly_wait(100);
+}
+
 static void Display()
 {
     uint8_t byNum[7];
@@ -631,13 +645,17 @@ static void MenuKeyboardHandler(uint8_t byKeyCode)
         (m_aMenuItems[m_mcbCurrent.byStartMenuItemID].pParentMenu == m_aMenuItems[m_mcbCurrent.byStartMenuItemID - 1].pParentMenu))
     {
         m_mcbCurrent.byStartMenuItemID--;
-        if (m_mcbCurrent.byStartMenuItemID > MENU_ITEMS - 1)
+		if (m_mcbCurrent.byStartMenuItemID > MENU_ITEMS - 1)
             m_mcbCurrent.byStartMenuItemID  = 0;
+		while(m_aMenuItems[m_mcbCurrent.byStartMenuItemID].byChildMenuItems == 0)
+			m_mcbCurrent.byStartMenuItemID--;        
     }
     else if ((byKeyCode == KEY_2) && 
              (m_aMenuItems[m_mcbCurrent.byStartMenuItemID].pParentMenu == m_aMenuItems[m_mcbCurrent.byStartMenuItemID + 1].pParentMenu))
     {
         m_mcbCurrent.byStartMenuItemID++;
+		while(m_aMenuItems[m_mcbCurrent.byStartMenuItemID].byChildMenuItems == 0)
+			m_mcbCurrent.byStartMenuItemID++; 		
         if (m_mcbCurrent.byStartMenuItemID > MENU_ITEMS - 1)
             m_mcbCurrent.byStartMenuItemID  = MENU_ITEMS - 1;
     }
@@ -650,6 +668,8 @@ static void MenuKeyboardHandler(uint8_t byKeyCode)
             if (!S_IS_EMPTY(m_stackMenuCtlBlock))
             {
                 EepromWr_n(g_UnitCfg.buf);
+				display_char("[STORING");
+				os_dly_wait(100);
                 m_mcbCurrent.pMenu = NULL;
                 S_POP(m_stackMenuCtlBlock);
             }
@@ -693,29 +713,35 @@ static void MENU_MAIN_MANUAL_KeyboardHandler(uint8_t byKeyCode)
             m_byCursorPos--;
             m_byCursorPage   = m_byCursorPos/3;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
         m_byCursorPage   = m_byCursorPos/3;
+		if (m_byCursorPos > 5)
+			m_byCursorPos = 5;
     }
     else if (byKeyCode == KEY_3)
     {
         if (m_byCursorPos < 3)
         {
-            m_bufKeyboard[m_byCursorPos]++;
+            m_bufKeyboard[m_byCursorPos]++;			
             if (m_bufKeyboard[m_byCursorPos] > '9')
                 m_bufKeyboard[m_byCursorPos] = '0';
+			adj_display( );
         }
-        else
+		else if (m_byCursorPos < 5)
+		{
+			g_UnitData.dat.fPid = (m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328)*10;
+			m_byCursorPos = 5;
+		}
+        else 
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
-            g_UnitData.dat.fPid = (m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328)*10;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            menu_return( );
         }
     }
 }
@@ -751,53 +777,101 @@ static void MENU_MAIN_MANUAL_OpeningHandler()
         m_bufKeyboard[i] = '0';
     m_byCursorPage   = 0;   
 }
+static void menu_update(void)
+{
+    for (int i = 0;i < 17;i++)
+        m_aMenuItems[MENU_MAIN_CHARACT + i].byChildMenuItems        = ((g_UnitCfg.dat.uMenu&(1L<<i))?1:0);
+}
+static void AddFun_KeyboardHandler(uint8_t byKeyCode)
+{
+    if (byKeyCode == KEY_1)
+    {
+        if (m_byCursorPos > 0)
+        {
+            m_byCursorPos--;
+        }
+		else 
+        {
+            menu_return( );
+        }
+    }
+    else if (byKeyCode == KEY_2)
+    {
+        m_byCursorPos++;
+		if (m_byCursorPos > 17)
+			m_byCursorPos = 17;
+    }
+    else if (byKeyCode == KEY_3)
+    {
+        if (m_byCursorPos < 17)
+        {
+            g_UnitCfg.dat.uMenu ^= (1L<<m_byCursorPos);
+        }
+        else
+        {
+            menu_update();
+            menu_return( );
+        }
+    }
+}
+
+static void AddFun_DisplayHandler()
+{
+    uint16_t    byMenuID = MENU_MAIN_CHARACT + m_byCursorPos;
+    if (m_byCursorPos < 17)
+    {
+        if ((g_UnitCfg.dat.uMenu&(1L<<m_byCursorPos)) != 0)
+            display_digital(":::::1",0,0);
+        else
+            display_digital(":::::0",0,0);
+        display_char((unsigned char *)display[byMenuID]);
+    }
+    else
+    {
+        display_digital("::::::",0,0);
+        display_char("[[[[DONE");
+    }
+}
+
+static void AddFun_OpeningHandler()
+{
+    m_byCursorPos = 0;
+}
 
 static void ActSngl_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.bIsDouble = FALSE;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void ActDoub_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.bIsDouble = TRUE;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Input4_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byInp = 0;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Input0_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byInp = 1;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Input10_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byInp = 3;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Input5_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byInp = 2;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void InsetCutoff_KeyboardHandler(uint8_t byKeyCode)
@@ -809,11 +883,17 @@ static void InsetCutoff_KeyboardHandler(uint8_t byKeyCode)
             m_byCursorPos--;
             m_byCursorPage   = m_byCursorPos/3;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
         m_byCursorPage   = m_byCursorPos/3;
+		if (m_byCursorPos > 6)
+			m_byCursorPos = 6;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -822,17 +902,13 @@ static void InsetCutoff_KeyboardHandler(uint8_t byKeyCode)
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
                 m_bufKeyboard[m_byCursorPos] = '0';
+			adj_display( );
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
             g_UnitCfg.dat.byCutoffMin = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
             g_UnitCfg.dat.byCutoffMax = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            menu_return( );
         }
     }
 }
@@ -882,11 +958,17 @@ static void InsetSpltrng_KeyboardHandler(uint8_t byKeyCode)
             m_byCursorPos--;
             m_byCursorPage   = m_byCursorPos/3;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
         m_byCursorPage   = m_byCursorPos/3;
+		if (m_byCursorPos > 6)
+			m_byCursorPos = 6;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -895,17 +977,13 @@ static void InsetSpltrng_KeyboardHandler(uint8_t byKeyCode)
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
                 m_bufKeyboard[m_byCursorPos] = '0';
+			adj_display( );
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
             g_UnitCfg.dat.bySrD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
-            g_UnitCfg.dat.bySrU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            g_UnitCfg.dat.bySrU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;	
+            menu_return( );
         }
     }
 }
@@ -955,11 +1033,17 @@ static void XsetXlimit_KeyboardHandler(uint8_t byKeyCode)
             m_byCursorPos--;
             m_byCursorPage   = m_byCursorPos/3;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
         m_byCursorPage   = m_byCursorPos/3;
+		if (m_byCursorPos > 6)
+			m_byCursorPos = 6;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -968,17 +1052,13 @@ static void XsetXlimit_KeyboardHandler(uint8_t byKeyCode)
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
                 m_bufKeyboard[m_byCursorPos] = '0';
+			adj_display( );
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
             g_UnitCfg.dat.byLimD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
             g_UnitCfg.dat.byLimU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+			menu_return( );
         }
     }
 }
@@ -1028,11 +1108,17 @@ static void XsetXtime_KeyboardHandler(uint8_t byKeyCode)
             m_byCursorPos--;
             m_byCursorPage   = m_byCursorPos/2;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
         m_byCursorPage   = m_byCursorPos/2;
+		if (m_byCursorPos > 4)
+			m_byCursorPos = 4;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -1044,14 +1130,9 @@ static void XsetXtime_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
             g_UnitCfg.dat.byXtimeOpen = m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 528;
             g_UnitCfg.dat.byXtimeClose = m_bufKeyboard[3]*10 + m_bufKeyboard[2] - 528;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+			menu_return( );
         }
     }
 }
@@ -1100,10 +1181,16 @@ static void SystemSafepos_KeyboardHandler(uint8_t byKeyCode)
         {
             m_byCursorPos--;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
+		if (m_byCursorPos > 3)
+			m_byCursorPos = 3;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -1112,16 +1199,12 @@ static void SystemSafepos_KeyboardHandler(uint8_t byKeyCode)
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
                 m_bufKeyboard[m_byCursorPos] = '0';
+			adj_display( );
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
-            g_UnitCfg.dat.bySafePos = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            g_UnitCfg.dat.bySafePos = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;	
+            menu_return( );
         }
     }
 }
@@ -1159,71 +1242,93 @@ static void SystemSafepos_OpeningHandler()
 static void SystemSetfact_OpeningHandler()
 {
     clearLCD();
-    display_char("DDDDDDDD");
+	for (U16 i = 0;i < sizeof(struct _UNIT_DATA_)/sizeof(U16);i++)
+        g_UnitData.buf[i]   = 0; 
+
+    for (U16 i = 0;i < sizeof(struct _UNIT_CFG_)/sizeof(U16);i++)
+        g_UnitCfg.buf[i]    = 0; 
+
+    if (g_UnitCfg.dat.bIsReboot)
+        g_UnitCfg.dat.bIsReboot = FALSE;
+
+    if (g_UnitCfg.dat.byMbAddr == 0)
+        g_UnitCfg.dat.byMbAddr = 1;
+
+    if (g_UnitCfg.dat.uBau == 0)
+        g_UnitCfg.dat.uBau = 19200;
+
+    if (g_UnitCfg.dat.P_Factor == 0)
+        g_UnitCfg.dat.P_Factor = 10*128;
+
+    if (g_UnitCfg.dat.iAd4Min == g_UnitCfg.dat.iAd4Max)
+    {
+        g_UnitCfg.dat.iAd4Max = 3069;
+        g_UnitCfg.dat.iAd4Min = 16;
+    }
+    if (g_UnitCfg.dat.byLimD == g_UnitCfg.dat.byLimU)
+    {
+        g_UnitCfg.dat.byLimU = 100;
+        g_UnitCfg.dat.byLimD = 0;
+    }
+    if (g_UnitCfg.dat.bySrD == g_UnitCfg.dat.bySrU)
+    {
+        g_UnitCfg.dat.bySrU = 100;
+        g_UnitCfg.dat.bySrD = 0;
+    }
+    if (g_UnitCfg.dat.byIN == 0)
+        g_UnitCfg.dat.byIN  = GP4DAT;
+    display_char("[[[[DONE");
+	g_UnitCfg.dat.bIsReboot = TRUE;
     clearLCD(); 
 }
 
 static void Charact11_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.bIsChaFree = FALSE;
     g_UnitCfg.dat.byN = 0;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Charact125_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.bIsChaFree = FALSE;
     g_UnitCfg.dat.byN = -25;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Charact133_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.bIsChaFree = FALSE;
     g_UnitCfg.dat.byN = -33;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Charact150_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.bIsChaFree = FALSE;
     g_UnitCfg.dat.byN = -50;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Charact251_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.bIsChaFree = FALSE;
     g_UnitCfg.dat.byN = 25;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void Charact331_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.bIsChaFree = FALSE;
     g_UnitCfg.dat.byN = 33;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Charact501_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.bIsChaFree = FALSE;
     g_UnitCfg.dat.byN = 50;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void CharactFree_KeyboardHandler(uint8_t byKeyCode)
@@ -1235,11 +1340,17 @@ static void CharactFree_KeyboardHandler(uint8_t byKeyCode)
             m_byCursorPos--;
             m_byCursorPage   = m_byCursorPos/3;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
         m_byCursorPage   = m_byCursorPos/3;
+		if (m_byCursorPos > 63)
+			m_byCursorPos = 63;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -1248,18 +1359,14 @@ static void CharactFree_KeyboardHandler(uint8_t byKeyCode)
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
                 m_bufKeyboard[m_byCursorPos] = '0';
+			adj_display( );
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
             g_UnitCfg.dat.bIsChaFree = TRUE;
             for (uint16_t i = 0; i < 21; i++)
                 g_UnitCfg.dat.byCha[i] = m_bufKeyboard[3*i + 2]*100 + m_bufKeyboard[3*i + 1]*10 + m_bufKeyboard[3*i] - 5328;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            menu_return( );
         }
     }
 }
@@ -1298,34 +1405,26 @@ static void CharactFree_OpeningHandler()
 
 static void DircmdRise_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.bIsCmdInverse = FALSE;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void DircmdFall_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.bIsCmdInverse = TRUE;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void DiractRise_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.bIsActInverse = FALSE;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void DiractFall_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.bIsActInverse = TRUE;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void XcontrolDbnd_KeyboardHandler(uint8_t byKeyCode)
@@ -1336,10 +1435,16 @@ static void XcontrolDbnd_KeyboardHandler(uint8_t byKeyCode)
         {
             m_byCursorPos--;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
+		if (m_byCursorPos > 3)
+			m_byCursorPos = 3;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -1348,16 +1453,12 @@ static void XcontrolDbnd_KeyboardHandler(uint8_t byKeyCode)
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
                 m_bufKeyboard[m_byCursorPos] = '0';
+			adj_display( );
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
-            g_UnitCfg.dat.byDbnd = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            g_UnitCfg.dat.iDbnd = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328; 
+            menu_return( );
         }
     }
 }
@@ -1402,11 +1503,17 @@ static void XcontrolPara_KeyboardHandler(uint8_t byKeyCode)
             m_byCursorPos--;
             m_byCursorPage   = m_byCursorPos/3;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
         m_byCursorPage   = m_byCursorPos/3;
+		if (m_byCursorPos > 6)
+			m_byCursorPos = 6;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -1415,17 +1522,13 @@ static void XcontrolPara_KeyboardHandler(uint8_t byKeyCode)
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
                 m_bufKeyboard[m_byCursorPos] = '0';
+			adj_display( );
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
             g_UnitCfg.dat.byKxD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
-            g_UnitCfg.dat.byKxU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            g_UnitCfg.dat.byKxU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;	
+            menu_return( );
         }
     }
 }
@@ -1469,22 +1572,23 @@ static void XcontrolPara_OpeningHandler()
 static uint16_t temp1 = 0;
 static uint16_t temp2 = 100;
 
-extern void SetPwmDutyCycle1(int16_t uiDutyCycle);
+extern void SetPwmDutyCycle2(int16_t uiDutyCycle);
 
 static void XtuneAuto_OpeningHandler()
 {
     clearLCD();
-    display_char("DDDDDDDD");
+    display_char("11111111");
 
     static float fDiff  = 100;
     static float fPos   = 0;
     static float fLast  = 0;
+    short iPwm = 0;
 
     g_UnitCfg.dat.byMode |= 0x80;
 
-    SetPwmDutyCycle1(-1000);
+    SetPwmDutyCycle2(-1000);
 
-    os_dly_wait(200);
+    os_dly_wait(300);
 
     while (ABS(fDiff) > 5)
     {
@@ -1500,7 +1604,10 @@ static void XtuneAuto_OpeningHandler()
     fPos    = 0;
     fLast   = 0;
 
-    SetPwmDutyCycle1(1000);
+    SetPwmDutyCycle2(1000);
+    display_char("22222222");
+
+	os_dly_wait(200);
 
     while (ABS(fDiff) > 5)
     {
@@ -1512,12 +1619,57 @@ static void XtuneAuto_OpeningHandler()
 
     temp2 = g_UnitData.dat.iAD4;
 
-    g_UnitCfg.dat.iAd4Min = temp1;
-    g_UnitCfg.dat.iAd4Max = temp2;
+    g_UnitCfg.dat.iAd4Min = MIN( temp1, temp2 );
+    g_UnitCfg.dat.iAd4Max = MAX( temp1, temp2 );
+
+    SetPwmDutyCycle2(-1000);
+    display_char("33333333");
+
+    while (g_UnitData.dat.fPos < 660)
+        ;    
+    
+    SetPwmDutyCycle2(0);
+    display_char("44444444");
+    os_dly_wait(200);
+
+    fDiff = 0;
+    iPwm  = 0;
+    fLast = g_UnitData.dat.fPos;
+    while (ABS(fDiff) < 5)
+    {
+        SetPwmDutyCycle2(iPwm);
+        os_dly_wait(10);
+        fPos    = g_UnitData.dat.fPos;
+        fDiff   = fPos - fLast;
+        fLast   = fPos;
+        iPwm   -= 10;
+    }
+    g_UnitCfg.dat.byYeU = -iPwm/10;
+
+    SetPwmDutyCycle2(0);
+    display_char("55555555");
+    os_dly_wait(200);
+
+    fDiff = 0;
+    iPwm  = 0;
+    fLast = g_UnitData.dat.fPos;
+    while (ABS(fDiff) < 5)
+    {
+        SetPwmDutyCycle2(iPwm);
+        os_dly_wait(10);
+        fPos    = g_UnitData.dat.fPos;
+        fDiff   = fPos - fLast;
+        fLast   = fPos;
+        iPwm   += 10;
+    }
+    g_UnitCfg.dat.byYbU = iPwm/10;
+
+    g_UnitCfg.dat.iDbnd = 5;
 
     g_UnitCfg.dat.byMode &= 0x7F;
 
-    display_char("DDDDDDDD");
+    display_char("[[[[DONE");
+    os_dly_wait(100);
 }
 
 static void XtunePwm_KeyboardHandler(uint8_t byKeyCode)
@@ -1529,11 +1681,17 @@ static void XtunePwm_KeyboardHandler(uint8_t byKeyCode)
             m_byCursorPos--;
             m_byCursorPage   = m_byCursorPos/3;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
         m_byCursorPage   = m_byCursorPos/3;
+		if (m_byCursorPos > 6)
+			m_byCursorPos = 6;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -1542,18 +1700,14 @@ static void XtunePwm_KeyboardHandler(uint8_t byKeyCode)
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
                 m_bufKeyboard[m_byCursorPos] = '0';
+			adj_display( );
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
             g_UnitCfg.dat.byYbU = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
             g_UnitCfg.dat.byYeU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
-        }
+            menu_return( );
+		}
     }
 }
 
@@ -1602,11 +1756,17 @@ static void XtuneAir_KeyboardHandler(uint8_t byKeyCode)
             m_byCursorPos--;
             m_byCursorPage   = m_byCursorPos/2;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
         m_byCursorPage   = m_byCursorPos/2;
+		if (m_byCursorPos > 4)
+			m_byCursorPos = 4;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -1618,14 +1778,10 @@ static void XtuneAir_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
             g_UnitCfg.dat.byAirOpen = m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 528;
             g_UnitCfg.dat.byAirClose = m_bufKeyboard[3]*10 + m_bufKeyboard[2] - 528;
 
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            menu_return( );
         }
     }
 }
@@ -1668,74 +1824,56 @@ static void XtuneAir_OpeningHandler()
 
 static void SigerrFunon_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byErr = 2;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void SigerrPoson_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byErr = 1;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void SigerrOff_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byErr = 0;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Serio9600_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.uBau = 9600;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Serio19200_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.uBau = 19200;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Serio38400_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.uBau = 38400;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Serio1200_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.uBau = 1200;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Serio2400_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.uBau = 2400;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void Serio4800_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.uBau = 4800;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void CodeKey_KeyboardHandler(uint8_t byKeyCode)
@@ -1747,11 +1885,17 @@ static void CodeKey_KeyboardHandler(uint8_t byKeyCode)
             m_byCursorPos--;
             m_byCursorPage   = m_byCursorPos/4;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
         m_byCursorPage   = m_byCursorPos/4;
+		if (m_byCursorPos > 4)
+			m_byCursorPos = 4;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -1763,13 +1907,8 @@ static void CodeKey_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
-            g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328; 
+            menu_return( );
         }
     }
 }
@@ -1813,11 +1952,17 @@ static void CodeMenu_KeyboardHandler(uint8_t byKeyCode)
             m_byCursorPos--;
             m_byCursorPage   = m_byCursorPos/4;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
         m_byCursorPage   = m_byCursorPos/4;
+		if (m_byCursorPos > 4)
+			m_byCursorPos = 4;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -1829,13 +1974,8 @@ static void CodeMenu_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
-            g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328; 
+            menu_return( );
         }
     }
 }
@@ -1880,11 +2020,17 @@ static void CodeGlob_KeyboardHandler(uint8_t byKeyCode)
             m_byCursorPos--;
             m_byCursorPage   = m_byCursorPos/4;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
         m_byCursorPage   = m_byCursorPos/4;
+		if (m_byCursorPos > 4)
+			m_byCursorPos = 4;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -1896,13 +2042,8 @@ static void CodeGlob_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
-            g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328; 
+            menu_return( );
         }
     }
 }
@@ -1941,11 +2082,11 @@ static void CaluserPos_KeyboardHandler(uint8_t byKeyCode)
 {
     if (byKeyCode == KEY_1)
     {
-        SetPwmDutyCycle1(-950);
+        SetPwmDutyCycle2(-1000);
     }
     else if (byKeyCode == KEY_2)
     {
-        SetPwmDutyCycle1(950);
+        SetPwmDutyCycle2(1000);
     }
     else if (byKeyCode == KEY_3)
     {
@@ -1961,15 +2102,10 @@ static void CaluserPos_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
             g_UnitCfg.dat.iAd4Min = temp1;
             g_UnitCfg.dat.iAd4Max = temp2;
             g_UnitCfg.dat.byMode &= 0x7F;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            menu_return( );
         }
     }
 }
@@ -2007,34 +2143,33 @@ static void CaluserInp_KeyboardHandler(uint8_t byKeyCode)
 {
     if (byKeyCode == KEY_1)
     {
-        SetPwmDutyCycle1(-900);
+
     }
     else if (byKeyCode == KEY_2)
     {
-        SetPwmDutyCycle1(900);
+
     }
     else if (byKeyCode == KEY_3)
     {
         if (m_byCursorPage == 0)
         {
-            temp1 = g_UnitData.dat.iAD4;
+            temp1 = g_UnitData.dat.iAD5;
             m_byCursorPage++;
         }
         else if (m_byCursorPage == 1)
         {
-            temp2 = g_UnitData.dat.iAD4;
+            temp2 = g_UnitData.dat.iAD5;
             m_byCursorPage++;
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
-            g_UnitCfg.dat.iAd4Min = temp1;
-            g_UnitCfg.dat.iAd4Max = temp2;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            g_UnitCfg.dat.iAd5Ma4 = temp1;
+			g_UnitCfg.dat.iAd5Ma0 = temp1;
+            g_UnitCfg.dat.iAd5V0  = temp1;
+            g_UnitCfg.dat.iAd5Ma20 = temp2;
+			g_UnitCfg.dat.iAd5V5   = temp2;
+            g_UnitCfg.dat.iAd5V10  = temp2;
+            menu_return( );
         }
     }
 }
@@ -2045,7 +2180,7 @@ static void CaluserInp_DisplayHandler()
 
     if (m_byCursorPage < 2)
     {
-        floattochar (g_UnitData.dat.fPos/10, byNum,0);
+        floattochar (g_UnitData.dat.fInp/10, byNum,0);
         display_digital(byNum,0,0);
     }
     else
@@ -2069,9 +2204,7 @@ static void CaluserInp_OpeningHandler()
 
 static void CaluserFact_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void PcontrlDbnd_KeyboardHandler(uint8_t byKeyCode)
@@ -2082,10 +2215,16 @@ static void PcontrlDbnd_KeyboardHandler(uint8_t byKeyCode)
         {
             m_byCursorPos--;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
+		if (m_byCursorPos > 3)
+			m_byCursorPos = 3;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -2097,13 +2236,8 @@ static void PcontrlDbnd_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
-            g_UnitCfg.dat.byPidDbnd = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            g_UnitCfg.dat.iPidDbnd = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
+            menu_return( );
         }
     }
 }
@@ -2142,11 +2276,17 @@ static void PcontrlPara_KeyboardHandler(uint8_t byKeyCode)
             m_byCursorPos--;
             m_byCursorPage   = m_byCursorPos/4;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
         m_byCursorPage   = m_byCursorPos/4;
+		if (m_byCursorPos > 16)
+			m_byCursorPos = 16;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -2158,14 +2298,7 @@ static void PcontrlPara_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
-//			g_UnitCfg.dat.byLimD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
-//			g_UnitCfg.dat.byLimU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            menu_return( );
         }
     }
 }
@@ -2224,10 +2357,16 @@ static void PcontrlFilt_KeyboardHandler(uint8_t byKeyCode)
         {
             m_byCursorPos--;
         }
+		else 
+        {
+            menu_return( );
+        }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
+		if (m_byCursorPos > 1)
+			m_byCursorPos = 1;
     }
     else if (byKeyCode == KEY_3)
     {
@@ -2239,13 +2378,8 @@ static void PcontrlFilt_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-
             g_UnitCfg.dat.byFilt = m_bufKeyboard[0] - 48;
-
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            menu_return( );
         }
     }
 }
@@ -2285,21 +2419,23 @@ static void PcontrlKv_KeyboardHandler(uint8_t byKeyCode)
         if (m_byCursorPos > 0)
         {
             m_byCursorPos--;
+            m_byCursorPage   = m_byCursorPos/4;
+        }
+		else 
+        {
+            menu_return( );
         }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
-        if (m_byCursorPos > 4)
-            m_byCursorPage   = 1;
-        if (m_byCursorPos > 9)
-            m_byCursorPage   = 2;
-        if (m_byCursorPos > 14)
-            m_byCursorPage   = 3;
+        m_byCursorPage   = m_byCursorPos/4;
+		if (m_byCursorPos > 16)
+			m_byCursorPos = 16;
     }
     else if (byKeyCode == KEY_3)
     {
-        if (m_byCursorPos < 20)
+        if (m_byCursorPos < 16)
         {
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
@@ -2307,311 +2443,233 @@ static void PcontrlKv_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-            /* add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action   */
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            menu_return( );
         }
     }
 }
 
 static void PcontrlKv_DisplayHandler()
 {
-    uint8_t byNum[6];   
+    uint8_t byNum[6];
+
+    byNum[0] = '+';
+    byNum[1] = ':';
+    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+    byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
+    byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
+    byNum[5] = m_bufKeyboard[4*m_byCursorPage];
+
     if (m_byCursorPage == 0)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[i];
         display_char("[[[[[[KP");
-        display_digital(byNum,0,m_byCursorPos + 1);
+        display_digital(byNum,2,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 1)
+    else if (m_byCursorPage == 1)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[5 + i];
         display_char("[[[[[[TN");
-        display_digital(byNum,0,m_byCursorPos - 4);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 2)
+    else if (m_byCursorPage == 2)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[10 + i];
         display_char("[[[[[[TV");
-        display_digital(byNum,0,m_byCursorPos - 9);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 3)
+    else if (m_byCursorPage == 3)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[15 + i];
         display_char("[[[[[[XO");
-        display_digital(byNum,0,m_byCursorPos - 14);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
+    }
+    else
+    {
+        display_char("[[[[DONE");
+        display_digital("::::::",0,0);
     }
 }
 
 static void PcontrlKv_OpeningHandler()
 {
     m_byCursorPos = 0;
-
-    clearLCD();
-    m_bufKeyboard[0]    = '0';
-    m_bufKeyboard[1]    = '0';
-    m_bufKeyboard[2]    = '0';
-    m_bufKeyboard[3]    = '0';
-    m_bufKeyboard[4]    = '0';
-    m_bufKeyboard[5]    = '0';
-    m_bufKeyboard[6]    = '0';
-    m_bufKeyboard[7]    = '0';
-    m_bufKeyboard[8]    = '0';
-    m_bufKeyboard[9]    = '0';
-    m_bufKeyboard[10]   = '0';
-    m_bufKeyboard[11]   = '0';
-    m_bufKeyboard[12]   = '0';
-    m_bufKeyboard[13]   = '0';
-    m_bufKeyboard[14]   = '0';
-    m_bufKeyboard[15]   = '0';
-    m_bufKeyboard[16]   = '0';
-    m_bufKeyboard[17]   = '0';
-    m_bufKeyboard[18]   = '0';
-    m_bufKeyboard[19]   = '0';
-    m_bufKeyboard[20]   = '0';
-    m_byCursorPage      = 0;
+    for (uint16_t i = 0; i < 16; i++)
+        m_bufKeyboard[i] = '0';
+    m_byCursorPage   = 0;
 }
 
 static void PortD_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byIN = (uint8_t)GP4DAT;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void AnlPos_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void AnlCmd_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void AnlSp_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void AnlP1_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void AnlP2_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin1Drv_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x38; 
     g_UnitCfg.dat.byOUT |= 0x08;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin1Lim_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x38; 
     g_UnitCfg.dat.byOUT |= 0x10;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin1Spos_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x38; 
     g_UnitCfg.dat.byOUT |= 0x18;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin1ErrS_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x38; 
     g_UnitCfg.dat.byOUT |= 0x20;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void Bin1Err1_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x38; 
     g_UnitCfg.dat.byOUT |= 0x28;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin1Err2_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x38; 
     g_UnitCfg.dat.byOUT |= 0x30;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin1ErrT_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x38; 
     g_UnitCfg.dat.byOUT |= 0x38; 
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void Bin1Opn_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT |= 0x80; 
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin1Cls_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x80;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void Bin2Drv_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x07; 
     g_UnitCfg.dat.byOUT |= 0x01;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin2Lim_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x07; 
     g_UnitCfg.dat.byOUT |= 0x01;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void Bin2Spos_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x07; 
     g_UnitCfg.dat.byOUT |= 0x01;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin2ErrS_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x07; 
     g_UnitCfg.dat.byOUT |= 0x01;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin2Err1_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x07; 
     g_UnitCfg.dat.byOUT |= 0x01;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin2Err2_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x07; 
     g_UnitCfg.dat.byOUT |= 0x01;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin2ErrT_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x07; 
     g_UnitCfg.dat.byOUT |= 0x07;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin2Opn_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT |= 0x40; 
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void Bin2Cls_OpeningHandler()
 {
-    clearLCD();
     g_UnitCfg.dat.byOUT &= ~0x40;
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void AnlT_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void AnlSet4_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void AnlSet0_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void AnlSet10_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void AnlSet5_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void ScalS_KeyboardHandler(uint8_t byKeyCode)
@@ -2621,21 +2679,23 @@ static void ScalS_KeyboardHandler(uint8_t byKeyCode)
         if (m_byCursorPos > 0)
         {
             m_byCursorPos--;
+            m_byCursorPage   = m_byCursorPos/4;
+        }
+		else 
+        {
+            menu_return( );
         }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
-        if (m_byCursorPos > 4)
-            m_byCursorPage   = 1;
-        if (m_byCursorPos > 9)
-            m_byCursorPage   = 2;
-        if (m_byCursorPos > 14)
-            m_byCursorPage   = 3;
+        m_byCursorPage   = m_byCursorPos/4;
+		if (m_byCursorPos > 16)
+			m_byCursorPos = 16;
     }
     else if (byKeyCode == KEY_3)
     {
-        if (m_byCursorPos < 20)
+        if (m_byCursorPos < 16)
         {
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
@@ -2643,75 +2703,55 @@ static void ScalS_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-            /* add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action   */
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            menu_return( );
         }
     }
 }
 
 static void ScalS_DisplayHandler()
 {
-    uint8_t byNum[6];   
+    uint8_t byNum[6];
+
+    byNum[0] = '+';
+    byNum[1] = ':';
+    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+    byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
+    byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
+    byNum[5] = m_bufKeyboard[4*m_byCursorPage];
+
     if (m_byCursorPage == 0)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[i];
         display_char("[[[[[[KP");
-        display_digital(byNum,0,m_byCursorPos + 1);
+        display_digital(byNum,2,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 1)
+    else if (m_byCursorPage == 1)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[5 + i];
         display_char("[[[[[[TN");
-        display_digital(byNum,0,m_byCursorPos - 4);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 2)
+    else if (m_byCursorPage == 2)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[10 + i];
         display_char("[[[[[[TV");
-        display_digital(byNum,0,m_byCursorPos - 9);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 3)
+    else if (m_byCursorPage == 3)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[15 + i];
         display_char("[[[[[[XO");
-        display_digital(byNum,0,m_byCursorPos - 14);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
+    }
+    else
+    {
+        display_char("[[[[DONE");
+        display_digital("::::::",0,0);
     }
 }
 
 static void ScalS_OpeningHandler()
 {
     m_byCursorPos = 0;
-
-    clearLCD();
-    m_bufKeyboard[0]    = '0';
-    m_bufKeyboard[1]    = '0';
-    m_bufKeyboard[2]    = '0';
-    m_bufKeyboard[3]    = '0';
-    m_bufKeyboard[4]    = '0';
-    m_bufKeyboard[5]    = '0';
-    m_bufKeyboard[6]    = '0';
-    m_bufKeyboard[7]    = '0';
-    m_bufKeyboard[8]    = '0';
-    m_bufKeyboard[9]    = '0';
-    m_bufKeyboard[10]   = '0';
-    m_bufKeyboard[11]   = '0';
-    m_bufKeyboard[12]   = '0';
-    m_bufKeyboard[13]   = '0';
-    m_bufKeyboard[14]   = '0';
-    m_bufKeyboard[15]   = '0';
-    m_bufKeyboard[16]   = '0';
-    m_bufKeyboard[17]   = '0';
-    m_bufKeyboard[18]   = '0';
-    m_bufKeyboard[19]   = '0';
-    m_bufKeyboard[20]   = '0';
-    m_byCursorPage      = 0;
+    for (uint16_t i = 0; i < 16; i++)
+        m_bufKeyboard[i] = '0';
+    m_byCursorPage   = 0;
 }
 
 static void ScalF_KeyboardHandler(uint8_t byKeyCode)
@@ -2721,21 +2761,23 @@ static void ScalF_KeyboardHandler(uint8_t byKeyCode)
         if (m_byCursorPos > 0)
         {
             m_byCursorPos--;
+            m_byCursorPage   = m_byCursorPos/4;
+        }
+		else 
+        {
+            menu_return( );
         }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
-        if (m_byCursorPos > 4)
-            m_byCursorPage   = 1;
-        if (m_byCursorPos > 9)
-            m_byCursorPage   = 2;
-        if (m_byCursorPos > 14)
-            m_byCursorPage   = 3;
+        m_byCursorPage   = m_byCursorPos/4;
+		if (m_byCursorPos > 16)
+			m_byCursorPos = 16;
     }
     else if (byKeyCode == KEY_3)
     {
-        if (m_byCursorPos < 20)
+        if (m_byCursorPos < 16)
         {
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
@@ -2743,75 +2785,55 @@ static void ScalF_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-            /* add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action   */
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            menu_return( );
         }
     }
 }
 
 static void ScalF_DisplayHandler()
 {
-    uint8_t byNum[6];   
+    uint8_t byNum[6];
+
+    byNum[0] = '+';
+    byNum[1] = ':';
+    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+    byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
+    byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
+    byNum[5] = m_bufKeyboard[4*m_byCursorPage];
+
     if (m_byCursorPage == 0)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[i];
         display_char("[[[[[[KP");
-        display_digital(byNum,0,m_byCursorPos + 1);
+        display_digital(byNum,2,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 1)
+    else if (m_byCursorPage == 1)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[5 + i];
         display_char("[[[[[[TN");
-        display_digital(byNum,0,m_byCursorPos - 4);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 2)
+    else if (m_byCursorPage == 2)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[10 + i];
         display_char("[[[[[[TV");
-        display_digital(byNum,0,m_byCursorPos - 9);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 3)
+    else if (m_byCursorPage == 3)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[15 + i];
         display_char("[[[[[[XO");
-        display_digital(byNum,0,m_byCursorPos - 14);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
+    }
+    else
+    {
+        display_char("[[[[DONE");
+        display_digital("::::::",0,0);
     }
 }
 
 static void ScalF_OpeningHandler()
 {
     m_byCursorPos = 0;
-
-    clearLCD();
-    m_bufKeyboard[0]    = '0';
-    m_bufKeyboard[1]    = '0';
-    m_bufKeyboard[2]    = '0';
-    m_bufKeyboard[3]    = '0';
-    m_bufKeyboard[4]    = '0';
-    m_bufKeyboard[5]    = '0';
-    m_bufKeyboard[6]    = '0';
-    m_bufKeyboard[7]    = '0';
-    m_bufKeyboard[8]    = '0';
-    m_bufKeyboard[9]    = '0';
-    m_bufKeyboard[10]   = '0';
-    m_bufKeyboard[11]   = '0';
-    m_bufKeyboard[12]   = '0';
-    m_bufKeyboard[13]   = '0';
-    m_bufKeyboard[14]   = '0';
-    m_bufKeyboard[15]   = '0';
-    m_bufKeyboard[16]   = '0';
-    m_bufKeyboard[17]   = '0';
-    m_bufKeyboard[18]   = '0';
-    m_bufKeyboard[19]   = '0';
-    m_bufKeyboard[20]   = '0';
-    m_byCursorPage      = 0;
+    for (uint16_t i = 0; i < 16; i++)
+        m_bufKeyboard[i] = '0';
+    m_byCursorPage   = 0;
 }
 
 static void ScalT_KeyboardHandler(uint8_t byKeyCode)
@@ -2821,21 +2843,23 @@ static void ScalT_KeyboardHandler(uint8_t byKeyCode)
         if (m_byCursorPos > 0)
         {
             m_byCursorPos--;
+            m_byCursorPage   = m_byCursorPos/4;
+        }
+		else 
+        {
+            menu_return( );
         }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
-        if (m_byCursorPos > 4)
-            m_byCursorPage   = 1;
-        if (m_byCursorPos > 9)
-            m_byCursorPage   = 2;
-        if (m_byCursorPos > 14)
-            m_byCursorPage   = 3;
+        m_byCursorPage   = m_byCursorPos/4;
+		if (m_byCursorPos > 16)
+			m_byCursorPos = 16;
     }
     else if (byKeyCode == KEY_3)
     {
-        if (m_byCursorPos < 20)
+        if (m_byCursorPos < 16)
         {
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
@@ -2843,77 +2867,56 @@ static void ScalT_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-            /* add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action   */
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            menu_return( );
         }
     }
 }
 
 static void ScalT_DisplayHandler()
 {
-    uint8_t byNum[6];   
+    uint8_t byNum[6];
+
+    byNum[0] = '+';
+    byNum[1] = ':';
+    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+    byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
+    byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
+    byNum[5] = m_bufKeyboard[4*m_byCursorPage];
+
     if (m_byCursorPage == 0)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[i];
         display_char("[[[[[[KP");
-        display_digital(byNum,0,m_byCursorPos + 1);
+        display_digital(byNum,2,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 1)
+    else if (m_byCursorPage == 1)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[5 + i];
         display_char("[[[[[[TN");
-        display_digital(byNum,0,m_byCursorPos - 4);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 2)
+    else if (m_byCursorPage == 2)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[10 + i];
         display_char("[[[[[[TV");
-        display_digital(byNum,0,m_byCursorPos - 9);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 3)
+    else if (m_byCursorPage == 3)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[15 + i];
         display_char("[[[[[[XO");
-        display_digital(byNum,0,m_byCursorPos - 14);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
+    }
+    else
+    {
+        display_char("[[[[DONE");
+        display_digital("::::::",0,0);
     }
 }
 
 static void ScalT_OpeningHandler()
 {
     m_byCursorPos = 0;
-
-    clearLCD();
-    m_bufKeyboard[0]    = '0';
-    m_bufKeyboard[1]    = '0';
-    m_bufKeyboard[2]    = '0';
-    m_bufKeyboard[3]    = '0';
-    m_bufKeyboard[4]    = '0';
-    m_bufKeyboard[5]    = '0';
-    m_bufKeyboard[6]    = '0';
-    m_bufKeyboard[7]    = '0';
-    m_bufKeyboard[8]    = '0';
-    m_bufKeyboard[9]    = '0';
-    m_bufKeyboard[10]   = '0';
-    m_bufKeyboard[11]   = '0';
-    m_bufKeyboard[12]   = '0';
-    m_bufKeyboard[13]   = '0';
-    m_bufKeyboard[14]   = '0';
-    m_bufKeyboard[15]   = '0';
-    m_bufKeyboard[16]   = '0';
-    m_bufKeyboard[17]   = '0';
-    m_bufKeyboard[18]   = '0';
-    m_bufKeyboard[19]   = '0';
-    m_bufKeyboard[20]   = '0';
-    m_byCursorPage      = 0;
+    for (uint16_t i = 0; i < 16; i++)
+        m_bufKeyboard[i] = '0';
+    m_byCursorPage   = 0;
 }
-
 static void ScalP_KeyboardHandler(uint8_t byKeyCode)
 {
     if (byKeyCode == KEY_1)
@@ -2921,21 +2924,23 @@ static void ScalP_KeyboardHandler(uint8_t byKeyCode)
         if (m_byCursorPos > 0)
         {
             m_byCursorPos--;
+            m_byCursorPage   = m_byCursorPos/4;
+        }
+		else 
+        {
+            menu_return( );
         }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
-        if (m_byCursorPos > 4)
-            m_byCursorPage   = 1;
-        if (m_byCursorPos > 9)
-            m_byCursorPage   = 2;
-        if (m_byCursorPos > 14)
-            m_byCursorPage   = 3;
+        m_byCursorPage   = m_byCursorPos/4;
+		if (m_byCursorPos > 16)
+			m_byCursorPos = 16;
     }
     else if (byKeyCode == KEY_3)
     {
-        if (m_byCursorPos < 20)
+        if (m_byCursorPos < 16)
         {
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
@@ -2943,124 +2948,90 @@ static void ScalP_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-            /* add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action   */
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            menu_return( );
         }
     }
 }
 
 static void ScalP_DisplayHandler()
 {
-    uint8_t byNum[6];   
+    uint8_t byNum[6];
+
+    byNum[0] = '+';
+    byNum[1] = ':';
+    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+    byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
+    byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
+    byNum[5] = m_bufKeyboard[4*m_byCursorPage];
+
     if (m_byCursorPage == 0)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[i];
         display_char("[[[[[[KP");
-        display_digital(byNum,0,m_byCursorPos + 1);
+        display_digital(byNum,2,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 1)
+    else if (m_byCursorPage == 1)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[5 + i];
         display_char("[[[[[[TN");
-        display_digital(byNum,0,m_byCursorPos - 4);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 2)
+    else if (m_byCursorPage == 2)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[10 + i];
         display_char("[[[[[[TV");
-        display_digital(byNum,0,m_byCursorPos - 9);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 3)
+    else if (m_byCursorPage == 3)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[15 + i];
         display_char("[[[[[[XO");
-        display_digital(byNum,0,m_byCursorPos - 14);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
+    }
+    else
+    {
+        display_char("[[[[DONE");
+        display_digital("::::::",0,0);
     }
 }
 
 static void ScalP_OpeningHandler()
 {
     m_byCursorPos = 0;
-
-    clearLCD();
-    m_bufKeyboard[0]    = '0';
-    m_bufKeyboard[1]    = '0';
-    m_bufKeyboard[2]    = '0';
-    m_bufKeyboard[3]    = '0';
-    m_bufKeyboard[4]    = '0';
-    m_bufKeyboard[5]    = '0';
-    m_bufKeyboard[6]    = '0';
-    m_bufKeyboard[7]    = '0';
-    m_bufKeyboard[8]    = '0';
-    m_bufKeyboard[9]    = '0';
-    m_bufKeyboard[10]   = '0';
-    m_bufKeyboard[11]   = '0';
-    m_bufKeyboard[12]   = '0';
-    m_bufKeyboard[13]   = '0';
-    m_bufKeyboard[14]   = '0';
-    m_bufKeyboard[15]   = '0';
-    m_bufKeyboard[16]   = '0';
-    m_bufKeyboard[17]   = '0';
-    m_bufKeyboard[18]   = '0';
-    m_bufKeyboard[19]   = '0';
-    m_bufKeyboard[20]   = '0';
-    m_byCursorPage      = 0;
+    for (uint16_t i = 0; i < 16; i++)
+        m_bufKeyboard[i] = '0';
+    m_byCursorPage   = 0;
 }
 
 static void TuneNot_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void TuneDef_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void TuneFlow_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void TuneTemp_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void TunePres_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( ); 
 }
 
 static void TuneLevl_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void LeakNot_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 static void LeakMeas_KeyboardHandler(uint8_t byKeyCode)
@@ -3070,21 +3041,23 @@ static void LeakMeas_KeyboardHandler(uint8_t byKeyCode)
         if (m_byCursorPos > 0)
         {
             m_byCursorPos--;
+            m_byCursorPage   = m_byCursorPos/4;
+        }
+		else 
+        {
+            menu_return( );
         }
     }
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
-        if (m_byCursorPos > 4)
-            m_byCursorPage   = 1;
-        if (m_byCursorPos > 9)
-            m_byCursorPage   = 2;
-        if (m_byCursorPos > 14)
-            m_byCursorPage   = 3;
+        m_byCursorPage   = m_byCursorPos/4;
+		if (m_byCursorPos > 16)
+			m_byCursorPos = 16;
     }
     else if (byKeyCode == KEY_3)
     {
-        if (m_byCursorPos < 20)
+        if (m_byCursorPos < 16)
         {
             m_bufKeyboard[m_byCursorPos]++;
             if (m_bufKeyboard[m_byCursorPos] > '9')
@@ -3092,90 +3065,68 @@ static void LeakMeas_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            MENU_ITEM*  pMenuItem = &m_aMenuItems[m_mcbCurrent.byStartMenuItemID];
-            /* add some fun to due with m_bufKeyboard[m_byCursorPos],or do any action   */
-            S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-            m_mcbCurrent.pMenu                      = pMenuItem;
-            m_mcbCurrent.byStartMenuItemID          = 0;
+            menu_return( );
         }
     }
 }
 
 static void LeakMeas_DisplayHandler()
 {
-    uint8_t byNum[6];   
+    uint8_t byNum[6];
+
+    byNum[0] = '+';
+    byNum[1] = ':';
+    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+    byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
+    byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
+    byNum[5] = m_bufKeyboard[4*m_byCursorPage];
+
     if (m_byCursorPage == 0)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[i];
         display_char("[[[[[[KP");
-        display_digital(byNum,0,m_byCursorPos + 1);
+        display_digital(byNum,2,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 1)
+    else if (m_byCursorPage == 1)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[5 + i];
         display_char("[[[[[[TN");
-        display_digital(byNum,0,m_byCursorPos - 4);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 2)
+    else if (m_byCursorPage == 2)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[10 + i];
         display_char("[[[[[[TV");
-        display_digital(byNum,0,m_byCursorPos - 9);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
     }
-    if (m_byCursorPage == 3)
+    else if (m_byCursorPage == 3)
     {
-        for (uint16_t i = 0; i < 5; i++)
-            byNum[5 - i] = m_bufKeyboard[15 + i];
         display_char("[[[[[[XO");
-        display_digital(byNum,0,m_byCursorPos - 14);
+        display_digital(byNum,1,m_byCursorPos - 4*m_byCursorPage + 1);
+    }
+    else
+    {
+        display_char("[[[[DONE");
+        display_digital("::::::",0,0);
     }
 }
 
 static void LeakMeas_OpeningHandler()
 {
     m_byCursorPos = 0;
-
-    clearLCD();
-    m_bufKeyboard[0]    = '0';
-    m_bufKeyboard[1]    = '0';
-    m_bufKeyboard[2]    = '0';
-    m_bufKeyboard[3]    = '0';
-    m_bufKeyboard[4]    = '0';
-    m_bufKeyboard[5]    = '0';
-    m_bufKeyboard[6]    = '0';
-    m_bufKeyboard[7]    = '0';
-    m_bufKeyboard[8]    = '0';
-    m_bufKeyboard[9]    = '0';
-    m_bufKeyboard[10]   = '0';
-    m_bufKeyboard[11]   = '0';
-    m_bufKeyboard[12]   = '0';
-    m_bufKeyboard[13]   = '0';
-    m_bufKeyboard[14]   = '0';
-    m_bufKeyboard[15]   = '0';
-    m_bufKeyboard[16]   = '0';
-    m_bufKeyboard[17]   = '0';
-    m_bufKeyboard[18]   = '0';
-    m_bufKeyboard[19]   = '0';
-    m_bufKeyboard[20]   = '0';
-    m_byCursorPage      = 0;
+    for (uint16_t i = 0; i < 16; i++)
+        m_bufKeyboard[i] = '0';
+    m_byCursorPage   = 0;
 }
 
 static void LeakChar_OpeningHandler()
 {
-    clearLCD();
-    display_char("DDDDDDDD");
-    clearLCD(); 
+    menu_display_done( );
 }
 
 void HMI_Init()
 {
     initLCD_1622();
     /* Enable internal pull-up resister*/
-    GP3CON  &= ~0x00003000;
-    GP0CON  &= ~0x00033000;
+    GP2CON  &= ~0x00000033;
+    GP0CON  &= ~0x00030000;
 
     /* Init Main Menu*/
     m_aMenuItems[MENU_MAIN_ACT].byMenuItemID                = MENU_MAIN_ACT;
@@ -3194,37 +3145,132 @@ void HMI_Init()
     m_aMenuItems[MENU_MAIN_INPUT].DisplayHandler            = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_MAIN_INPUT].OnOpeningHandler          = NULL;
 
-    m_aMenuItems[MENU_MAIN_INSET].byMenuItemID              = MENU_MAIN_INSET;
-    m_aMenuItems[MENU_MAIN_INSET].byChildMenuItems          = 8;
-    m_aMenuItems[MENU_MAIN_INSET].pChildMenu                = &m_aMenuItems[MENU_INSET_CHARACT];
-    m_aMenuItems[MENU_MAIN_INSET].pParentMenu               = NULL;
-    m_aMenuItems[MENU_MAIN_INSET].KeyboardHandler           = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_MAIN_INSET].DisplayHandler            = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_MAIN_INSET].OnOpeningHandler          = NULL;
+    m_aMenuItems[MENU_MAIN_CHARACT].byMenuItemID            = MENU_MAIN_CHARACT;
+    m_aMenuItems[MENU_MAIN_CHARACT].pChildMenu              = &m_aMenuItems[MENU_CHARACT_l_1];
+    m_aMenuItems[MENU_MAIN_CHARACT].pParentMenu             = NULL;
+    m_aMenuItems[MENU_MAIN_CHARACT].KeyboardHandler         = MainMenu_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_CHARACT].DisplayHandler          = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_CHARACT].OnOpeningHandler        = NULL;
 
-    m_aMenuItems[MENU_MAIN_XSET].byMenuItemID               = MENU_MAIN_XSET;
-    m_aMenuItems[MENU_MAIN_XSET].byChildMenuItems           = 8;
-    m_aMenuItems[MENU_MAIN_XSET].pChildMenu                 = &m_aMenuItems[MENU_XSET_XTUNE];
-    m_aMenuItems[MENU_MAIN_XSET].pParentMenu                = NULL;
-    m_aMenuItems[MENU_MAIN_XSET].KeyboardHandler            = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_MAIN_XSET].DisplayHandler             = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_MAIN_XSET].OnOpeningHandler           = NULL; 
+    m_aMenuItems[MENU_MAIN_CUTOFF].byMenuItemID             = MENU_MAIN_CUTOFF;
+    m_aMenuItems[MENU_MAIN_CUTOFF].pChildMenu               = NULL;
+    m_aMenuItems[MENU_MAIN_CUTOFF].pParentMenu              = NULL;
+    m_aMenuItems[MENU_MAIN_CUTOFF].KeyboardHandler          = InsetCutoff_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_CUTOFF].DisplayHandler           = InsetCutoff_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_CUTOFF].OnOpeningHandler         = InsetCutoff_OpeningHandler;
 
-    m_aMenuItems[MENU_MAIN_SYSTEM].byMenuItemID             = MENU_MAIN_SYSTEM;
-    m_aMenuItems[MENU_MAIN_SYSTEM].byChildMenuItems         = 8;
-    m_aMenuItems[MENU_MAIN_SYSTEM].pChildMenu               = &m_aMenuItems[MENU_SYSTEM_SERIO];
-    m_aMenuItems[MENU_MAIN_SYSTEM].pParentMenu              = NULL;
-    m_aMenuItems[MENU_MAIN_SYSTEM].KeyboardHandler          = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_MAIN_SYSTEM].DisplayHandler           = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_MAIN_SYSTEM].OnOpeningHandler         = NULL;
+    m_aMenuItems[MENU_MAIN_DIRCMD].byMenuItemID             = MENU_MAIN_DIRCMD;
+    m_aMenuItems[MENU_MAIN_DIRCMD].pChildMenu               = &m_aMenuItems[MENU_DIRCMD_RISE];
+    m_aMenuItems[MENU_MAIN_DIRCMD].pParentMenu              = NULL;
+    m_aMenuItems[MENU_MAIN_DIRCMD].KeyboardHandler          = MainMenu_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_DIRCMD].DisplayHandler           = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_DIRCMD].OnOpeningHandler         = NULL;
 
-    m_aMenuItems[MENU_MAIN_CONTRL].byMenuItemID             = MENU_MAIN_CONTRL;
-    m_aMenuItems[MENU_MAIN_CONTRL].byChildMenuItems         = 8;
-    m_aMenuItems[MENU_MAIN_CONTRL].pChildMenu               = &m_aMenuItems[MENU_CONTRL_BININ];
-    m_aMenuItems[MENU_MAIN_CONTRL].pParentMenu              = NULL;
-    m_aMenuItems[MENU_MAIN_CONTRL].KeyboardHandler          = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_MAIN_CONTRL].DisplayHandler           = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_MAIN_CONTRL].OnOpeningHandler         = NULL;
+    m_aMenuItems[MENU_MAIN_DIRACT].byMenuItemID             = MENU_MAIN_DIRACT;
+    m_aMenuItems[MENU_MAIN_DIRACT].pChildMenu               = &m_aMenuItems[MENU_DIRACT_RISE];
+    m_aMenuItems[MENU_MAIN_DIRACT].pParentMenu              = NULL;
+    m_aMenuItems[MENU_MAIN_DIRACT].KeyboardHandler          = MainMenu_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_DIRACT].DisplayHandler           = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_DIRACT].OnOpeningHandler         = NULL;
+
+    m_aMenuItems[MENU_MAIN_SPLTRNG].byMenuItemID            = MENU_MAIN_SPLTRNG;
+    m_aMenuItems[MENU_MAIN_SPLTRNG].pChildMenu              = NULL;
+    m_aMenuItems[MENU_MAIN_SPLTRNG].pParentMenu             = NULL;
+    m_aMenuItems[MENU_MAIN_SPLTRNG].KeyboardHandler         = InsetSpltrng_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_SPLTRNG].DisplayHandler          = InsetSpltrng_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_SPLTRNG].OnOpeningHandler        = InsetSpltrng_OpeningHandler;
+
+    m_aMenuItems[MENU_MAIN_XLIMIT].byMenuItemID             = MENU_MAIN_XLIMIT;
+    m_aMenuItems[MENU_MAIN_XLIMIT].pChildMenu               = NULL;
+    m_aMenuItems[MENU_MAIN_XLIMIT].pParentMenu              = NULL;
+    m_aMenuItems[MENU_MAIN_XLIMIT].KeyboardHandler          = XsetXlimit_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_XLIMIT].DisplayHandler           = XsetXlimit_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_XLIMIT].OnOpeningHandler         = XsetXlimit_OpeningHandler;
+
+    m_aMenuItems[MENU_MAIN_XTIME].byMenuItemID              = MENU_MAIN_XTIME;
+    m_aMenuItems[MENU_MAIN_XTIME].pChildMenu                = NULL;
+    m_aMenuItems[MENU_MAIN_XTIME].pParentMenu               = NULL;
+    m_aMenuItems[MENU_MAIN_XTIME].KeyboardHandler           = XsetXtime_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_XTIME].DisplayHandler            = XsetXtime_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_XTIME].OnOpeningHandler          = XsetXtime_OpeningHandler;
+
+    m_aMenuItems[MENU_MAIN_XCONTRL].byMenuItemID            = MENU_MAIN_XCONTRL;
+    m_aMenuItems[MENU_MAIN_XCONTRL].pChildMenu              = &m_aMenuItems[MENU_XCONTRL_END];
+    m_aMenuItems[MENU_MAIN_XCONTRL].pParentMenu             = NULL;
+    m_aMenuItems[MENU_MAIN_XCONTRL].KeyboardHandler         = MainMenu_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_XCONTRL].DisplayHandler          = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_XCONTRL].OnOpeningHandler        = NULL;
+
+    m_aMenuItems[MENU_MAIN_PCONTRL].byMenuItemID            = MENU_MAIN_PCONTRL;
+    m_aMenuItems[MENU_MAIN_PCONTRL].pChildMenu              = &m_aMenuItems[MENU_PCONTRL_END];
+    m_aMenuItems[MENU_MAIN_PCONTRL].pParentMenu             = NULL;
+    m_aMenuItems[MENU_MAIN_PCONTRL].KeyboardHandler         = MainMenu_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_PCONTRL].DisplayHandler          = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_PCONTRL].OnOpeningHandler        = NULL;
+
+    m_aMenuItems[MENU_MAIN_CODE].byMenuItemID               = MENU_MAIN_CODE;
+    m_aMenuItems[MENU_MAIN_CODE].pChildMenu                 = &m_aMenuItems[MENU_CODE_END];
+    m_aMenuItems[MENU_MAIN_CODE].pParentMenu                = NULL;
+    m_aMenuItems[MENU_MAIN_CODE].KeyboardHandler            = MainMenu_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_CODE].DisplayHandler             = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_CODE].OnOpeningHandler           = NULL;
+
+    m_aMenuItems[MENU_MAIN_SAFEPOS].byMenuItemID            = MENU_MAIN_SAFEPOS;
+    m_aMenuItems[MENU_MAIN_SAFEPOS].pChildMenu              = NULL;
+    m_aMenuItems[MENU_MAIN_SAFEPOS].pParentMenu             = NULL;
+    m_aMenuItems[MENU_MAIN_SAFEPOS].KeyboardHandler         = SystemSafepos_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_SAFEPOS].DisplayHandler          = SystemSafepos_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_SAFEPOS].OnOpeningHandler        = SystemSafepos_OpeningHandler;
+
+    m_aMenuItems[MENU_MAIN_SIGERR].byMenuItemID             = MENU_MAIN_SIGERR;
+    m_aMenuItems[MENU_MAIN_SIGERR].pChildMenu               = &m_aMenuItems[MENU_SIGERR_FUNON];
+    m_aMenuItems[MENU_MAIN_SIGERR].pParentMenu              = NULL;
+    m_aMenuItems[MENU_MAIN_SIGERR].KeyboardHandler          = MainMenu_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_SIGERR].DisplayHandler           = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_SIGERR].OnOpeningHandler         = NULL;
+
+    m_aMenuItems[MENU_MAIN_BININ].byMenuItemID              = MENU_MAIN_BININ;
+    m_aMenuItems[MENU_MAIN_BININ].pChildMenu                = &m_aMenuItems[MENU_BININ_SPOS];
+    m_aMenuItems[MENU_MAIN_BININ].pParentMenu               = NULL;
+    m_aMenuItems[MENU_MAIN_BININ].KeyboardHandler           = MainMenu_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_BININ].DisplayHandler            = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_BININ].OnOpeningHandler          = NULL;
+
+    m_aMenuItems[MENU_MAIN_OUTPUT].byMenuItemID             = MENU_MAIN_OUTPUT;
+    m_aMenuItems[MENU_MAIN_OUTPUT].pChildMenu               = &m_aMenuItems[MENU_OUTPUT_ANL];
+    m_aMenuItems[MENU_MAIN_OUTPUT].pParentMenu              = NULL;
+    m_aMenuItems[MENU_MAIN_OUTPUT].KeyboardHandler          = MainMenu_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_OUTPUT].DisplayHandler           = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_OUTPUT].OnOpeningHandler         = NULL;
+
+    m_aMenuItems[MENU_MAIN_CALUSER].byMenuItemID            = MENU_MAIN_CALUSER;
+    m_aMenuItems[MENU_MAIN_CALUSER].pChildMenu              = &m_aMenuItems[MENU_CALUSER_END];
+    m_aMenuItems[MENU_MAIN_CALUSER].pParentMenu             = NULL;
+    m_aMenuItems[MENU_MAIN_CALUSER].KeyboardHandler         = MainMenu_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_CALUSER].DisplayHandler          = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_CALUSER].OnOpeningHandler        = NULL;
+
+    m_aMenuItems[MENU_MAIN_SETFACT].byMenuItemID            = MENU_MAIN_SETFACT;
+    m_aMenuItems[MENU_MAIN_SETFACT].pChildMenu              = NULL;
+    m_aMenuItems[MENU_MAIN_SETFACT].pParentMenu             = NULL;
+    m_aMenuItems[MENU_MAIN_SETFACT].KeyboardHandler         = MainMenu_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_SETFACT].DisplayHandler          = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_SETFACT].OnOpeningHandler        = SystemSetfact_OpeningHandler;
+
+    m_aMenuItems[MENU_MAIN_SERIO].byMenuItemID              = MENU_MAIN_SERIO;
+    m_aMenuItems[MENU_MAIN_SERIO].pChildMenu                = &m_aMenuItems[MENU_SERIO_9600];
+    m_aMenuItems[MENU_MAIN_SERIO].pParentMenu               = NULL;
+    m_aMenuItems[MENU_MAIN_SERIO].KeyboardHandler           = MainMenu_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_SERIO].DisplayHandler            = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_SERIO].OnOpeningHandler          = NULL;    
+
+    m_aMenuItems[MENU_MAIN_ADDFUN].byMenuItemID             = MENU_MAIN_ADDFUN;
+    m_aMenuItems[MENU_MAIN_ADDFUN].byChildMenuItems         = 8;
+    m_aMenuItems[MENU_MAIN_ADDFUN].pChildMenu               = NULL;
+    m_aMenuItems[MENU_MAIN_ADDFUN].pParentMenu              = NULL;
+    m_aMenuItems[MENU_MAIN_ADDFUN].KeyboardHandler          = AddFun_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_ADDFUN].DisplayHandler           = AddFun_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_ADDFUN].OnOpeningHandler         = AddFun_OpeningHandler;
 
     m_aMenuItems[MENU_MAIN_MANUAL].byMenuItemID             = MENU_MAIN_MANUAL;
     m_aMenuItems[MENU_MAIN_MANUAL].byChildMenuItems         = 8;
@@ -3233,6 +3279,14 @@ void HMI_Init()
     m_aMenuItems[MENU_MAIN_MANUAL].KeyboardHandler          = MENU_MAIN_MANUAL_KeyboardHandler;
     m_aMenuItems[MENU_MAIN_MANUAL].DisplayHandler           = MENU_MAIN_MANUAL_DisplayHandler;
     m_aMenuItems[MENU_MAIN_MANUAL].OnOpeningHandler         = MENU_MAIN_MANUAL_OpeningHandler;
+
+    m_aMenuItems[MENU_MAIN_XTUNE].byMenuItemID              = MENU_MAIN_XTUNE;
+    m_aMenuItems[MENU_MAIN_XTUNE].byChildMenuItems          = 8;
+    m_aMenuItems[MENU_MAIN_XTUNE].pChildMenu                = &m_aMenuItems[MENU_XTUNE_AUTO];
+    m_aMenuItems[MENU_MAIN_XTUNE].pParentMenu               = NULL;
+    m_aMenuItems[MENU_MAIN_XTUNE].KeyboardHandler           = MainMenu_KeyboardHandler;
+    m_aMenuItems[MENU_MAIN_XTUNE].DisplayHandler            = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_MAIN_XTUNE].OnOpeningHandler          = NULL;
 
     m_aMenuItems[MENU_MAIN_END].byMenuItemID                = MENU_MAIN_END;
     m_aMenuItems[MENU_MAIN_END].byChildMenuItems            = 8;
@@ -3308,191 +3362,11 @@ void HMI_Init()
     m_aMenuItems[MENU_INPUT_END].DisplayHandler             = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_INPUT_END].OnOpeningHandler           = NULL;
 
-    /* Init In Set Menu*/
-    m_aMenuItems[MENU_INSET_CHARACT].byMenuItemID           = MENU_INSET_CHARACT;
-    m_aMenuItems[MENU_INSET_CHARACT].byChildMenuItems       = 6;
-    m_aMenuItems[MENU_INSET_CHARACT].pChildMenu             = &m_aMenuItems[MENU_CHARACT_l_1];
-    m_aMenuItems[MENU_INSET_CHARACT].pParentMenu            = &m_aMenuItems[MENU_MAIN_INSET];
-    m_aMenuItems[MENU_INSET_CHARACT].KeyboardHandler        = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_INSET_CHARACT].DisplayHandler         = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_INSET_CHARACT].OnOpeningHandler       = NULL;
-
-    m_aMenuItems[MENU_INSET_CUTOFF].byMenuItemID            = MENU_INSET_CUTOFF;
-    m_aMenuItems[MENU_INSET_CUTOFF].byChildMenuItems        = 6;
-    m_aMenuItems[MENU_INSET_CUTOFF].pChildMenu              = NULL;
-    m_aMenuItems[MENU_INSET_CUTOFF].pParentMenu             = &m_aMenuItems[MENU_MAIN_INSET];
-    m_aMenuItems[MENU_INSET_CUTOFF].KeyboardHandler         = InsetCutoff_KeyboardHandler;
-    m_aMenuItems[MENU_INSET_CUTOFF].DisplayHandler          = InsetCutoff_DisplayHandler;
-    m_aMenuItems[MENU_INSET_CUTOFF].OnOpeningHandler        = InsetCutoff_OpeningHandler;
-
-    m_aMenuItems[MENU_INSET_DIRCMD].byMenuItemID            = MENU_INSET_DIRCMD;
-    m_aMenuItems[MENU_INSET_DIRCMD].byChildMenuItems        = 6;
-    m_aMenuItems[MENU_INSET_DIRCMD].pChildMenu              = &m_aMenuItems[MENU_DIRCMD_RISE];
-    m_aMenuItems[MENU_INSET_DIRCMD].pParentMenu             = &m_aMenuItems[MENU_MAIN_INSET];
-    m_aMenuItems[MENU_INSET_DIRCMD].KeyboardHandler         = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_INSET_DIRCMD].DisplayHandler          = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_INSET_DIRCMD].OnOpeningHandler        = NULL;
-
-    m_aMenuItems[MENU_INSET_DIRACT].byMenuItemID            = MENU_INSET_DIRACT;
-    m_aMenuItems[MENU_INSET_DIRACT].byChildMenuItems        = 6;
-    m_aMenuItems[MENU_INSET_DIRACT].pChildMenu              = &m_aMenuItems[MENU_DIRACT_RISE];
-    m_aMenuItems[MENU_INSET_DIRACT].pParentMenu             = &m_aMenuItems[MENU_MAIN_INSET];
-    m_aMenuItems[MENU_INSET_DIRACT].KeyboardHandler         = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_INSET_DIRACT].DisplayHandler          = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_INSET_DIRACT].OnOpeningHandler        = NULL;
-
-    m_aMenuItems[MENU_INSET_SPLTRNG].byMenuItemID           = MENU_INSET_SPLTRNG;
-    m_aMenuItems[MENU_INSET_SPLTRNG].byChildMenuItems       = 6;
-    m_aMenuItems[MENU_INSET_SPLTRNG].pChildMenu             = NULL;
-    m_aMenuItems[MENU_INSET_SPLTRNG].pParentMenu            = &m_aMenuItems[MENU_MAIN_INSET];
-    m_aMenuItems[MENU_INSET_SPLTRNG].KeyboardHandler        = InsetSpltrng_KeyboardHandler;
-    m_aMenuItems[MENU_INSET_SPLTRNG].DisplayHandler         = InsetSpltrng_DisplayHandler;
-    m_aMenuItems[MENU_INSET_SPLTRNG].OnOpeningHandler       = InsetSpltrng_OpeningHandler;
-
-    m_aMenuItems[MENU_INSET_END].byMenuItemID               = MENU_INSET_END;
-    m_aMenuItems[MENU_INSET_END].byChildMenuItems           = 6;
-    m_aMenuItems[MENU_INSET_END].pChildMenu                 = &m_aMenuItems[MENU_MAIN_INSET];
-    m_aMenuItems[MENU_INSET_END].pParentMenu                = &m_aMenuItems[MENU_MAIN_INSET];
-    m_aMenuItems[MENU_INSET_END].KeyboardHandler            = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_INSET_END].DisplayHandler             = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_INSET_END].OnOpeningHandler           = NULL;
-
-    /* Init X Set Menu*/
-    m_aMenuItems[MENU_XSET_XLIMIT].byMenuItemID             = MENU_XSET_XLIMIT;
-    m_aMenuItems[MENU_XSET_XLIMIT].byChildMenuItems         = 5;
-    m_aMenuItems[MENU_XSET_XLIMIT].pChildMenu               = NULL;
-    m_aMenuItems[MENU_XSET_XLIMIT].pParentMenu              = &m_aMenuItems[MENU_MAIN_XSET];
-    m_aMenuItems[MENU_XSET_XLIMIT].KeyboardHandler          = XsetXlimit_KeyboardHandler;
-    m_aMenuItems[MENU_XSET_XLIMIT].DisplayHandler           = XsetXlimit_DisplayHandler;
-    m_aMenuItems[MENU_XSET_XLIMIT].OnOpeningHandler         = XsetXlimit_OpeningHandler;
-
-    m_aMenuItems[MENU_XSET_XTIME].byMenuItemID              = MENU_XSET_XTIME;
-    m_aMenuItems[MENU_XSET_XTIME].byChildMenuItems          = 5;
-    m_aMenuItems[MENU_XSET_XTIME].pChildMenu                = NULL;
-    m_aMenuItems[MENU_XSET_XTIME].pParentMenu               = &m_aMenuItems[MENU_MAIN_XSET];
-    m_aMenuItems[MENU_XSET_XTIME].KeyboardHandler           = XsetXtime_KeyboardHandler;
-    m_aMenuItems[MENU_XSET_XTIME].DisplayHandler            = XsetXtime_DisplayHandler;
-    m_aMenuItems[MENU_XSET_XTIME].OnOpeningHandler          = XsetXtime_OpeningHandler;
-
-    m_aMenuItems[MENU_XSET_XCONTRL].byMenuItemID            = MENU_XSET_XCONTRL;
-    m_aMenuItems[MENU_XSET_XCONTRL].byChildMenuItems        = 5;
-    m_aMenuItems[MENU_XSET_XCONTRL].pChildMenu              = &m_aMenuItems[MENU_XCONTRL_END];
-    m_aMenuItems[MENU_XSET_XCONTRL].pParentMenu             = &m_aMenuItems[MENU_MAIN_XSET];
-    m_aMenuItems[MENU_XSET_XCONTRL].KeyboardHandler         = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_XSET_XCONTRL].DisplayHandler          = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_XSET_XCONTRL].OnOpeningHandler        = NULL;
-
-    m_aMenuItems[MENU_XSET_XTUNE].byMenuItemID              = MENU_XSET_XTUNE;
-    m_aMenuItems[MENU_XSET_XTUNE].byChildMenuItems          = 5;
-    m_aMenuItems[MENU_XSET_XTUNE].pChildMenu                = &m_aMenuItems[MENU_XTUNE_AUTO];
-    m_aMenuItems[MENU_XSET_XTUNE].pParentMenu               = &m_aMenuItems[MENU_MAIN_XSET];
-    m_aMenuItems[MENU_XSET_XTUNE].KeyboardHandler           = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_XSET_XTUNE].DisplayHandler            = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_XSET_XTUNE].OnOpeningHandler          = NULL;
-
-    m_aMenuItems[MENU_XSET_END].byMenuItemID                = MENU_XSET_END;
-    m_aMenuItems[MENU_XSET_END].byChildMenuItems            = 5;
-    m_aMenuItems[MENU_XSET_END].pChildMenu                  = &m_aMenuItems[MENU_MAIN_XSET];
-    m_aMenuItems[MENU_XSET_END].pParentMenu                 = &m_aMenuItems[MENU_MAIN_XSET];
-    m_aMenuItems[MENU_XSET_END].KeyboardHandler             = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_XSET_END].DisplayHandler              = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_XSET_END].OnOpeningHandler            = NULL;
-
-    /* Init System Menu*/
-    m_aMenuItems[MENU_SYSTEM_SAFEPOS].byMenuItemID          = MENU_SYSTEM_SAFEPOS;
-    m_aMenuItems[MENU_SYSTEM_SAFEPOS].byChildMenuItems      = 6;
-    m_aMenuItems[MENU_SYSTEM_SAFEPOS].pChildMenu            = NULL;
-    m_aMenuItems[MENU_SYSTEM_SAFEPOS].pParentMenu           = &m_aMenuItems[MENU_MAIN_SYSTEM];
-    m_aMenuItems[MENU_SYSTEM_SAFEPOS].KeyboardHandler       = SystemSafepos_KeyboardHandler;
-    m_aMenuItems[MENU_SYSTEM_SAFEPOS].DisplayHandler        = SystemSafepos_DisplayHandler;
-    m_aMenuItems[MENU_SYSTEM_SAFEPOS].OnOpeningHandler      = SystemSafepos_OpeningHandler;
-
-    m_aMenuItems[MENU_SYSTEM_SIGERR].byMenuItemID           = MENU_SYSTEM_SIGERR;
-    m_aMenuItems[MENU_SYSTEM_SIGERR].byChildMenuItems       = 6;
-    m_aMenuItems[MENU_SYSTEM_SIGERR].pChildMenu             = &m_aMenuItems[MENU_SIGERR_FUNON];
-    m_aMenuItems[MENU_SYSTEM_SIGERR].pParentMenu            = &m_aMenuItems[MENU_MAIN_SYSTEM];
-    m_aMenuItems[MENU_SYSTEM_SIGERR].KeyboardHandler        = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_SYSTEM_SIGERR].DisplayHandler         = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_SYSTEM_SIGERR].OnOpeningHandler       = NULL;
-
-    m_aMenuItems[MENU_SYSTEM_SERIO].byMenuItemID            = MENU_SYSTEM_SERIO;
-    m_aMenuItems[MENU_SYSTEM_SERIO].byChildMenuItems        = 6;
-    m_aMenuItems[MENU_SYSTEM_SERIO].pChildMenu              = &m_aMenuItems[MENU_SERIO_9600];
-    m_aMenuItems[MENU_SYSTEM_SERIO].pParentMenu             = &m_aMenuItems[MENU_MAIN_SYSTEM];
-    m_aMenuItems[MENU_SYSTEM_SERIO].KeyboardHandler         = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_SYSTEM_SERIO].DisplayHandler          = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_SYSTEM_SERIO].OnOpeningHandler        = NULL;
-
-    m_aMenuItems[MENU_SYSTEM_CODE].byMenuItemID             = MENU_SYSTEM_CODE;
-    m_aMenuItems[MENU_SYSTEM_CODE].byChildMenuItems         = 6;
-    m_aMenuItems[MENU_SYSTEM_CODE].pChildMenu               = &m_aMenuItems[MENU_CODE_END];
-    m_aMenuItems[MENU_SYSTEM_CODE].pParentMenu              = &m_aMenuItems[MENU_MAIN_SYSTEM];
-    m_aMenuItems[MENU_SYSTEM_CODE].KeyboardHandler          = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_SYSTEM_CODE].DisplayHandler           = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_SYSTEM_CODE].OnOpeningHandler         = NULL;
-
-    m_aMenuItems[MENU_SYSTEM_SETFACT].byMenuItemID          = MENU_SYSTEM_SETFACT;
-    m_aMenuItems[MENU_SYSTEM_SETFACT].byChildMenuItems      = 6;
-    m_aMenuItems[MENU_SYSTEM_SETFACT].pChildMenu            = NULL;
-    m_aMenuItems[MENU_SYSTEM_SETFACT].pParentMenu           = &m_aMenuItems[MENU_MAIN_SYSTEM];
-    m_aMenuItems[MENU_SYSTEM_SETFACT].KeyboardHandler       = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_SYSTEM_SETFACT].DisplayHandler        = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_SYSTEM_SETFACT].OnOpeningHandler      = SystemSetfact_OpeningHandler;
-
-    m_aMenuItems[MENU_SYSTEM_END].byMenuItemID              = MENU_SYSTEM_END;
-    m_aMenuItems[MENU_SYSTEM_END].byChildMenuItems          = 6;
-    m_aMenuItems[MENU_SYSTEM_END].pChildMenu                = &m_aMenuItems[MENU_MAIN_SYSTEM];
-    m_aMenuItems[MENU_SYSTEM_END].pParentMenu               = &m_aMenuItems[MENU_MAIN_SYSTEM];
-    m_aMenuItems[MENU_SYSTEM_END].KeyboardHandler           = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_SYSTEM_END].DisplayHandler            = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_SYSTEM_END].OnOpeningHandler          = NULL;
-
-    /* Init Control Menu*/
-    m_aMenuItems[MENU_CONTRL_BININ].byMenuItemID            = MENU_CONTRL_BININ;
-    m_aMenuItems[MENU_CONTRL_BININ].byChildMenuItems        = 5;
-    m_aMenuItems[MENU_CONTRL_BININ].pChildMenu              = &m_aMenuItems[MENU_BININ_SPOS];
-    m_aMenuItems[MENU_CONTRL_BININ].pParentMenu             = &m_aMenuItems[MENU_MAIN_CONTRL];
-    m_aMenuItems[MENU_CONTRL_BININ].KeyboardHandler         = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_CONTRL_BININ].DisplayHandler          = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_CONTRL_BININ].OnOpeningHandler        = NULL;
-
-    m_aMenuItems[MENU_CONTRL_OUTPUT].byMenuItemID           = MENU_CONTRL_OUTPUT;
-    m_aMenuItems[MENU_CONTRL_OUTPUT].byChildMenuItems       = 5;
-    m_aMenuItems[MENU_CONTRL_OUTPUT].pChildMenu             = &m_aMenuItems[MENU_OUTPUT_ANL];
-    m_aMenuItems[MENU_CONTRL_OUTPUT].pParentMenu            = &m_aMenuItems[MENU_MAIN_CONTRL];
-    m_aMenuItems[MENU_CONTRL_OUTPUT].KeyboardHandler        = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_CONTRL_OUTPUT].DisplayHandler         = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_CONTRL_OUTPUT].OnOpeningHandler       = NULL;
-
-    m_aMenuItems[MENU_CONTRL_CALUSER].byMenuItemID          = MENU_CONTRL_CALUSER;
-    m_aMenuItems[MENU_CONTRL_CALUSER].byChildMenuItems      = 5;
-    m_aMenuItems[MENU_CONTRL_CALUSER].pChildMenu            = &m_aMenuItems[MENU_CALUSER_END];
-    m_aMenuItems[MENU_CONTRL_CALUSER].pParentMenu           = &m_aMenuItems[MENU_MAIN_CONTRL];
-    m_aMenuItems[MENU_CONTRL_CALUSER].KeyboardHandler       = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_CONTRL_CALUSER].DisplayHandler        = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_CONTRL_CALUSER].OnOpeningHandler      = NULL;
-
-    m_aMenuItems[MENU_CONTRL_PCONTRL].byMenuItemID          = MENU_CONTRL_PCONTRL;
-    m_aMenuItems[MENU_CONTRL_PCONTRL].byChildMenuItems      = 5;
-    m_aMenuItems[MENU_CONTRL_PCONTRL].pChildMenu            = &m_aMenuItems[MENU_PCONTRL_END];
-    m_aMenuItems[MENU_CONTRL_PCONTRL].pParentMenu           = &m_aMenuItems[MENU_MAIN_CONTRL];
-    m_aMenuItems[MENU_CONTRL_PCONTRL].KeyboardHandler       = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_CONTRL_PCONTRL].DisplayHandler        = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_CONTRL_PCONTRL].OnOpeningHandler      = NULL;
-
-    m_aMenuItems[MENU_CONTRL_END].byMenuItemID              = MENU_CONTRL_END;
-    m_aMenuItems[MENU_CONTRL_END].byChildMenuItems          = 5;
-    m_aMenuItems[MENU_CONTRL_END].pChildMenu                = &m_aMenuItems[MENU_MAIN_CONTRL];
-    m_aMenuItems[MENU_CONTRL_END].pParentMenu               = &m_aMenuItems[MENU_MAIN_CONTRL];
-    m_aMenuItems[MENU_CONTRL_END].KeyboardHandler           = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_CONTRL_END].DisplayHandler            = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_CONTRL_END].OnOpeningHandler          = NULL;
-
     /* Init Charact Menu*/
     m_aMenuItems[MENU_CHARACT_l_1].byMenuItemID             = MENU_CHARACT_l_1;
     m_aMenuItems[MENU_CHARACT_l_1].byChildMenuItems         = 9;
     m_aMenuItems[MENU_CHARACT_l_1].pChildMenu               = NULL;
-    m_aMenuItems[MENU_CHARACT_l_1].pParentMenu              = &m_aMenuItems[MENU_INSET_CHARACT];
+    m_aMenuItems[MENU_CHARACT_l_1].pParentMenu              = &m_aMenuItems[MENU_MAIN_CHARACT];
     m_aMenuItems[MENU_CHARACT_l_1].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_CHARACT_l_1].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_CHARACT_l_1].OnOpeningHandler         = Charact11_OpeningHandler;
@@ -3500,7 +3374,7 @@ void HMI_Init()
     m_aMenuItems[MENU_CHARACT_l_25].byMenuItemID            = MENU_CHARACT_l_25;
     m_aMenuItems[MENU_CHARACT_l_25].byChildMenuItems        = 9;
     m_aMenuItems[MENU_CHARACT_l_25].pChildMenu              = NULL;
-    m_aMenuItems[MENU_CHARACT_l_25].pParentMenu             = &m_aMenuItems[MENU_INSET_CHARACT];
+    m_aMenuItems[MENU_CHARACT_l_25].pParentMenu             = &m_aMenuItems[MENU_MAIN_CHARACT];
     m_aMenuItems[MENU_CHARACT_l_25].KeyboardHandler         = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_CHARACT_l_25].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_CHARACT_l_25].OnOpeningHandler        = Charact125_OpeningHandler;
@@ -3508,7 +3382,7 @@ void HMI_Init()
     m_aMenuItems[MENU_CHARACT_l_33].byMenuItemID            = MENU_CHARACT_l_33;
     m_aMenuItems[MENU_CHARACT_l_33].byChildMenuItems        = 9;
     m_aMenuItems[MENU_CHARACT_l_33].pChildMenu              = NULL;
-    m_aMenuItems[MENU_CHARACT_l_33].pParentMenu             = &m_aMenuItems[MENU_INSET_CHARACT];
+    m_aMenuItems[MENU_CHARACT_l_33].pParentMenu             = &m_aMenuItems[MENU_MAIN_CHARACT];
     m_aMenuItems[MENU_CHARACT_l_33].KeyboardHandler         = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_CHARACT_l_33].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_CHARACT_l_33].OnOpeningHandler        = Charact133_OpeningHandler;
@@ -3516,7 +3390,7 @@ void HMI_Init()
     m_aMenuItems[MENU_CHARACT_l_50].byMenuItemID            = MENU_CHARACT_l_50;
     m_aMenuItems[MENU_CHARACT_l_50].byChildMenuItems        = 9;
     m_aMenuItems[MENU_CHARACT_l_50].pChildMenu              = NULL;
-    m_aMenuItems[MENU_CHARACT_l_50].pParentMenu             = &m_aMenuItems[MENU_INSET_CHARACT];
+    m_aMenuItems[MENU_CHARACT_l_50].pParentMenu             = &m_aMenuItems[MENU_MAIN_CHARACT];
     m_aMenuItems[MENU_CHARACT_l_50].KeyboardHandler         = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_CHARACT_l_50].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_CHARACT_l_50].OnOpeningHandler        = Charact150_OpeningHandler;
@@ -3524,7 +3398,7 @@ void HMI_Init()
     m_aMenuItems[MENU_CHARACT_25_1].byMenuItemID            = MENU_CHARACT_25_1;
     m_aMenuItems[MENU_CHARACT_25_1].byChildMenuItems        = 9;
     m_aMenuItems[MENU_CHARACT_25_1].pChildMenu              = NULL;
-    m_aMenuItems[MENU_CHARACT_25_1].pParentMenu             = &m_aMenuItems[MENU_INSET_CHARACT];
+    m_aMenuItems[MENU_CHARACT_25_1].pParentMenu             = &m_aMenuItems[MENU_MAIN_CHARACT];
     m_aMenuItems[MENU_CHARACT_25_1].KeyboardHandler         = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_CHARACT_25_1].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_CHARACT_25_1].OnOpeningHandler        = Charact251_OpeningHandler;
@@ -3532,7 +3406,7 @@ void HMI_Init()
     m_aMenuItems[MENU_CHARACT_33_1].byMenuItemID            = MENU_CHARACT_33_1;
     m_aMenuItems[MENU_CHARACT_33_1].byChildMenuItems        = 9;
     m_aMenuItems[MENU_CHARACT_33_1].pChildMenu              = NULL;
-    m_aMenuItems[MENU_CHARACT_33_1].pParentMenu             = &m_aMenuItems[MENU_INSET_CHARACT];
+    m_aMenuItems[MENU_CHARACT_33_1].pParentMenu             = &m_aMenuItems[MENU_MAIN_CHARACT];
     m_aMenuItems[MENU_CHARACT_33_1].KeyboardHandler         = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_CHARACT_33_1].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_CHARACT_33_1].OnOpeningHandler        = Charact331_OpeningHandler;
@@ -3540,7 +3414,7 @@ void HMI_Init()
     m_aMenuItems[MENU_CHARACT_50_1].byMenuItemID            = MENU_CHARACT_50_1;
     m_aMenuItems[MENU_CHARACT_50_1].byChildMenuItems        = 9;
     m_aMenuItems[MENU_CHARACT_50_1].pChildMenu              = NULL;
-    m_aMenuItems[MENU_CHARACT_50_1].pParentMenu             = &m_aMenuItems[MENU_INSET_CHARACT];
+    m_aMenuItems[MENU_CHARACT_50_1].pParentMenu             = &m_aMenuItems[MENU_MAIN_CHARACT];
     m_aMenuItems[MENU_CHARACT_50_1].KeyboardHandler         = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_CHARACT_50_1].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_CHARACT_50_1].OnOpeningHandler        = Charact501_OpeningHandler;
@@ -3548,15 +3422,15 @@ void HMI_Init()
     m_aMenuItems[MENU_CHARACT_FREE].byMenuItemID            = MENU_CHARACT_FREE;
     m_aMenuItems[MENU_CHARACT_FREE].byChildMenuItems        = 9;
     m_aMenuItems[MENU_CHARACT_FREE].pChildMenu              = NULL;
-    m_aMenuItems[MENU_CHARACT_FREE].pParentMenu             = &m_aMenuItems[MENU_INSET_CHARACT];
+    m_aMenuItems[MENU_CHARACT_FREE].pParentMenu             = &m_aMenuItems[MENU_MAIN_CHARACT];
     m_aMenuItems[MENU_CHARACT_FREE].KeyboardHandler         = CharactFree_KeyboardHandler;
     m_aMenuItems[MENU_CHARACT_FREE].DisplayHandler          = CharactFree_DisplayHandler;
     m_aMenuItems[MENU_CHARACT_FREE].OnOpeningHandler        = CharactFree_OpeningHandler;
 
     m_aMenuItems[MENU_CHARACT_END].byMenuItemID             = MENU_CHARACT_END;
     m_aMenuItems[MENU_CHARACT_END].byChildMenuItems         = 9;
-    m_aMenuItems[MENU_CHARACT_END].pChildMenu               = &m_aMenuItems[MENU_INSET_CHARACT];
-    m_aMenuItems[MENU_CHARACT_END].pParentMenu              = &m_aMenuItems[MENU_INSET_CHARACT];
+    m_aMenuItems[MENU_CHARACT_END].pChildMenu               = &m_aMenuItems[MENU_MAIN_CHARACT];
+    m_aMenuItems[MENU_CHARACT_END].pParentMenu              = &m_aMenuItems[MENU_MAIN_CHARACT];
     m_aMenuItems[MENU_CHARACT_END].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_CHARACT_END].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_CHARACT_END].OnOpeningHandler         = NULL;
@@ -3565,7 +3439,7 @@ void HMI_Init()
     m_aMenuItems[MENU_DIRCMD_RISE].byMenuItemID             = MENU_DIRCMD_RISE;
     m_aMenuItems[MENU_DIRCMD_RISE].byChildMenuItems         = 3;
     m_aMenuItems[MENU_DIRCMD_RISE].pChildMenu               = NULL;
-    m_aMenuItems[MENU_DIRCMD_RISE].pParentMenu              = &m_aMenuItems[MENU_INSET_DIRCMD];
+    m_aMenuItems[MENU_DIRCMD_RISE].pParentMenu              = &m_aMenuItems[MENU_MAIN_DIRCMD];
     m_aMenuItems[MENU_DIRCMD_RISE].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_DIRCMD_RISE].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_DIRCMD_RISE].OnOpeningHandler         = DircmdRise_OpeningHandler;
@@ -3573,15 +3447,15 @@ void HMI_Init()
     m_aMenuItems[MENU_DIRCMD_FALL].byMenuItemID             = MENU_DIRCMD_FALL;
     m_aMenuItems[MENU_DIRCMD_FALL].byChildMenuItems         = 3;
     m_aMenuItems[MENU_DIRCMD_FALL].pChildMenu               = NULL;
-    m_aMenuItems[MENU_DIRCMD_FALL].pParentMenu              = &m_aMenuItems[MENU_INSET_DIRCMD];
+    m_aMenuItems[MENU_DIRCMD_FALL].pParentMenu              = &m_aMenuItems[MENU_MAIN_DIRCMD];
     m_aMenuItems[MENU_DIRCMD_FALL].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_DIRCMD_FALL].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_DIRCMD_FALL].OnOpeningHandler         = DircmdFall_OpeningHandler;
 
     m_aMenuItems[MENU_DIRCMD_END].byMenuItemID              = MENU_DIRCMD_END;
     m_aMenuItems[MENU_DIRCMD_END].byChildMenuItems          = 3;
-    m_aMenuItems[MENU_DIRCMD_END].pChildMenu                = &m_aMenuItems[MENU_INSET_DIRCMD];
-    m_aMenuItems[MENU_DIRCMD_END].pParentMenu               = &m_aMenuItems[MENU_INSET_DIRCMD];
+    m_aMenuItems[MENU_DIRCMD_END].pChildMenu                = &m_aMenuItems[MENU_MAIN_DIRCMD];
+    m_aMenuItems[MENU_DIRCMD_END].pParentMenu               = &m_aMenuItems[MENU_MAIN_DIRCMD];
     m_aMenuItems[MENU_DIRCMD_END].KeyboardHandler           = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_DIRCMD_END].DisplayHandler            = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_DIRCMD_END].OnOpeningHandler          = NULL;
@@ -3590,7 +3464,7 @@ void HMI_Init()
     m_aMenuItems[MENU_DIRACT_RISE].byMenuItemID             = MENU_DIRACT_RISE;
     m_aMenuItems[MENU_DIRACT_RISE].byChildMenuItems         = 3;
     m_aMenuItems[MENU_DIRACT_RISE].pChildMenu               = NULL;
-    m_aMenuItems[MENU_DIRACT_RISE].pParentMenu              = &m_aMenuItems[MENU_INSET_DIRACT];
+    m_aMenuItems[MENU_DIRACT_RISE].pParentMenu              = &m_aMenuItems[MENU_MAIN_DIRACT];
     m_aMenuItems[MENU_DIRACT_RISE].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_DIRACT_RISE].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_DIRACT_RISE].OnOpeningHandler         = DiractRise_OpeningHandler;
@@ -3598,15 +3472,15 @@ void HMI_Init()
     m_aMenuItems[MENU_DIRACT_FALL].byMenuItemID             = MENU_DIRACT_FALL;
     m_aMenuItems[MENU_DIRACT_FALL].byChildMenuItems         = 3;
     m_aMenuItems[MENU_DIRACT_FALL].pChildMenu               = NULL;
-    m_aMenuItems[MENU_DIRACT_FALL].pParentMenu              = &m_aMenuItems[MENU_INSET_DIRACT];
+    m_aMenuItems[MENU_DIRACT_FALL].pParentMenu              = &m_aMenuItems[MENU_MAIN_DIRACT];
     m_aMenuItems[MENU_DIRACT_FALL].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_DIRACT_FALL].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_DIRACT_FALL].OnOpeningHandler         = DiractFall_OpeningHandler;
 
     m_aMenuItems[MENU_DIRACT_END].byMenuItemID              = MENU_DIRACT_END;
     m_aMenuItems[MENU_DIRACT_END].byChildMenuItems          = 3;
-    m_aMenuItems[MENU_DIRACT_END].pChildMenu                = &m_aMenuItems[MENU_INSET_DIRACT];
-    m_aMenuItems[MENU_DIRACT_END].pParentMenu               = &m_aMenuItems[MENU_INSET_DIRACT];
+    m_aMenuItems[MENU_DIRACT_END].pChildMenu                = &m_aMenuItems[MENU_MAIN_DIRACT];
+    m_aMenuItems[MENU_DIRACT_END].pParentMenu               = &m_aMenuItems[MENU_MAIN_DIRACT];
     m_aMenuItems[MENU_DIRACT_END].KeyboardHandler           = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_DIRACT_END].DisplayHandler            = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_DIRACT_END].OnOpeningHandler          = NULL;
@@ -3615,7 +3489,7 @@ void HMI_Init()
     m_aMenuItems[MENU_XCONTRL_DBMD].byMenuItemID            = MENU_XCONTRL_DBMD;
     m_aMenuItems[MENU_XCONTRL_DBMD].byChildMenuItems        = 3;
     m_aMenuItems[MENU_XCONTRL_DBMD].pChildMenu              = NULL;
-    m_aMenuItems[MENU_XCONTRL_DBMD].pParentMenu             = &m_aMenuItems[MENU_XSET_XCONTRL];
+    m_aMenuItems[MENU_XCONTRL_DBMD].pParentMenu             = &m_aMenuItems[MENU_MAIN_XCONTRL];
     m_aMenuItems[MENU_XCONTRL_DBMD].KeyboardHandler         = XcontrolDbnd_KeyboardHandler;
     m_aMenuItems[MENU_XCONTRL_DBMD].DisplayHandler          = XcontrolDbnd_DisplayHandler;
     m_aMenuItems[MENU_XCONTRL_DBMD].OnOpeningHandler        = XcontrolDbnd_OpeningHandler;
@@ -3623,15 +3497,15 @@ void HMI_Init()
     m_aMenuItems[MENU_XCONTRL_PARA].byMenuItemID            = MENU_XCONTRL_PARA;
     m_aMenuItems[MENU_XCONTRL_PARA].byChildMenuItems        = 3;
     m_aMenuItems[MENU_XCONTRL_PARA].pChildMenu              = NULL;
-    m_aMenuItems[MENU_XCONTRL_PARA].pParentMenu             = &m_aMenuItems[MENU_XSET_XCONTRL];
+    m_aMenuItems[MENU_XCONTRL_PARA].pParentMenu             = &m_aMenuItems[MENU_MAIN_XCONTRL];
     m_aMenuItems[MENU_XCONTRL_PARA].KeyboardHandler         = XcontrolPara_KeyboardHandler;
     m_aMenuItems[MENU_XCONTRL_PARA].DisplayHandler          = XcontrolPara_DisplayHandler;
     m_aMenuItems[MENU_XCONTRL_PARA].OnOpeningHandler        = XcontrolPara_OpeningHandler;
 
     m_aMenuItems[MENU_XCONTRL_END].byMenuItemID             = MENU_XCONTRL_END;
     m_aMenuItems[MENU_XCONTRL_END].byChildMenuItems         = 3;
-    m_aMenuItems[MENU_XCONTRL_END].pChildMenu               = &m_aMenuItems[MENU_XSET_XCONTRL];
-    m_aMenuItems[MENU_XCONTRL_END].pParentMenu              = &m_aMenuItems[MENU_XSET_XCONTRL];
+    m_aMenuItems[MENU_XCONTRL_END].pChildMenu               = &m_aMenuItems[MENU_MAIN_XCONTRL];
+    m_aMenuItems[MENU_XCONTRL_END].pParentMenu              = &m_aMenuItems[MENU_MAIN_XCONTRL];
     m_aMenuItems[MENU_XCONTRL_END].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_XCONTRL_END].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_XCONTRL_END].OnOpeningHandler         = NULL;
@@ -3640,7 +3514,7 @@ void HMI_Init()
     m_aMenuItems[MENU_XTUNE_AUTO].byMenuItemID              = MENU_XTUNE_AUTO;
     m_aMenuItems[MENU_XTUNE_AUTO].byChildMenuItems          = 5;
     m_aMenuItems[MENU_XTUNE_AUTO].pChildMenu                = NULL;
-    m_aMenuItems[MENU_XTUNE_AUTO].pParentMenu               = &m_aMenuItems[MENU_XSET_XTUNE];
+    m_aMenuItems[MENU_XTUNE_AUTO].pParentMenu               = &m_aMenuItems[MENU_MAIN_XTUNE];
     m_aMenuItems[MENU_XTUNE_AUTO].KeyboardHandler           = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_XTUNE_AUTO].DisplayHandler            = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_XTUNE_AUTO].OnOpeningHandler          = XtuneAuto_OpeningHandler;
@@ -3648,7 +3522,7 @@ void HMI_Init()
     m_aMenuItems[MENU_XTUNE_POS].byMenuItemID               = MENU_XTUNE_POS;
     m_aMenuItems[MENU_XTUNE_POS].byChildMenuItems           = 5;
     m_aMenuItems[MENU_XTUNE_POS].pChildMenu                 = NULL;
-    m_aMenuItems[MENU_XTUNE_POS].pParentMenu                = &m_aMenuItems[MENU_XSET_XTUNE];
+    m_aMenuItems[MENU_XTUNE_POS].pParentMenu                = &m_aMenuItems[MENU_MAIN_XTUNE];
     m_aMenuItems[MENU_XTUNE_POS].KeyboardHandler            = CaluserPos_KeyboardHandler;
     m_aMenuItems[MENU_XTUNE_POS].DisplayHandler             = CaluserPos_DisplayHandler;
     m_aMenuItems[MENU_XTUNE_POS].OnOpeningHandler           = CaluserPos_OpeningHandler;
@@ -3656,7 +3530,7 @@ void HMI_Init()
     m_aMenuItems[MENU_XTUNE_PWM].byMenuItemID               = MENU_XTUNE_PWM;
     m_aMenuItems[MENU_XTUNE_PWM].byChildMenuItems           = 5;
     m_aMenuItems[MENU_XTUNE_PWM].pChildMenu                 = NULL;
-    m_aMenuItems[MENU_XTUNE_PWM].pParentMenu                = &m_aMenuItems[MENU_XSET_XTUNE];
+    m_aMenuItems[MENU_XTUNE_PWM].pParentMenu                = &m_aMenuItems[MENU_MAIN_XTUNE];
     m_aMenuItems[MENU_XTUNE_PWM].KeyboardHandler            = XtunePwm_KeyboardHandler;
     m_aMenuItems[MENU_XTUNE_PWM].DisplayHandler             = XtunePwm_DisplayHandler;
     m_aMenuItems[MENU_XTUNE_PWM].OnOpeningHandler           = XtunePwm_OpeningHandler;
@@ -3664,15 +3538,15 @@ void HMI_Init()
     m_aMenuItems[MENU_XTUNE_AIR].byMenuItemID               = MENU_XTUNE_AIR;
     m_aMenuItems[MENU_XTUNE_AIR].byChildMenuItems           = 5;
     m_aMenuItems[MENU_XTUNE_AIR].pChildMenu                 = NULL;
-    m_aMenuItems[MENU_XTUNE_AIR].pParentMenu                = &m_aMenuItems[MENU_XSET_XTUNE];
+    m_aMenuItems[MENU_XTUNE_AIR].pParentMenu                = &m_aMenuItems[MENU_MAIN_XTUNE];
     m_aMenuItems[MENU_XTUNE_AIR].KeyboardHandler            = XtuneAir_KeyboardHandler;
     m_aMenuItems[MENU_XTUNE_AIR].DisplayHandler             = XtuneAir_DisplayHandler;
     m_aMenuItems[MENU_XTUNE_AIR].OnOpeningHandler           = XtuneAir_OpeningHandler;
 
     m_aMenuItems[MENU_XTUNE_END].byMenuItemID               = MENU_XTUNE_END;
     m_aMenuItems[MENU_XTUNE_END].byChildMenuItems           = 5;
-    m_aMenuItems[MENU_XTUNE_END].pChildMenu                 = &m_aMenuItems[MENU_XSET_XTUNE];
-    m_aMenuItems[MENU_XTUNE_END].pParentMenu                = &m_aMenuItems[MENU_XSET_XTUNE];
+    m_aMenuItems[MENU_XTUNE_END].pChildMenu                 = &m_aMenuItems[MENU_MAIN_XTUNE];
+    m_aMenuItems[MENU_XTUNE_END].pParentMenu                = &m_aMenuItems[MENU_MAIN_XTUNE];
     m_aMenuItems[MENU_XTUNE_END].KeyboardHandler            = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_XTUNE_END].DisplayHandler             = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_XTUNE_END].OnOpeningHandler           = NULL;
@@ -3681,7 +3555,7 @@ void HMI_Init()
     m_aMenuItems[MENU_SIGERR_FUNON].byMenuItemID            = MENU_SIGERR_FUNON;
     m_aMenuItems[MENU_SIGERR_FUNON].byChildMenuItems        = 4;
     m_aMenuItems[MENU_SIGERR_FUNON].pChildMenu              = NULL;
-    m_aMenuItems[MENU_SIGERR_FUNON].pParentMenu             = &m_aMenuItems[MENU_SYSTEM_SIGERR];
+    m_aMenuItems[MENU_SIGERR_FUNON].pParentMenu             = &m_aMenuItems[MENU_MAIN_SIGERR];
     m_aMenuItems[MENU_SIGERR_FUNON].KeyboardHandler         = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_SIGERR_FUNON].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_SIGERR_FUNON].OnOpeningHandler        = SigerrFunon_OpeningHandler;
@@ -3689,7 +3563,7 @@ void HMI_Init()
     m_aMenuItems[MENU_SIGERR_POSON].byMenuItemID            = MENU_SIGERR_POSON;
     m_aMenuItems[MENU_SIGERR_POSON].byChildMenuItems        = 4;
     m_aMenuItems[MENU_SIGERR_POSON].pChildMenu              = NULL;
-    m_aMenuItems[MENU_SIGERR_POSON].pParentMenu             = &m_aMenuItems[MENU_SYSTEM_SIGERR];
+    m_aMenuItems[MENU_SIGERR_POSON].pParentMenu             = &m_aMenuItems[MENU_MAIN_SIGERR];
     m_aMenuItems[MENU_SIGERR_POSON].KeyboardHandler         = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_SIGERR_POSON].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_SIGERR_POSON].OnOpeningHandler        = SigerrPoson_OpeningHandler;
@@ -3697,15 +3571,15 @@ void HMI_Init()
     m_aMenuItems[MENU_SIGERR_OFF].byMenuItemID              = MENU_SIGERR_OFF;
     m_aMenuItems[MENU_SIGERR_OFF].byChildMenuItems          = 4;
     m_aMenuItems[MENU_SIGERR_OFF].pChildMenu                = NULL;
-    m_aMenuItems[MENU_SIGERR_OFF].pParentMenu               = &m_aMenuItems[MENU_SYSTEM_SIGERR];
+    m_aMenuItems[MENU_SIGERR_OFF].pParentMenu               = &m_aMenuItems[MENU_MAIN_SIGERR];
     m_aMenuItems[MENU_SIGERR_OFF].KeyboardHandler           = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_SIGERR_OFF].DisplayHandler            = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_SIGERR_OFF].OnOpeningHandler          = SigerrOff_OpeningHandler;
 
     m_aMenuItems[MENU_SIGERR_END].byMenuItemID              = MENU_SIGERR_END;
     m_aMenuItems[MENU_SIGERR_END].byChildMenuItems          = 4;
-    m_aMenuItems[MENU_SIGERR_END].pChildMenu                = &m_aMenuItems[MENU_SYSTEM_SIGERR];
-    m_aMenuItems[MENU_SIGERR_END].pParentMenu               = &m_aMenuItems[MENU_SYSTEM_SIGERR];
+    m_aMenuItems[MENU_SIGERR_END].pChildMenu                = &m_aMenuItems[MENU_MAIN_SIGERR];
+    m_aMenuItems[MENU_SIGERR_END].pParentMenu               = &m_aMenuItems[MENU_MAIN_SIGERR];
     m_aMenuItems[MENU_SIGERR_END].KeyboardHandler           = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_SIGERR_END].DisplayHandler            = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_SIGERR_END].OnOpeningHandler          = NULL; 
@@ -3714,7 +3588,7 @@ void HMI_Init()
     m_aMenuItems[MENU_SERIO_9600].byMenuItemID              = MENU_SERIO_9600;
     m_aMenuItems[MENU_SERIO_9600].byChildMenuItems          = 7;
     m_aMenuItems[MENU_SERIO_9600].pChildMenu                = NULL;
-    m_aMenuItems[MENU_SERIO_9600].pParentMenu               = &m_aMenuItems[MENU_SYSTEM_SERIO];
+    m_aMenuItems[MENU_SERIO_9600].pParentMenu               = &m_aMenuItems[MENU_MAIN_SERIO];
     m_aMenuItems[MENU_SERIO_9600].KeyboardHandler           = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_SERIO_9600].DisplayHandler            = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_SERIO_9600].OnOpeningHandler          = Serio9600_OpeningHandler;
@@ -3722,7 +3596,7 @@ void HMI_Init()
     m_aMenuItems[MENU_SERIO_19200].byMenuItemID             = MENU_SERIO_19200;
     m_aMenuItems[MENU_SERIO_19200].byChildMenuItems         = 7;
     m_aMenuItems[MENU_SERIO_19200].pChildMenu               = NULL;
-    m_aMenuItems[MENU_SERIO_19200].pParentMenu              = &m_aMenuItems[MENU_SYSTEM_SERIO];
+    m_aMenuItems[MENU_SERIO_19200].pParentMenu              = &m_aMenuItems[MENU_MAIN_SERIO];
     m_aMenuItems[MENU_SERIO_19200].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_SERIO_19200].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_SERIO_19200].OnOpeningHandler         = Serio19200_OpeningHandler;
@@ -3730,7 +3604,7 @@ void HMI_Init()
     m_aMenuItems[MENU_SERIO_38400].byMenuItemID             = MENU_SERIO_38400;
     m_aMenuItems[MENU_SERIO_38400].byChildMenuItems         = 7;
     m_aMenuItems[MENU_SERIO_38400].pChildMenu               = NULL;
-    m_aMenuItems[MENU_SERIO_38400].pParentMenu              = &m_aMenuItems[MENU_SYSTEM_SERIO];
+    m_aMenuItems[MENU_SERIO_38400].pParentMenu              = &m_aMenuItems[MENU_MAIN_SERIO];
     m_aMenuItems[MENU_SERIO_38400].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_SERIO_38400].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_SERIO_38400].OnOpeningHandler         = Serio38400_OpeningHandler;
@@ -3738,7 +3612,7 @@ void HMI_Init()
     m_aMenuItems[MENU_SERIO_1200].byMenuItemID              = MENU_SERIO_1200;
     m_aMenuItems[MENU_SERIO_1200].byChildMenuItems          = 7;
     m_aMenuItems[MENU_SERIO_1200].pChildMenu                = NULL;
-    m_aMenuItems[MENU_SERIO_1200].pParentMenu               = &m_aMenuItems[MENU_SYSTEM_SERIO];
+    m_aMenuItems[MENU_SERIO_1200].pParentMenu               = &m_aMenuItems[MENU_MAIN_SERIO];
     m_aMenuItems[MENU_SERIO_1200].KeyboardHandler           = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_SERIO_1200].DisplayHandler            = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_SERIO_1200].OnOpeningHandler          = Serio1200_OpeningHandler;
@@ -3746,7 +3620,7 @@ void HMI_Init()
     m_aMenuItems[MENU_SERIO_2400].byMenuItemID              = MENU_SERIO_2400;
     m_aMenuItems[MENU_SERIO_2400].byChildMenuItems          = 7;
     m_aMenuItems[MENU_SERIO_2400].pChildMenu                = NULL;
-    m_aMenuItems[MENU_SERIO_2400].pParentMenu               = &m_aMenuItems[MENU_SYSTEM_SERIO];
+    m_aMenuItems[MENU_SERIO_2400].pParentMenu               = &m_aMenuItems[MENU_MAIN_SERIO];
     m_aMenuItems[MENU_SERIO_2400].KeyboardHandler           = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_SERIO_2400].DisplayHandler            = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_SERIO_2400].OnOpeningHandler          = Serio2400_OpeningHandler;
@@ -3754,15 +3628,15 @@ void HMI_Init()
     m_aMenuItems[MENU_SERIO_4800].byMenuItemID              = MENU_SERIO_4800;
     m_aMenuItems[MENU_SERIO_4800].byChildMenuItems          = 7;
     m_aMenuItems[MENU_SERIO_4800].pChildMenu                = NULL;
-    m_aMenuItems[MENU_SERIO_4800].pParentMenu               = &m_aMenuItems[MENU_SYSTEM_SERIO];
+    m_aMenuItems[MENU_SERIO_4800].pParentMenu               = &m_aMenuItems[MENU_MAIN_SERIO];
     m_aMenuItems[MENU_SERIO_4800].KeyboardHandler           = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_SERIO_4800].DisplayHandler            = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_SERIO_4800].OnOpeningHandler          = Serio4800_OpeningHandler;
 
     m_aMenuItems[MENU_SERIO_END].byMenuItemID               = MENU_SERIO_END;
     m_aMenuItems[MENU_SERIO_END].byChildMenuItems           = 7;
-    m_aMenuItems[MENU_SERIO_END].pChildMenu                 = &m_aMenuItems[MENU_SYSTEM_SERIO];
-    m_aMenuItems[MENU_SERIO_END].pParentMenu                = &m_aMenuItems[MENU_SYSTEM_SERIO];
+    m_aMenuItems[MENU_SERIO_END].pChildMenu                 = &m_aMenuItems[MENU_MAIN_SERIO];
+    m_aMenuItems[MENU_SERIO_END].pParentMenu                = &m_aMenuItems[MENU_MAIN_SERIO];
     m_aMenuItems[MENU_SERIO_END].KeyboardHandler            = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_SERIO_END].DisplayHandler             = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_SERIO_END].OnOpeningHandler           = NULL;
@@ -3771,7 +3645,7 @@ void HMI_Init()
     m_aMenuItems[MENU_CODE_KEY].byMenuItemID                = MENU_CODE_KEY;
     m_aMenuItems[MENU_CODE_KEY].byChildMenuItems            = 4;
     m_aMenuItems[MENU_CODE_KEY].pChildMenu                  = NULL;
-    m_aMenuItems[MENU_CODE_KEY].pParentMenu                 = &m_aMenuItems[MENU_SYSTEM_CODE];
+    m_aMenuItems[MENU_CODE_KEY].pParentMenu                 = &m_aMenuItems[MENU_MAIN_CODE];
     m_aMenuItems[MENU_CODE_KEY].KeyboardHandler             = CodeKey_KeyboardHandler;
     m_aMenuItems[MENU_CODE_KEY].DisplayHandler              = CodeKey_DisplayHandler;
     m_aMenuItems[MENU_CODE_KEY].OnOpeningHandler            = CodeKey_OpeningHandler;
@@ -3779,7 +3653,7 @@ void HMI_Init()
     m_aMenuItems[MENU_CODE_MENU].byMenuItemID               = MENU_CODE_MENU;
     m_aMenuItems[MENU_CODE_MENU].byChildMenuItems           = 4;
     m_aMenuItems[MENU_CODE_MENU].pChildMenu                 = NULL;
-    m_aMenuItems[MENU_CODE_MENU].pParentMenu                = &m_aMenuItems[MENU_SYSTEM_CODE];
+    m_aMenuItems[MENU_CODE_MENU].pParentMenu                = &m_aMenuItems[MENU_MAIN_CODE];
     m_aMenuItems[MENU_CODE_MENU].KeyboardHandler            = CodeMenu_KeyboardHandler;
     m_aMenuItems[MENU_CODE_MENU].DisplayHandler             = CodeMenu_DisplayHandler;
     m_aMenuItems[MENU_CODE_MENU].OnOpeningHandler           = CodeMenu_OpeningHandler;
@@ -3787,15 +3661,15 @@ void HMI_Init()
     m_aMenuItems[MENU_CODE_GLOB].byMenuItemID               = MENU_CODE_GLOB;
     m_aMenuItems[MENU_CODE_GLOB].byChildMenuItems           = 4;
     m_aMenuItems[MENU_CODE_GLOB].pChildMenu                 = NULL;
-    m_aMenuItems[MENU_CODE_GLOB].pParentMenu                = &m_aMenuItems[MENU_SYSTEM_CODE];
+    m_aMenuItems[MENU_CODE_GLOB].pParentMenu                = &m_aMenuItems[MENU_MAIN_CODE];
     m_aMenuItems[MENU_CODE_GLOB].KeyboardHandler            = CodeGlob_KeyboardHandler;
     m_aMenuItems[MENU_CODE_GLOB].DisplayHandler             = CodeGlob_DisplayHandler;
     m_aMenuItems[MENU_CODE_GLOB].OnOpeningHandler           = CodeGlob_OpeningHandler;
 
     m_aMenuItems[MENU_CODE_END].byMenuItemID                = MENU_CODE_END;
     m_aMenuItems[MENU_CODE_END].byChildMenuItems            = 4;
-    m_aMenuItems[MENU_CODE_END].pChildMenu                  = &m_aMenuItems[MENU_SYSTEM_CODE];
-    m_aMenuItems[MENU_CODE_END].pParentMenu                 = &m_aMenuItems[MENU_SYSTEM_CODE];
+    m_aMenuItems[MENU_CODE_END].pChildMenu                  = &m_aMenuItems[MENU_MAIN_CODE];
+    m_aMenuItems[MENU_CODE_END].pParentMenu                 = &m_aMenuItems[MENU_MAIN_CODE];
     m_aMenuItems[MENU_CODE_END].KeyboardHandler             = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_CODE_END].DisplayHandler              = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_CODE_END].OnOpeningHandler            = NULL; 
@@ -3804,7 +3678,7 @@ void HMI_Init()
     m_aMenuItems[MENU_BININ_SPOS].byMenuItemID              = MENU_BININ_SPOS;
     m_aMenuItems[MENU_BININ_SPOS].byChildMenuItems          = 3;
     m_aMenuItems[MENU_BININ_SPOS].pChildMenu                = &m_aMenuItems[MENU_SPOS_OPN];
-    m_aMenuItems[MENU_BININ_SPOS].pParentMenu               = &m_aMenuItems[MENU_CONTRL_BININ];
+    m_aMenuItems[MENU_BININ_SPOS].pParentMenu               = &m_aMenuItems[MENU_MAIN_BININ];
     m_aMenuItems[MENU_BININ_SPOS].KeyboardHandler           = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_BININ_SPOS].DisplayHandler            = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_BININ_SPOS].OnOpeningHandler          = NULL;
@@ -3812,15 +3686,15 @@ void HMI_Init()
     m_aMenuItems[MENU_BININ_MA].byMenuItemID                = MENU_BININ_MA;
     m_aMenuItems[MENU_BININ_MA].byChildMenuItems            = 3;
     m_aMenuItems[MENU_BININ_MA].pChildMenu                  = &m_aMenuItems[MENU_MA_OPN];
-    m_aMenuItems[MENU_BININ_MA].pParentMenu                 = &m_aMenuItems[MENU_CONTRL_BININ];
+    m_aMenuItems[MENU_BININ_MA].pParentMenu                 = &m_aMenuItems[MENU_MAIN_BININ];
     m_aMenuItems[MENU_BININ_MA].KeyboardHandler             = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_BININ_MA].DisplayHandler              = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_BININ_MA].OnOpeningHandler            = NULL;
 
     m_aMenuItems[MENU_BININ_END].byMenuItemID               = MENU_BININ_END;
     m_aMenuItems[MENU_BININ_END].byChildMenuItems           = 3;
-    m_aMenuItems[MENU_BININ_END].pChildMenu                 = &m_aMenuItems[MENU_CONTRL_BININ];
-    m_aMenuItems[MENU_BININ_END].pParentMenu                = &m_aMenuItems[MENU_CONTRL_BININ];
+    m_aMenuItems[MENU_BININ_END].pChildMenu                 = &m_aMenuItems[MENU_MAIN_BININ];
+    m_aMenuItems[MENU_BININ_END].pParentMenu                = &m_aMenuItems[MENU_MAIN_BININ];
     m_aMenuItems[MENU_BININ_END].KeyboardHandler            = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_BININ_END].DisplayHandler             = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_BININ_END].OnOpeningHandler           = NULL;
@@ -3829,7 +3703,7 @@ void HMI_Init()
     m_aMenuItems[MENU_OUTPUT_ANL].byMenuItemID              = MENU_OUTPUT_ANL;
     m_aMenuItems[MENU_OUTPUT_ANL].byChildMenuItems          = 5;
     m_aMenuItems[MENU_OUTPUT_ANL].pChildMenu                = &m_aMenuItems[MENU_ANL_POS];
-    m_aMenuItems[MENU_OUTPUT_ANL].pParentMenu               = &m_aMenuItems[MENU_CONTRL_OUTPUT];
+    m_aMenuItems[MENU_OUTPUT_ANL].pParentMenu               = &m_aMenuItems[MENU_MAIN_OUTPUT];
     m_aMenuItems[MENU_OUTPUT_ANL].KeyboardHandler           = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_OUTPUT_ANL].DisplayHandler            = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_OUTPUT_ANL].OnOpeningHandler          = NULL;
@@ -3837,7 +3711,7 @@ void HMI_Init()
     m_aMenuItems[MENU_OUTPUT_ANLSET].byMenuItemID           = MENU_OUTPUT_ANLSET;
     m_aMenuItems[MENU_OUTPUT_ANLSET].byChildMenuItems       = 5;
     m_aMenuItems[MENU_OUTPUT_ANLSET].pChildMenu             = &m_aMenuItems[MENU_ANLSET_4];
-    m_aMenuItems[MENU_OUTPUT_ANLSET].pParentMenu            = &m_aMenuItems[MENU_CONTRL_OUTPUT];
+    m_aMenuItems[MENU_OUTPUT_ANLSET].pParentMenu            = &m_aMenuItems[MENU_MAIN_OUTPUT];
     m_aMenuItems[MENU_OUTPUT_ANLSET].KeyboardHandler        = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_OUTPUT_ANLSET].DisplayHandler         = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_OUTPUT_ANLSET].OnOpeningHandler       = NULL;
@@ -3845,7 +3719,7 @@ void HMI_Init()
     m_aMenuItems[MENU_OUTPUT_BIN1].byMenuItemID             = MENU_OUTPUT_BIN1;
     m_aMenuItems[MENU_OUTPUT_BIN1].byChildMenuItems         = 5;
     m_aMenuItems[MENU_OUTPUT_BIN1].pChildMenu               = &m_aMenuItems[MENU_BIN1_DRV];
-    m_aMenuItems[MENU_OUTPUT_BIN1].pParentMenu              = &m_aMenuItems[MENU_CONTRL_OUTPUT];
+    m_aMenuItems[MENU_OUTPUT_BIN1].pParentMenu              = &m_aMenuItems[MENU_MAIN_OUTPUT];
     m_aMenuItems[MENU_OUTPUT_BIN1].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_OUTPUT_BIN1].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_OUTPUT_BIN1].OnOpeningHandler         = NULL;
@@ -3853,15 +3727,15 @@ void HMI_Init()
     m_aMenuItems[MENU_OUTPUT_BIN2].byMenuItemID             = MENU_OUTPUT_BIN2;
     m_aMenuItems[MENU_OUTPUT_BIN2].byChildMenuItems         = 5;
     m_aMenuItems[MENU_OUTPUT_BIN2].pChildMenu               = &m_aMenuItems[MENU_BIN2_DRV];
-    m_aMenuItems[MENU_OUTPUT_BIN2].pParentMenu              = &m_aMenuItems[MENU_CONTRL_OUTPUT];
+    m_aMenuItems[MENU_OUTPUT_BIN2].pParentMenu              = &m_aMenuItems[MENU_MAIN_OUTPUT];
     m_aMenuItems[MENU_OUTPUT_BIN2].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_OUTPUT_BIN2].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_OUTPUT_BIN2].OnOpeningHandler         = NULL;
 
     m_aMenuItems[MENU_OUTPUT_END].byMenuItemID              = MENU_OUTPUT_END;
     m_aMenuItems[MENU_OUTPUT_END].byChildMenuItems          = 5;
-    m_aMenuItems[MENU_OUTPUT_END].pChildMenu                = &m_aMenuItems[MENU_CONTRL_OUTPUT];
-    m_aMenuItems[MENU_OUTPUT_END].pParentMenu               = &m_aMenuItems[MENU_CONTRL_OUTPUT];
+    m_aMenuItems[MENU_OUTPUT_END].pChildMenu                = &m_aMenuItems[MENU_MAIN_OUTPUT];
+    m_aMenuItems[MENU_OUTPUT_END].pParentMenu               = &m_aMenuItems[MENU_MAIN_OUTPUT];
     m_aMenuItems[MENU_OUTPUT_END].KeyboardHandler           = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_OUTPUT_END].DisplayHandler            = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_OUTPUT_END].OnOpeningHandler          = NULL; 
@@ -3870,7 +3744,7 @@ void HMI_Init()
     m_aMenuItems[MENU_CALUSER_POS].byMenuItemID             = MENU_CALUSER_POS;
     m_aMenuItems[MENU_CALUSER_POS].byChildMenuItems         = 4;
     m_aMenuItems[MENU_CALUSER_POS].pChildMenu               = NULL;
-    m_aMenuItems[MENU_CALUSER_POS].pParentMenu              = &m_aMenuItems[MENU_CONTRL_CALUSER];
+    m_aMenuItems[MENU_CALUSER_POS].pParentMenu              = &m_aMenuItems[MENU_MAIN_CALUSER];
     m_aMenuItems[MENU_CALUSER_POS].KeyboardHandler          = CaluserPos_KeyboardHandler;
     m_aMenuItems[MENU_CALUSER_POS].DisplayHandler           = CaluserPos_DisplayHandler;
     m_aMenuItems[MENU_CALUSER_POS].OnOpeningHandler         = CaluserPos_OpeningHandler;
@@ -3878,7 +3752,7 @@ void HMI_Init()
     m_aMenuItems[MENU_CALUSER_INP].byMenuItemID             = MENU_CALUSER_INP;
     m_aMenuItems[MENU_CALUSER_INP].byChildMenuItems         = 4;
     m_aMenuItems[MENU_CALUSER_INP].pChildMenu               = NULL;
-    m_aMenuItems[MENU_CALUSER_INP].pParentMenu              = &m_aMenuItems[MENU_CONTRL_CALUSER];
+    m_aMenuItems[MENU_CALUSER_INP].pParentMenu              = &m_aMenuItems[MENU_MAIN_CALUSER];
     m_aMenuItems[MENU_CALUSER_INP].KeyboardHandler          = CaluserInp_KeyboardHandler;
     m_aMenuItems[MENU_CALUSER_INP].DisplayHandler           = CaluserInp_DisplayHandler;
     m_aMenuItems[MENU_CALUSER_INP].OnOpeningHandler         = CaluserInp_OpeningHandler;
@@ -3886,15 +3760,15 @@ void HMI_Init()
     m_aMenuItems[MENU_CALUSER_FACT].byMenuItemID            = MENU_CALUSER_FACT;
     m_aMenuItems[MENU_CALUSER_FACT].byChildMenuItems        = 4;
     m_aMenuItems[MENU_CALUSER_FACT].pChildMenu              = NULL;
-    m_aMenuItems[MENU_CALUSER_FACT].pParentMenu             = &m_aMenuItems[MENU_CONTRL_CALUSER];
+    m_aMenuItems[MENU_CALUSER_FACT].pParentMenu             = &m_aMenuItems[MENU_MAIN_CALUSER];
     m_aMenuItems[MENU_CALUSER_FACT].KeyboardHandler         = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_CALUSER_FACT].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_CALUSER_FACT].OnOpeningHandler        = CaluserFact_OpeningHandler;
 
     m_aMenuItems[MENU_CALUSER_END].byMenuItemID             = MENU_CALUSER_END;
     m_aMenuItems[MENU_CALUSER_END].byChildMenuItems         = 4;
-    m_aMenuItems[MENU_CALUSER_END].pChildMenu               = &m_aMenuItems[MENU_CONTRL_CALUSER];
-    m_aMenuItems[MENU_CALUSER_END].pParentMenu              = &m_aMenuItems[MENU_CONTRL_CALUSER];
+    m_aMenuItems[MENU_CALUSER_END].pChildMenu               = &m_aMenuItems[MENU_MAIN_CALUSER];
+    m_aMenuItems[MENU_CALUSER_END].pParentMenu              = &m_aMenuItems[MENU_MAIN_CALUSER];
     m_aMenuItems[MENU_CALUSER_END].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_CALUSER_END].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_CALUSER_END].OnOpeningHandler         = NULL; 
@@ -3903,7 +3777,7 @@ void HMI_Init()
     m_aMenuItems[MENU_PCONTRL_DBND].byMenuItemID            = MENU_PCONTRL_DBND;
     m_aMenuItems[MENU_PCONTRL_DBND].byChildMenuItems        = 10;
     m_aMenuItems[MENU_PCONTRL_DBND].pChildMenu              = NULL;
-    m_aMenuItems[MENU_PCONTRL_DBND].pParentMenu             = &m_aMenuItems[MENU_CONTRL_PCONTRL];
+    m_aMenuItems[MENU_PCONTRL_DBND].pParentMenu             = &m_aMenuItems[MENU_MAIN_PCONTRL];
     m_aMenuItems[MENU_PCONTRL_DBND].KeyboardHandler         = PcontrlDbnd_KeyboardHandler;
     m_aMenuItems[MENU_PCONTRL_DBND].DisplayHandler          = PcontrlDbnd_DisplayHandler;
     m_aMenuItems[MENU_PCONTRL_DBND].OnOpeningHandler        = PcontrlDbnd_OpeningHandler;
@@ -3911,7 +3785,7 @@ void HMI_Init()
     m_aMenuItems[MENU_PCONTRL_PARA].byMenuItemID            = MENU_PCONTRL_PARA;
     m_aMenuItems[MENU_PCONTRL_PARA].byChildMenuItems        = 10;
     m_aMenuItems[MENU_PCONTRL_PARA].pChildMenu              = NULL;
-    m_aMenuItems[MENU_PCONTRL_PARA].pParentMenu             = &m_aMenuItems[MENU_CONTRL_PCONTRL];
+    m_aMenuItems[MENU_PCONTRL_PARA].pParentMenu             = &m_aMenuItems[MENU_MAIN_PCONTRL];
     m_aMenuItems[MENU_PCONTRL_PARA].KeyboardHandler         = PcontrlPara_KeyboardHandler;
     m_aMenuItems[MENU_PCONTRL_PARA].DisplayHandler          = PcontrlPara_DisplayHandler;
     m_aMenuItems[MENU_PCONTRL_PARA].OnOpeningHandler        = PcontrlPara_OpeningHandler;
@@ -3919,7 +3793,7 @@ void HMI_Init()
     m_aMenuItems[MENU_PCONTRL_SETP].byMenuItemID            = MENU_PCONTRL_SETP;
     m_aMenuItems[MENU_PCONTRL_SETP].byChildMenuItems        = 10;
     m_aMenuItems[MENU_PCONTRL_SETP].pChildMenu              = &m_aMenuItems[MENU_SETP_INT];
-    m_aMenuItems[MENU_PCONTRL_SETP].pParentMenu             = &m_aMenuItems[MENU_CONTRL_PCONTRL];
+    m_aMenuItems[MENU_PCONTRL_SETP].pParentMenu             = &m_aMenuItems[MENU_MAIN_PCONTRL];
     m_aMenuItems[MENU_PCONTRL_SETP].KeyboardHandler         = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_PCONTRL_SETP].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_PCONTRL_SETP].OnOpeningHandler        = NULL;
@@ -3927,7 +3801,7 @@ void HMI_Init()
     m_aMenuItems[MENU_PCONTRL_INP].byMenuItemID             = MENU_PCONTRL_INP;
     m_aMenuItems[MENU_PCONTRL_INP].byChildMenuItems         = 10;
     m_aMenuItems[MENU_PCONTRL_INP].pChildMenu               = &m_aMenuItems[MENU_INP_FREQ];
-    m_aMenuItems[MENU_PCONTRL_INP].pParentMenu              = &m_aMenuItems[MENU_CONTRL_PCONTRL];
+    m_aMenuItems[MENU_PCONTRL_INP].pParentMenu              = &m_aMenuItems[MENU_MAIN_PCONTRL];
     m_aMenuItems[MENU_PCONTRL_INP].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_PCONTRL_INP].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_PCONTRL_INP].OnOpeningHandler         = NULL;
@@ -3935,7 +3809,7 @@ void HMI_Init()
     m_aMenuItems[MENU_PCONTRL_FILT].byMenuItemID            = MENU_PCONTRL_FILT;
     m_aMenuItems[MENU_PCONTRL_FILT].byChildMenuItems        = 10;
     m_aMenuItems[MENU_PCONTRL_FILT].pChildMenu              = NULL;
-    m_aMenuItems[MENU_PCONTRL_FILT].pParentMenu             = &m_aMenuItems[MENU_CONTRL_PCONTRL];
+    m_aMenuItems[MENU_PCONTRL_FILT].pParentMenu             = &m_aMenuItems[MENU_MAIN_PCONTRL];
     m_aMenuItems[MENU_PCONTRL_FILT].KeyboardHandler         = PcontrlFilt_KeyboardHandler;
     m_aMenuItems[MENU_PCONTRL_FILT].DisplayHandler          = PcontrlFilt_DisplayHandler;
     m_aMenuItems[MENU_PCONTRL_FILT].OnOpeningHandler        = PcontrlFilt_OpeningHandler;
@@ -3943,7 +3817,7 @@ void HMI_Init()
     m_aMenuItems[MENU_PCONTRL_SCAL].byMenuItemID            = MENU_PCONTRL_SCAL;
     m_aMenuItems[MENU_PCONTRL_SCAL].byChildMenuItems        = 10;
     m_aMenuItems[MENU_PCONTRL_SCAL].pChildMenu              = &m_aMenuItems[MENU_SCAL_END];
-    m_aMenuItems[MENU_PCONTRL_SCAL].pParentMenu             = &m_aMenuItems[MENU_CONTRL_PCONTRL];
+    m_aMenuItems[MENU_PCONTRL_SCAL].pParentMenu             = &m_aMenuItems[MENU_MAIN_PCONTRL];
     m_aMenuItems[MENU_PCONTRL_SCAL].KeyboardHandler         = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_PCONTRL_SCAL].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_PCONTRL_SCAL].OnOpeningHandler        = NULL;
@@ -3951,7 +3825,7 @@ void HMI_Init()
     m_aMenuItems[MENU_PCONTRL_TUNE].byMenuItemID            = MENU_PCONTRL_TUNE;
     m_aMenuItems[MENU_PCONTRL_TUNE].byChildMenuItems        = 10;
     m_aMenuItems[MENU_PCONTRL_TUNE].pChildMenu              = &m_aMenuItems[MENU_TUNE_NOT];
-    m_aMenuItems[MENU_PCONTRL_TUNE].pParentMenu             = &m_aMenuItems[MENU_CONTRL_PCONTRL];
+    m_aMenuItems[MENU_PCONTRL_TUNE].pParentMenu             = &m_aMenuItems[MENU_MAIN_PCONTRL];
     m_aMenuItems[MENU_PCONTRL_TUNE].KeyboardHandler         = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_PCONTRL_TUNE].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_PCONTRL_TUNE].OnOpeningHandler        = NULL;
@@ -3959,7 +3833,7 @@ void HMI_Init()
     m_aMenuItems[MENU_PCONTRL_KV].byMenuItemID              = MENU_PCONTRL_KV;
     m_aMenuItems[MENU_PCONTRL_KV].byChildMenuItems          = 10;
     m_aMenuItems[MENU_PCONTRL_KV].pChildMenu                = NULL;
-    m_aMenuItems[MENU_PCONTRL_KV].pParentMenu               = &m_aMenuItems[MENU_CONTRL_PCONTRL];
+    m_aMenuItems[MENU_PCONTRL_KV].pParentMenu               = &m_aMenuItems[MENU_MAIN_PCONTRL];
     m_aMenuItems[MENU_PCONTRL_KV].KeyboardHandler           = PcontrlKv_KeyboardHandler;
     m_aMenuItems[MENU_PCONTRL_KV].DisplayHandler            = PcontrlKv_DisplayHandler;
     m_aMenuItems[MENU_PCONTRL_KV].OnOpeningHandler          = PcontrlKv_OpeningHandler;
@@ -3967,15 +3841,15 @@ void HMI_Init()
     m_aMenuItems[MENU_PCONTRL_LEAK].byMenuItemID            = MENU_PCONTRL_LEAK;
     m_aMenuItems[MENU_PCONTRL_LEAK].byChildMenuItems        = 10;
     m_aMenuItems[MENU_PCONTRL_LEAK].pChildMenu              = &m_aMenuItems[MENU_LEAK_NOT];
-    m_aMenuItems[MENU_PCONTRL_LEAK].pParentMenu             = &m_aMenuItems[MENU_CONTRL_PCONTRL];
+    m_aMenuItems[MENU_PCONTRL_LEAK].pParentMenu             = &m_aMenuItems[MENU_MAIN_PCONTRL];
     m_aMenuItems[MENU_PCONTRL_LEAK].KeyboardHandler         = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_PCONTRL_LEAK].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_PCONTRL_LEAK].OnOpeningHandler        = NULL;
 
     m_aMenuItems[MENU_PCONTRL_END].byMenuItemID             = MENU_PCONTRL_END;
     m_aMenuItems[MENU_PCONTRL_END].byChildMenuItems         = 10;
-    m_aMenuItems[MENU_PCONTRL_END].pChildMenu               = &m_aMenuItems[MENU_CONTRL_PCONTRL];
-    m_aMenuItems[MENU_PCONTRL_END].pParentMenu              = &m_aMenuItems[MENU_CONTRL_PCONTRL];
+    m_aMenuItems[MENU_PCONTRL_END].pChildMenu               = &m_aMenuItems[MENU_MAIN_PCONTRL];
+    m_aMenuItems[MENU_PCONTRL_END].pParentMenu              = &m_aMenuItems[MENU_MAIN_PCONTRL];
     m_aMenuItems[MENU_PCONTRL_END].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_PCONTRL_END].DisplayHandler           = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_PCONTRL_END].OnOpeningHandler         = NULL; 
@@ -4489,6 +4363,8 @@ void HMI_Init()
 
     m_mcbCurrent.pMenu                                      = NULL;
     m_mcbCurrent.byStartMenuItemID                          = 0;
+
+    menu_update();
 
     S_INIT(m_stackMenuCtlBlock, &m_mcbCurrent, 1);
 

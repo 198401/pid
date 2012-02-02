@@ -128,7 +128,7 @@ void cmdHandle(void)
                 g_UnitData.dat.fInp   = 10.0f*g_UnitCfg.dat.bySrU 
                                         + 10.0f*(g_UnitCfg.dat.bySrD - g_UnitCfg.dat.bySrU)*(temp - g_UnitCfg.dat.iAd5V0)/(g_UnitCfg.dat.iAd5V5 - g_UnitCfg.dat.iAd5V0);
         }
-        break;
+        break;								
     case 3:
         if (!g_UnitCfg.dat.bIsCmdInverse)
         {

@@ -614,8 +614,7 @@ void initLCD_1622(void)
     SENDCOMA(LCD_1622_BIAS);   
     SENDCOMA(LCD_1622_SYSEN);   
     SENDCOMA(LCD_1622_LCDON);   
-    SENDCOMA(LCD_1622_TIMERDIS); 
-
+    SENDCOMA(LCD_1622_TIMERDIS);
 }
 
 void floattochar(float fdata,uint8_t disbuf[6],uint8_t dotp)
