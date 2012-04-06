@@ -4,16 +4,1436 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 F:\object\PID\keil\PID.uvproj
-Project File Date:  12/29/2011
+Project File Date:  04/05/2012
 
 <h2>Output:</h2>
 Build target 'Target 1'
+compiling Hmi.c...
 linking...
-Program Size: Code=39844 RO-data=23132 RW-data=536 ZI-data=7504  
+Program Size: Code=40144 RO-data=2568 RW-data=536 ZI-data=7544  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=39844 RO-data=23132 RW-data=536 ZI-data=7504  
+Program Size: Code=40144 RO-data=2568 RW-data=536 ZI-data=7544  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40144 RO-data=2568 RW-data=536 ZI-data=7544  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40144 RO-data=2568 RW-data=536 ZI-data=7544  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40144 RO-data=2568 RW-data=536 ZI-data=7544  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40488 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Rebuild target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling mbascii.c...
+compiling mbfuncdiag.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+compiling pid.c...
+compiling calc.c...
+compiling AD5422.c...
+compiling mcp2515.c...
+compiling can.c...
+linking...
+Program Size: Code=40488 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+Program Size: Code=40504 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+Program Size: Code=40500 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+..\src\main.c(148): error:  #165: too few arguments in function call
+..\src\main.c(157): error:  #165: too few arguments in function call
+..\src\main.c(164): error:  #165: too few arguments in function call
+..\src\main.c(170): error:  #165: too few arguments in function call
+..\src\main.c(173): error:  #165: too few arguments in function call
+Target not created
+Build target 'Target 1'
+compiling main.c...
+linking...
+Program Size: Code=40508 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40508 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40508 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40508 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40596 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40576 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+compiling iap.c...
+compiling Hmi.c...
+compiling pid.c...
+compiling calc.c...
+linking...
+Program Size: Code=40564 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40512 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=40508 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40608 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40600 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=40604 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=40600 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Rebuild target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling mbascii.c...
+compiling mbfuncdiag.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+compiling pid.c...
+compiling calc.c...
+compiling AD5422.c...
+compiling mcp2515.c...
+compiling can.c...
+linking...
+Program Size: Code=40600 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=40600 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40600 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40600 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=40600 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40600 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40600 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40600 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40600 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=40584 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=40632 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Target system has no power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+Could not find supported CPU core on JTAG chain
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Communication timed out: Requested 2 bytes, received 0 bytes !
+EMU_GetFirmwareString: Insufficient data read when trying to read the string length.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG Timeout during adaptive clocking: RTCK did not respond.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Error: JTAG communication error: Unknown error code 128
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Can not connect to J-Link via USB.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Can not connect to J-Link via USB.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Could not read hardware status!
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Unable to retrieve firmware info !
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Target system has no power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.067V
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Using DBGRQ to halt CPU
+Info: Resetting TRST in order to halt CPU
+***JLink Error: JTAG communication error: Unknown error code 2
+Unable to halt CPU core
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Error: JTAG communication error: Unknown error code 3
+Hardware-Breakpoints: 0
+Software-Breakpoints: 0
+Watchpoints:          0
+Trying to connect with 5 kHz !
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Hardware-Breakpoints: 0
+Software-Breakpoints: 0
+Watchpoints:          0
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Invalid core Id. (0x00000000)
+Trying to connect with 5 kHz !
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Invalid core Id. (0x00000000)
+Build target 'Target 1'
+linking...
+Program Size: Code=40668 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = ?, IRPrint = 0x..0000000000000000000000FF
+***JLink Error: JTAG communication error: Unknown error code 9
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Failed to read memory before ADI software reset.
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x801.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = ?, IRPrint = 0x..0000000000000000000000FF
+***JLink Error: JTAG communication error: Unknown error code 12
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Failed to read memory before ADI software reset.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Hardware-Breakpoints: 2
+Software-Breakpoints: 8192
+Watchpoints:          0
+Found 1 JTAG device, Total IRLen = 4:
+ Id of device #0: 0x3F0F0F0F
+ARM7 identified.
+JTAG speed: 4 kHz
+Info: RTCK seems to be bridged with TCK
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK seems to be bridged with TCK
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK seems to be bridged with TCK
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK seems to be bridged with TCK
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=40644 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 17
+***JLink Error: Target system has no power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Using DBGRQ to halt CPU
+Info: Resetting TRST in order to halt CPU
+***JLink Error: JTAG Timeout during adaptive clocking: RTCK did not respond.
+Unable to halt CPU core
+***JLink Error: Register failed. Received illegal information (NumConInfos > 16).
+Build target 'Target 1'
+linking...
+Program Size: Code=40644 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Can not connect to J-Link via USB.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Communication timed out: Requested 4 bytes, received 0 bytes !
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG Timeout during adaptive clocking: RTCK did not respond.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+***JLink Error: Register failed. Received illegal information (NumConInfos > 16).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Using DBGRQ to halt CPU
+Info: Resetting TRST in order to halt CPU
+***JLink Error: Unable to halt CPU core
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Communication timed out: Requested 8 bytes, received 0 bytes !
+Could not read hardware status!
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Communication timed out: Requested 2 bytes, received 0 bytes !
+EMU_GetFirmwareString: Insufficient data read when trying to read the string length.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Target system has no power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0xD4.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.7 Volt).
+Please check target power.
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Failed to read memory before ADI software reset.
+Info: Resetting target using RESET pin
+Info: Halting CPU core
+Info: Using DBGRQ to halt CPU
+Info: Resetting TRST in order to halt CPU
+Info: Resetting target using RESET pin
+Info: Halting CPU core
+Info: Using DBGRQ to halt CPU
+Info: Resetting TRST in order to halt CPU
+***JLink Error: JTAG communication error: Unknown error code 41
+Communication timed out: Requested 8 bytes, received 0 bytes !
+JTAG communication error: Unknown error code 212
+JTAG communication error: Unknown error code 255
+JTAG Timeout during adaptive clocking: RTCK did not respond.
+JTAG communication error: Unknown error code 8
+Unable to halt CPU core
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+***JLink Error: Register failed. Received illegal information (NumConInfos > 16).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0xD4.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Target system has no power.
+***JLink Error: Could not read hardware status!
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Unable to retrieve firmware info !
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0xD4.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Target VCC failure. Please check target voltage.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG Timeout during adaptive clocking: RTCK did not respond.
+***JLink Error: Target system has no power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Failed to read memory before ADI software reset.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+JTAG speed: 4 kHz
+Info: RTCK seems to be bridged with TCK
+Info: Auto JTAG speed: 8000 kHz
+Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK seems to be bridged with TCK
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK seems to be bridged with TCK
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40772 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40964 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40964 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Hmi.c...
+linking...
+Program Size: Code=40984 RO-data=2568 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0xD4.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.060V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 10
+***JLink Error: Communication timed out: Requested 8 bytes, received 0 bytes !
+Could not read hardware status!
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Can not connect to J-Link via USB.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.7 Volt).
+Please check target power.
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Failed to read memory before ADI software reset.
+Info: Resetting target using RESET pin
+Info: Halting CPU core
+Info: Using DBGRQ to halt CPU
+Info: Resetting TRST in order to halt CPU
+Info: Resetting target using RESET pin
+Info: Halting CPU core
+Info: Using DBGRQ to halt CPU
+Info: Resetting TRST in order to halt CPU
+***JLink Error: JTAG communication error: Unknown error code 41
+Communication timed out: Requested 8 bytes, received 0 bytes !
+Could not transfer JTAG data.
+Unable to halt CPU core
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 104
+***JLink Error: Target system has no power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Can not connect to J-Link via USB.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Failed to read memory before ADI software reset.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+JTAG speed: 4 kHz
+Info: RTCK seems to be bridged with TCK
+Info: Auto JTAG speed: 8000 kHz
+Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK seems to be bridged with TCK
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK seems to be bridged with TCK
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40964 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling calc.c...
+..\src\calc.c(107): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa0"
+..\src\calc.c(107): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+..\src\calc.c(107): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa0"
+..\src\calc.c(111): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa0"
+..\src\calc.c(111): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+..\src\calc.c(111): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa0"
+..\src\calc.c(113): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa0"
+..\src\calc.c(113): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+..\src\calc.c(113): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa0"
+..\src\calc.c(127): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(127): error:  #136: struct "_UNIT_CFG_" has no field "iAdV5"
+..\src\calc.c(127): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(131): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(131): error:  #136: struct "_UNIT_CFG_" has no field "iAdV5"
+..\src\calc.c(131): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(133): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(133): error:  #136: struct "_UNIT_CFG_" has no field "iAdV5"
+..\src\calc.c(133): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(147): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(147): error:  #136: struct "_UNIT_CFG_" has no field "iAdV10"
+..\src\calc.c(147): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(151): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(151): error:  #136: struct "_UNIT_CFG_" has no field "iAdV10"
+..\src\calc.c(151): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(153): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(153): error:  #136: struct "_UNIT_CFG_" has no field "iAdV10"
+..\src\calc.c(153): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(175): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa4"
+..\src\calc.c(175): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+..\src\calc.c(175): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa4"
+Target not created
+Build target 'Target 1'
+compiling calc.c...
+..\src\calc.c(107): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+..\src\calc.c(111): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+..\src\calc.c(113): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+..\src\calc.c(127): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(127): error:  #136: struct "_UNIT_CFG_" has no field "iAdV5"
+..\src\calc.c(127): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(131): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(131): error:  #136: struct "_UNIT_CFG_" has no field "iAdV5"
+..\src\calc.c(131): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(133): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(133): error:  #136: struct "_UNIT_CFG_" has no field "iAdV5"
+..\src\calc.c(133): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(147): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(147): error:  #136: struct "_UNIT_CFG_" has no field "iAdV10"
+..\src\calc.c(147): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(151): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(151): error:  #136: struct "_UNIT_CFG_" has no field "iAdV10"
+..\src\calc.c(151): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(153): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(153): error:  #136: struct "_UNIT_CFG_" has no field "iAdV10"
+..\src\calc.c(153): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(175): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa4"
+..\src\calc.c(175): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+..\src\calc.c(175): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa4"
+..\src\calc.c(177): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa4"
+..\src\calc.c(177): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+..\src\calc.c(177): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa4"
+Target not created
+Build target 'Target 1'
+compiling calc.c...
+..\src\calc.c(107): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+..\src\calc.c(111): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+..\src\calc.c(113): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+..\src\calc.c(127): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(127): error:  #136: struct "_UNIT_CFG_" has no field "iAdV5"
+..\src\calc.c(127): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(131): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(131): error:  #136: struct "_UNIT_CFG_" has no field "iAdV5"
+..\src\calc.c(131): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(133): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(133): error:  #136: struct "_UNIT_CFG_" has no field "iAdV5"
+..\src\calc.c(133): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(147): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(147): error:  #136: struct "_UNIT_CFG_" has no field "iAdV10"
+..\src\calc.c(147): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(151): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(151): error:  #136: struct "_UNIT_CFG_" has no field "iAdV10"
+..\src\calc.c(151): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(153): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(153): error:  #136: struct "_UNIT_CFG_" has no field "iAdV10"
+..\src\calc.c(153): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(175): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+..\src\calc.c(177): error:  #136: struct "_UNIT_CFG_" has no field "iAdMa20"
+Target not created
+Build target 'Target 1'
+compiling calc.c...
+..\src\calc.c(127): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(127): error:  #136: struct "_UNIT_CFG_" has no field "iAdV5"
+..\src\calc.c(127): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(131): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(131): error:  #136: struct "_UNIT_CFG_" has no field "iAdV5"
+..\src\calc.c(131): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(133): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(133): error:  #136: struct "_UNIT_CFG_" has no field "iAdV5"
+..\src\calc.c(133): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(147): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(147): error:  #136: struct "_UNIT_CFG_" has no field "iAdV10"
+..\src\calc.c(147): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(151): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(151): error:  #136: struct "_UNIT_CFG_" has no field "iAdV10"
+..\src\calc.c(151): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(153): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+..\src\calc.c(153): error:  #136: struct "_UNIT_CFG_" has no field "iAdV10"
+..\src\calc.c(153): error:  #136: struct "_UNIT_CFG_" has no field "iAdV0"
+Target not created
+Build target 'Target 1'
+compiling calc.c...
+linking...
+Program Size: Code=40860 RO-data=2572 RW-data=532 ZI-data=7548  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+compiling iap.c...
+compiling Hmi.c...
+compiling pid.c...
+compiling calc.c...
+linking...
+Program Size: Code=40856 RO-data=2568 RW-data=532 ZI-data=7540  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+compiling iap.c...
+compiling Hmi.c...
+compiling pid.c...
+compiling calc.c...
+linking...
+Program Size: Code=40856 RO-data=2568 RW-data=532 ZI-data=7540  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Rebuild target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling mbascii.c...
+compiling mbfuncdiag.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+compiling pid.c...
+compiling calc.c...
+compiling AD5422.c...
+compiling mcp2515.c...
+compiling can.c...
+linking...
+Program Size: Code=40856 RO-data=2568 RW-data=532 ZI-data=7540  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40856 RO-data=2568 RW-data=532 ZI-data=7540  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=40856 RO-data=2568 RW-data=532 ZI-data=7540  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 8
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Error: Failed to measure TotalIRLen.
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Failed to read memory before ADI software reset.
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x801.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Target system has no power.
+***JLink Error: Could not read hardware status!
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Failed to read memory before ADI software reset.
+Info: Resetting target using RESET pin
+Info: Halting CPU core
+Info: Using DBGRQ to halt CPU
+Info: Resetting TRST in order to halt CPU
+Info: Resetting target using RESET pin
+Info: Halting CPU core
+Info: Using DBGRQ to halt CPU
+Info: Resetting TRST in order to halt CPU
+***JLink Error: JTAG communication error: Unknown error code 83
+Communication timed out: Requested 8 bytes, received 0 bytes !
+JTAG communication error: Unknown error code 101
+Unable to halt CPU core
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Using DBGRQ to halt CPU
+Info: Resetting TRST in order to halt CPU
+***JLink Error: JTAG communication error: Unknown error code 3
+Unable to halt CPU core
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x3 (TAP Command : 12) @ Off 0xD4.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Target VCC failure. Please check target voltage.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+***JLink Error: JTAG communication error: Unknown error code 255
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+***JLink Error: Register failed. Received illegal information (NumConInfos > 16).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Communication timed out: Requested 2 bytes, received 0 bytes !
+EMU_GetFirmwareString: Insufficient data read when trying to read the string length.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.041V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Unable to retrieve firmware info !
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Can not connect to J-Link via USB.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Can not connect to J-Link via USB.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Can not connect to J-Link via USB.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.7 Volt).
+Please check target power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Failed to read memory before ADI software reset.
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x801.
+JTAG speed: 4 kHz
+Erase Failed!
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0xF (TAP Command : 15) @ Off 0x5.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Communication timed out: Requested 4 bytes, received 0 bytes !
+Could not transfer JTAG data: Emulator is out of memory.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+***JLink Error: Register failed. Table size to large (> 0x200 bytes)
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG Timeout during adaptive clocking: RTCK did not respond.
+Could not find supported CPU core on JTAG chain
+***JLink Error: Communication timed out: Requested 8 bytes, received 0 bytes !
+Could not read hardware status!
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Can not connect to J-Link via USB.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Build target 'Target 1'
+linking...
+Program Size: Code=40856 RO-data=2568 RW-data=532 ZI-data=7540  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.099V
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Hardware-Breakpoints: 0
+Software-Breakpoints: 0
+Watchpoints:          0
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Invalid core Id. (0x00000000)
+Trying to connect with 5 kHz !
+Info: TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+Invalid core Id. (0x00000000)
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Using DBGRQ to halt CPU
+Info: Resetting TRST in order to halt CPU
+***JLink Error: Target VCC failure. Please check target voltage.
+Unable to halt CPU core
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 2.989V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 12) @ Off 0xD4.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x7 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Target VCC failure. Please check target voltage.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Can not connect to J-Link via USB.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Can not connect to J-Link via USB.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.009V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Target system has no power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Can not connect to J-Link via USB.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Communication timed out: Requested 11 bytes, received 0 bytes !
+Could not transfer JTAG data.
+***JLink Error: TCK (pin 9) low, but should be high. Please check target hardware.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+JTAG speed: 4 kHz
+Erase Failed!
+***JLink Error: Register failed. Received illegal information (NumConInfos > 16).
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+***JLink Warning: Out of sync , resynchronising...
+Communication timed out: Requested 2 bytes, received 0 bytes !
+EMU_GetFirmwareString: Insufficient data read when trying to read the string length.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.047V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+Load "F:\\object\\PID\\keil\\PID.AXF" 
+VTarget = 3.054V
+Info: TotalIRLen = 4, IRPrint = 0x01
+***JLink Error: JTAG communication error: Unknown error code 3
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.7 Volt).
+Please check target power.
+***JLink Error: Supply voltage too low (1 Volt is required, Measured: 0.0 Volt).
+Please check target power.
+DLL version V4.36l, compiled Dec  2 2011 18:52:36
+Firmware: J-Link ARM V8 compiled Dec  1 2015 11:42:48
+Hardware: V8.00
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: Failed to read memory before ADI software reset.
+Info: Resetting target using RESET pin
+Info: Resetting TRST
+***JLink Error: Bad JTAG communication: Write to IR: Expected 0x1, got 0x0 (TAP Command : 2) @ Off 0x801.
+JTAG speed: 4 kHz
+Info: RTCK seems to be bridged with TCK
+Info: Auto JTAG speed: 8000 kHz
+Erase Done.
+Programming Done.
+Verify OK.
+Info: RTCK seems to be bridged with TCK
+Info: Auto JTAG speed: 8000 kHz
+Info: TotalIRLen = 4, IRPrint = 0x01
+Info: RTCK seems to be bridged with TCK
+Info: Auto JTAG speed: 8000 kHz
+JTAG speed: 8000 kHz
+Application running ...
+Build target 'Target 1'
+linking...
+Program Size: Code=40856 RO-data=2568 RW-data=532 ZI-data=7540  
+FromELF: creating hex file...
+"PID.axf" - 0 Error(s), 0 Warning(s).
+Rebuild target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling portevent.c...
+compiling portserial.c...
+compiling porttimer.c...
+compiling mb.c...
+compiling mbcrc.c...
+compiling mbrtu.c...
+compiling mbfunccoils.c...
+compiling mbfuncdisc.c...
+compiling mbfuncholding.c...
+compiling mbfuncinput.c...
+compiling mbfuncother.c...
+compiling mbutils.c...
+compiling mbascii.c...
+compiling mbfuncdiag.c...
+compiling RTX_Config.c...
+compiling iap.c...
+compiling HT1622.c...
+compiling Hmi.c...
+compiling ds18b20.c...
+compiling pid.c...
+compiling calc.c...
+compiling AD5422.c...
+compiling mcp2515.c...
+compiling can.c...
+linking...
+Program Size: Code=40856 RO-data=2568 RW-data=532 ZI-data=7540  
 FromELF: creating hex file...
 "PID.axf" - 0 Error(s), 0 Warning(s).

@@ -3,11 +3,11 @@
 
  Date          : 
 
- File          : ht1622
+ File          : AD5422
 
  Hardware      : ADuC702X
 
- Description   : LCD_HT1622
+ Description   : 
 *************************************************************/
 #include <aduc7024.h>
 #include <inttypes.h>
@@ -31,8 +31,7 @@ static void delay (int length)
 }
 
 void WriteToAD5422(unsigned char count,unsigned char *buf)
-{
-
+{ 
     unsigned    char    ValueToWrite = 0;
     unsigned    char    i = 0;
     unsigned    char    j = 0;
@@ -58,10 +57,8 @@ void WriteToAD5422(unsigned char count,unsigned char *buf)
             delay(1);
             SET_SCL();
             delay(1);
-            ValueToWrite <<= 1; /* Rotate data*/
-
-        }
-
+            ValueToWrite <<= 1; /* Rotate data*/   
+        }  
     }
     CLR_SCL();
     delay(1);
@@ -69,6 +66,7 @@ void WriteToAD5422(unsigned char count,unsigned char *buf)
     delay(20);
 }
 
+/*
 void ReadFromAD5422(unsigned char count,unsigned char *buf)
 {
     unsigned    char    i = 0;
@@ -83,10 +81,10 @@ void ReadFromAD5422(unsigned char count,unsigned char *buf)
         for (i=0; i<8; i++)
         {
             CLR_SCL();
-            RotateData <<= 1;       /* Rotate data*/
+            RotateData <<= 1;       
             delay(1);
-            CLR_SDO();              /* Write a nop condition when read the data.*/
-            iTemp = GP1DAT;         /* Read SDO of AD5422*/
+            CLR_SDO();             
+            iTemp = GP1DAT;         
             SET_SCL();  
             if (0x00000020 == (iTemp & 0x00000020))
             {
@@ -102,3 +100,4 @@ void ReadFromAD5422(unsigned char count,unsigned char *buf)
     SET_LATCH();
     delay(20);
 } 
+*/

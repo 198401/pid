@@ -403,6 +403,17 @@ static uint8_t                      m_bufKeyboard[KB_BUF_SIZE];
 extern UNIT_DATA                g_UnitData;
 extern UNIT_CFG                 g_UnitCfg;
 
+static volatile void delay_1s(U32 count)   /*delay_1s(30) is 1 second*/   
+{
+    U32 i;  
+    while (count)
+    {
+        i =200000;
+        while (i>0) i--;
+        count--;
+    }
+}
+
 static void OnKeyDown(uint8_t byKeyCode)
 {
     GP3DAT  &= ~0x00020000;
@@ -419,19 +430,22 @@ static void OnKeyDown(uint8_t byKeyCode)
         }
         else if (byKeyCode == KEY_3)
         {
-            GP0DAT  |= 0x01010000;
-			S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
-
-            m_mcbCurrent.pMenu                      = &m_aMenuItems[MENU_MAIN_ACT];
-            m_mcbCurrent.byStartMenuItemID          = m_mcbCurrent.pMenu->byMenuItemID;
+            if (m_mcbCurrent.pMenu == NULL)
+	        {
+	            GP0DAT  |= 0x01010000;
+				S_PUSH(m_stackMenuCtlBlock, m_mcbCurrent);
+	
+	            m_mcbCurrent.pMenu                      = &m_aMenuItems[MENU_MAIN_ACT];
+	            m_mcbCurrent.byStartMenuItemID          = m_mcbCurrent.pMenu->byMenuItemID;
+	        } 			
         }
     }
 }
 
-static void OnKeyLongPressUp(uint8_t byKeyCode)
-{
-
-}
+//static void OnKeyLongPressUp(uint8_t byKeyCode)
+//{
+//
+//}
 
 static void OnKeyUp(uint8_t byKeyCode)
 {
@@ -452,11 +466,6 @@ static void OnKeyUp(uint8_t byKeyCode)
               m_byPageNo += 0x80;
 			  GP0DAT  |= 0x01010000;
         }
-//		else if (byKeyCode == KEY_7)
-//        {
-//              m_byPageNo = 0x09;
-//			  GP0DAT  |= 0x01010000;
-//        }
     }
     else
     {
@@ -505,7 +514,7 @@ static void CheckKeyboard()
         {
             if (_cnts[i] >= 20)
             {
-				OnKeyLongPressUp(i);		  
+//				OnKeyLongPressUp(i);		  
             }
 			else if(_cnts[i] >= 1)
 			{
@@ -544,7 +553,7 @@ static void menu_display_done(void)
 {
 	display_digital("::::::",0,0);
     display_char("[[[[DONE");
-	os_dly_wait(100);
+	delay_1s(30);
 }
 
 static void Display()
@@ -553,7 +562,7 @@ static void Display()
 
     if (m_mcbCurrent.pMenu == NULL)
     {
-      if (!(m_byPageNo&0x80))
+      	if (!(m_byPageNo&0x80))
         {
             m_iCnt++;
             if (m_iCnt > 10)
@@ -580,7 +589,7 @@ static void Display()
             display_char("[[[[[CMD");
             break;
         case 0x02:
-            floattochar (g_UnitData.dat.fInp/10, byNum,0);
+            floattochar (g_UnitData.dat.iInp/10, byNum,0);
             display_digital(byNum,0,0);
             display_char("[[[[[INP");
 			break;
@@ -667,9 +676,9 @@ static void MenuKeyboardHandler(uint8_t byKeyCode)
         {
             if (!S_IS_EMPTY(m_stackMenuCtlBlock))
             {
-                EepromWr_n(g_UnitCfg.buf);
-				display_char("[STORING");
-				os_dly_wait(100);
+                display_char("[STORING");
+				delay_1s(30);
+				EepromWr_n(g_UnitCfg.buf);
                 m_mcbCurrent.pMenu = NULL;
                 S_POP(m_stackMenuCtlBlock);
             }
@@ -715,7 +724,8 @@ static void MENU_MAIN_MANUAL_KeyboardHandler(uint8_t byKeyCode)
         }
 		else 
         {
-            menu_return( );
+            g_UnitCfg.dat.bIsManual = FALSE;
+			menu_return( );
         }
     }
     else if (byKeyCode == KEY_2)
@@ -741,7 +751,8 @@ static void MENU_MAIN_MANUAL_KeyboardHandler(uint8_t byKeyCode)
 		}
         else 
         {
-            menu_return( );
+            g_UnitCfg.dat.bIsManual = FALSE;
+			menu_return( );
         }
     }
 }
@@ -775,7 +786,8 @@ static void MENU_MAIN_MANUAL_OpeningHandler()
     m_byCursorPos = 0;
     for (uint16_t i = 0; i < 6; i++)
         m_bufKeyboard[i] = '0';
-    m_byCursorPage   = 0;   
+    m_byCursorPage   = 0; 
+	g_UnitCfg.dat.bIsManual = TRUE;  
 }
 static void menu_update(void)
 {
@@ -906,8 +918,8 @@ static void InsetCutoff_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            g_UnitCfg.dat.byCutoffMin = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
-            g_UnitCfg.dat.byCutoffMax = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
+            g_UnitCfg.dat.iCutoffMin = 10*(m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328);
+            g_UnitCfg.dat.iCutoffMax = 10*(m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328);
             menu_return( );
         }
     }
@@ -981,8 +993,8 @@ static void InsetSpltrng_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            g_UnitCfg.dat.bySrD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
-            g_UnitCfg.dat.bySrU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;	
+            g_UnitCfg.dat.iSrD = (m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328)*10;
+            g_UnitCfg.dat.iSrU = (m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328)*10; 	
             menu_return( );
         }
     }
@@ -1056,8 +1068,8 @@ static void XsetXlimit_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            g_UnitCfg.dat.byLimD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
-            g_UnitCfg.dat.byLimU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
+            g_UnitCfg.dat.iLimD = (m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328)*10;
+            g_UnitCfg.dat.iLimU = (m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328)*10;
 			menu_return( );
         }
     }
@@ -1130,8 +1142,8 @@ static void XsetXtime_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            g_UnitCfg.dat.byXtimeOpen = m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 528;
-            g_UnitCfg.dat.byXtimeClose = m_bufKeyboard[3]*10 + m_bufKeyboard[2] - 528;
+            g_UnitCfg.dat.iXtimeOpen = m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 528;
+            g_UnitCfg.dat.iXtimeClose = m_bufKeyboard[3]*10 + m_bufKeyboard[2] - 528;
 			menu_return( );
         }
     }
@@ -1203,7 +1215,7 @@ static void SystemSafepos_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            g_UnitCfg.dat.bySafePos = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;	
+            g_UnitCfg.dat.iSafePos = 10*(m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328);	
             menu_return( );
         }
     }
@@ -1239,44 +1251,12 @@ static void SystemSafepos_OpeningHandler()
     m_byCursorPage   = 0;
 }
 
+extern void data_init(void);
+
 static void SystemSetfact_OpeningHandler()
 {
     clearLCD();
-	for (U16 i = 0;i < sizeof(struct _UNIT_DATA_)/sizeof(U16);i++)
-        g_UnitData.buf[i]   = 0; 
-
-    for (U16 i = 0;i < sizeof(struct _UNIT_CFG_)/sizeof(U16);i++)
-        g_UnitCfg.buf[i]    = 0; 
-
-    if (g_UnitCfg.dat.bIsReboot)
-        g_UnitCfg.dat.bIsReboot = FALSE;
-
-    if (g_UnitCfg.dat.byMbAddr == 0)
-        g_UnitCfg.dat.byMbAddr = 1;
-
-    if (g_UnitCfg.dat.uBau == 0)
-        g_UnitCfg.dat.uBau = 19200;
-
-    if (g_UnitCfg.dat.P_Factor == 0)
-        g_UnitCfg.dat.P_Factor = 10*128;
-
-    if (g_UnitCfg.dat.iAd4Min == g_UnitCfg.dat.iAd4Max)
-    {
-        g_UnitCfg.dat.iAd4Max = 3069;
-        g_UnitCfg.dat.iAd4Min = 16;
-    }
-    if (g_UnitCfg.dat.byLimD == g_UnitCfg.dat.byLimU)
-    {
-        g_UnitCfg.dat.byLimU = 100;
-        g_UnitCfg.dat.byLimD = 0;
-    }
-    if (g_UnitCfg.dat.bySrD == g_UnitCfg.dat.bySrU)
-    {
-        g_UnitCfg.dat.bySrU = 100;
-        g_UnitCfg.dat.bySrD = 0;
-    }
-    if (g_UnitCfg.dat.byIN == 0)
-        g_UnitCfg.dat.byIN  = GP4DAT;
+	data_init();
     display_char("[[[[DONE");
 	g_UnitCfg.dat.bIsReboot = TRUE;
     clearLCD(); 
@@ -1526,8 +1506,8 @@ static void XcontrolPara_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            g_UnitCfg.dat.byKxD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
-            g_UnitCfg.dat.byKxU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;	
+            g_UnitCfg.dat.iKxD = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
+            g_UnitCfg.dat.iKxU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;	
             menu_return( );
         }
     }
@@ -1588,7 +1568,7 @@ static void XtuneAuto_OpeningHandler()
 
     SetPwmDutyCycle2(-1000);
 
-    os_dly_wait(300);
+    delay_1s(90);
 
     while (ABS(fDiff) > 5)
     {
@@ -1607,7 +1587,7 @@ static void XtuneAuto_OpeningHandler()
     SetPwmDutyCycle2(1000);
     display_char("22222222");
 
-	os_dly_wait(200);
+	delay_1s(60);
 
     while (ABS(fDiff) > 5)
     {
@@ -1619,13 +1599,24 @@ static void XtuneAuto_OpeningHandler()
 
     temp2 = g_UnitData.dat.iAD4;
 
-    g_UnitCfg.dat.iAd4Min = MIN( temp1, temp2 );
-    g_UnitCfg.dat.iAd4Max = MAX( temp1, temp2 );
+	while(temp1 > temp2)
+	{
+		display_char("[[[ERR[1");
+	}
+
+	while(temp2 - temp1 < 100)
+	{
+		display_char("[[[ERR[2");
+	}
+
+    g_UnitCfg.dat.iAd4Min = temp1;
+    g_UnitCfg.dat.iAd4Max = temp2;
 
     SetPwmDutyCycle2(-1000);
     display_char("33333333");
+	delay_1s(60);
 
-    while (g_UnitData.dat.fPos < 660)
+    while (g_UnitData.dat.fPos > 660)
         ;    
     
     SetPwmDutyCycle2(0);
@@ -1644,11 +1635,11 @@ static void XtuneAuto_OpeningHandler()
         fLast   = fPos;
         iPwm   -= 10;
     }
-    g_UnitCfg.dat.byYeU = -iPwm/10;
+    g_UnitCfg.dat.iYeU = -iPwm;
 
     SetPwmDutyCycle2(0);
     display_char("55555555");
-    os_dly_wait(200);
+    delay_1s(60);
 
     fDiff = 0;
     iPwm  = 0;
@@ -1662,14 +1653,16 @@ static void XtuneAuto_OpeningHandler()
         fLast   = fPos;
         iPwm   += 10;
     }
-    g_UnitCfg.dat.byYbU = iPwm/10;
+    g_UnitCfg.dat.iYbU = iPwm;
 
     g_UnitCfg.dat.iDbnd = 5;
 
     g_UnitCfg.dat.byMode &= 0x7F;
 
     display_char("[[[[DONE");
-    os_dly_wait(100);
+	EepromWr_n(g_UnitCfg.buf); 	
+    delay_1s(30);
+	RSTSTA  |= 0x04;
 }
 
 static void XtunePwm_KeyboardHandler(uint8_t byKeyCode)
@@ -1704,8 +1697,8 @@ static void XtunePwm_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            g_UnitCfg.dat.byYbU = m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328;
-            g_UnitCfg.dat.byYeU = m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328;
+            g_UnitCfg.dat.iYbU = (m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328)*10;
+            g_UnitCfg.dat.iYeU = (m_bufKeyboard[5]*100 + m_bufKeyboard[4]*10 + m_bufKeyboard[3] - 5328)*10;
             menu_return( );
 		}
     }
@@ -1778,8 +1771,8 @@ static void XtuneAir_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            g_UnitCfg.dat.byAirOpen = m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 528;
-            g_UnitCfg.dat.byAirClose = m_bufKeyboard[3]*10 + m_bufKeyboard[2] - 528;
+            g_UnitCfg.dat.iAirOpen = m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 528;
+            g_UnitCfg.dat.iAirClose = m_bufKeyboard[3]*10 + m_bufKeyboard[2] - 528;
 
             menu_return( );
         }
@@ -1824,19 +1817,19 @@ static void XtuneAir_OpeningHandler()
 
 static void SigerrFunon_OpeningHandler()
 {
-    g_UnitCfg.dat.byErr = 2;
+    g_UnitCfg.dat.byErr = 1;
     menu_display_done( );
 }
 
 static void SigerrPoson_OpeningHandler()
 {
-    g_UnitCfg.dat.byErr = 1;
+	g_UnitCfg.dat.byErr = 0;
     menu_display_done( );
 }
 
 static void SigerrOff_OpeningHandler()
 {
-    g_UnitCfg.dat.byErr = 0;
+    g_UnitCfg.dat.byErr = 2;
     menu_display_done( );
 }
 
@@ -2163,12 +2156,25 @@ static void CaluserInp_KeyboardHandler(uint8_t byKeyCode)
         }
         else
         {
-            g_UnitCfg.dat.iAd5Ma4 = temp1;
-			g_UnitCfg.dat.iAd5Ma0 = temp1;
-            g_UnitCfg.dat.iAd5V0  = temp1;
-            g_UnitCfg.dat.iAd5Ma20 = temp2;
-			g_UnitCfg.dat.iAd5V5   = temp2;
-            g_UnitCfg.dat.iAd5V10  = temp2;
+            switch(g_UnitCfg.dat.byInp)
+			{
+	        case 1:
+	            g_UnitCfg.dat.iAd5Ma0 = temp1;
+				g_UnitCfg.dat.iAd5Ma20 = temp2;
+	            break;
+	        case 2:
+	            g_UnitCfg.dat.iAd5V0  = temp1;
+				g_UnitCfg.dat.iAd5V5   = temp2;
+	            break;
+			case 3:
+	            g_UnitCfg.dat.iAd5V0  = temp1;
+				g_UnitCfg.dat.iAd5V10  = temp2;
+	            break;
+	        default:            
+	            g_UnitCfg.dat.iAd5Ma4 = temp1;
+				g_UnitCfg.dat.iAd5Ma20 = temp2;
+	            break;
+	        }
             menu_return( );
         }
     }
@@ -2180,7 +2186,7 @@ static void CaluserInp_DisplayHandler()
 
     if (m_byCursorPage < 2)
     {
-        floattochar (g_UnitData.dat.fInp/10, byNum,0);
+        floattochar (g_UnitData.dat.iInp/10, byNum,0);
         display_digital(byNum,0,0);
     }
     else
@@ -2205,7 +2211,7 @@ static void CaluserInp_OpeningHandler()
 static void CaluserFact_OpeningHandler()
 {
     menu_display_done( );
-}
+} 
 
 static void PcontrlDbnd_KeyboardHandler(uint8_t byKeyCode)
 {
@@ -2502,27 +2508,62 @@ static void PortD_OpeningHandler()
 
 static void AnlPos_OpeningHandler()
 {
-    menu_display_done( );
+    g_UnitCfg.dat.byAnlDat = 0;
+	menu_display_done( );
 }
 
 static void AnlCmd_OpeningHandler()
 {
-    menu_display_done( );
+    g_UnitCfg.dat.byAnlDat = 1;
+	menu_display_done( );
 }
 
 static void AnlSp_OpeningHandler()
 {
-    menu_display_done( ); 
+    g_UnitCfg.dat.byAnlDat = 2;
+	menu_display_done( ); 
 }
 
 static void AnlP1_OpeningHandler()
 {
-    menu_display_done( );
+    g_UnitCfg.dat.byAnlDat = 3;
+	menu_display_done( );
 }
 
 static void AnlP2_OpeningHandler()
 {
-    menu_display_done( );
+    g_UnitCfg.dat.byAnlDat = 4;
+	menu_display_done( );
+}
+
+static void AnlT_OpeningHandler()
+{
+    g_UnitCfg.dat.byAnlDat = 5;
+	menu_display_done( );
+}
+
+static void AnlSet4_OpeningHandler()
+{
+    g_UnitCfg.dat.byAnlCtl = 5;
+	menu_display_done( );
+}
+
+static void AnlSet0_OpeningHandler()
+{
+    g_UnitCfg.dat.byAnlCtl = 6;
+	menu_display_done( );
+}
+
+static void AnlSet10_OpeningHandler()
+{
+    g_UnitCfg.dat.byAnlCtl = 1;
+	menu_display_done( );
+}
+
+static void AnlSet5_OpeningHandler()
+{
+    g_UnitCfg.dat.byAnlCtl = 0;
+	menu_display_done( ); 
 }
 
 static void Bin1Drv_OpeningHandler()
@@ -2645,31 +2686,6 @@ static void Bin2Cls_OpeningHandler()
 {
     g_UnitCfg.dat.byOUT &= ~0x40;
     menu_display_done( );
-}
-
-static void AnlT_OpeningHandler()
-{
-    menu_display_done( );
-}
-
-static void AnlSet4_OpeningHandler()
-{
-    menu_display_done( );
-}
-
-static void AnlSet0_OpeningHandler()
-{
-    menu_display_done( );
-}
-
-static void AnlSet10_OpeningHandler()
-{
-    menu_display_done( );
-}
-
-static void AnlSet5_OpeningHandler()
-{
-    menu_display_done( ); 
 }
 
 static void ScalS_KeyboardHandler(uint8_t byKeyCode)
@@ -4373,6 +4389,6 @@ void HMI_Init()
 
 void HMI_Handler()
 {
-    CheckKeyboard();
+	CheckKeyboard();
     Display();
 }

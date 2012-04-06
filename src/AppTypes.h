@@ -29,7 +29,17 @@ typedef union _UNIT_DATA
         uint16_t    iAD8;
         uint16_t    iCnt;
 
+		uint16_t    iPos;
+		uint16_t    iInp;
+        uint16_t    iSp;
+        uint16_t    iPress1;
+        uint16_t    iPress2;
+        uint16_t    iTemp;
+
+		uint8_t     byAd5422[3];
+
         mbBOOL      bInput;
+		mbBOOL      bIsDaOut;
         mbBOOL      bZZZZ;
     } dat;
     uint16_t        buf[sizeof(struct _UNIT_DATA_)/sizeof(short)];
@@ -73,48 +83,45 @@ typedef union _UNIT_CFG
         uint16_t    iAd8Ma20;
         uint16_t    iAd8R100;
         uint16_t    iAd8R200;
-        uint16_t    iSpMa0;
-        uint16_t    iSpMa4;
-        uint16_t    iSpMa20;
-        uint16_t    iSpV0;
-        uint16_t    iSpV5;
-        uint16_t    iSpV10;
         uint16_t    iCode;
-		uint16_t    iDbnd;    /* div 10       */
-		uint16_t    iPidDbnd; /* div 10       */        
+		uint16_t    iDbnd;    
+		uint16_t    iPidDbnd; 
 
-        int8_t      byLimD;
-        int8_t      byLimU;
-        int8_t      bySrD;
-        int8_t      bySrU;
-        int8_t      bySpD;
-        int8_t      bySpU;
-        int8_t      byP1D;
-        int8_t      byP1U;
-        int8_t      byP2D;
-        int8_t      byP2U;
-        int8_t      byTempD;
-        int8_t      byTempU;
-        int8_t      byCutoffMin;
-        int8_t      byCutoffMax;
-        int8_t      byXtimeClose;
-        int8_t      byXtimeOpen;
-        int8_t      bySafePos;        
-        int8_t      byKxD;     
-        int8_t      byKxU;
-        int8_t      byYbU;     
-        int8_t      byYeU;
-        int8_t      byAirOpen;     
-        int8_t      byAirClose;    
+        int16_t     iLimD;
+        int16_t     iLimU;
+        int16_t     iSrD;
+        int16_t     iSrU;
+        int16_t     iSpD;
+        int16_t     iSpU;
+        int16_t     iP1D;
+        int16_t     iP1U;
+        int16_t     iP2D;
+        int16_t     iP2U;
+        int16_t     iTempD;
+        int16_t     iTempU;
+        int16_t     iCutoffMin;
+        int16_t     iCutoffMax;
+        int16_t     iXtimeClose;
+        int16_t     iXtimeOpen;
+        int16_t     iSafePos;        
+        int16_t     iKxD;     
+        int16_t     iKxU;
+        int16_t     iYbU;     
+        int16_t     iYeU;
+        int16_t     iAirOpen;     
+        int16_t     iAirClose; 
+		   
         int8_t      byN;
         int8_t      byFilt;    
         int8_t      byCha[21];
 
         uint8_t     byMbAddr;
         uint8_t     byMode;    /* 0 positioner 1 freq processer 2 pt100 processer 3 flow rate processer 4 inp processer 0x80 in set mode other positioner */
-        uint8_t     byInp;     /* 0 4-20ma 1 0-20ma 2 0-5V 3 0-10V other pt100     */
-        uint8_t     byErr;     /* 0 none 1 pos safe pos 2 pos zero other none     */
-        uint8_t     byOut;
+        uint8_t     byInp;     /* 0 4-20ma 1 0-20ma 2 0-5V 3 0-10V other 4-20ma     */
+        uint8_t     byErr;     /* 0 pos safe pos 1 pos zero other none     */
+        uint8_t     byAnlMode;
+		uint8_t     byAnlCtl;
+		uint8_t     byAnlDat;
         /*!
          * byIN bit map of portD
          *

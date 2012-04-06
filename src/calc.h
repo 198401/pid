@@ -19,6 +19,6 @@ void spHandle(void);
 void p1Handle(void);
 void p2Handle(void);
 void tempHandle(void);
-void cmdHandle(void);
+void cmdHandle(uint8_t byMode);
 
 #endif

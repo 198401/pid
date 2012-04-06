@@ -14,8 +14,8 @@
 #include <ADuC7024.H>
 #include "AppTypes.h"
 
-#define USER_ADD_START 0x8F400
-#define USER_ADD_END   0x8F5FF
+#define USER_ADD_START 0x8F600
+#define USER_ADD_END   0x8F7FF
 extern UNIT_CFG        g_UnitCfg;
 #define CFG_NREGS      (sizeof(g_UnitCfg)/sizeof(short))
 
@@ -27,6 +27,7 @@ void iap_init(void)
 static void EepromWr( uint16_t addr, uint16_t  data)
 {
     uint8_t status;
+	T3CLRI = 0x55;
     FEEADR = addr;           
     FEEDAT = data;               
     FEECON = WRITE_HALF_WORD;        

@@ -26,7 +26,7 @@ UNIT_DATA                       g_UnitData;
 UNIT_BUF                        g_UnitBuf;
 UNIT_CFG                        g_UnitCfg;
 
-#define EEPADDR 				0x8F400
+#define EEPADDR 				0x8F600
 const U16                       g_UnitCfgInFlash[256]    __at (EEPADDR);
 
 #define REG_INPUT_START             0x0001
@@ -35,6 +35,7 @@ const U16                       g_UnitCfgInFlash[256]    __at (EEPADDR);
 #define REG_HOLDING_NREGS           sizeof(g_UnitCfg)/sizeof(short)
 
 OS_TID t_pid;                           /* assigned task id of task: pid     */
+OS_TID t_dac;                           /* assigned task id of task: dac     */
 OS_TID t_modbus;                        /* assigned task id of task: modbus  */
 OS_TID t_adc;                           /* assigned task id of task: adc     */
 OS_TID t_hmi;                           /* assigned task id of task: hmi     */
@@ -137,8 +138,6 @@ __task void pid(void)
         os_evt_wait_or (0x0001, 0xffff);       
 
         posHandle( );
-		cmdHandle( ); 
-
         switch (g_UnitCfg.dat.byMode)
         {
         case 1:
@@ -146,6 +145,7 @@ __task void pid(void)
             break;
         case 2:
             tempHandle( );
+			cmdHandle(1); 
             g_UnitData.dat.fPv  = g_UnitData.dat.fTemp;
             Controller.input    = (S16)g_UnitData.dat.fSp;
             Controller.feedback = (S16)g_UnitData.dat.fPv;
@@ -154,48 +154,61 @@ __task void pid(void)
             p1Handle( );
             p2Handle( );
             tempHandle( );
+			cmdHandle(1); 
             g_UnitData.dat.fPv  = g_UnitData.dat.fTemp + g_UnitData.dat.fPress1 + g_UnitData.dat.fPress2;
             Controller.input    = (S16)g_UnitData.dat.fSp;
             Controller.feedback = (S16)g_UnitData.dat.fPv;
             break;
         case 4:
             tempHandle( );
+			cmdHandle(1); 
             g_UnitData.dat.fPv  = g_UnitData.dat.fTemp;
             Controller.input    = (S16)g_UnitData.dat.fSp;
             Controller.feedback = (S16)g_UnitData.dat.fPv;
             break;
         case 5:
+			cmdHandle(1); 
             break;
-        default:              
+        default: 
+			cmdHandle(0);              
             Controller.input    = (S16)g_UnitData.dat.fInp;
+			if(Controller.input < g_UnitCfg.dat.iCutoffMin)
+				Controller.input	= MIN(g_UnitCfg.dat.iSrD,g_UnitCfg.dat.iSrU);
+			if(Controller.input > g_UnitCfg.dat.iCutoffMax)
+				Controller.input	= MAX(g_UnitCfg.dat.iSrD,g_UnitCfg.dat.iSrU);
             Controller.feedback = (S16)g_UnitData.dat.fPos;
             break;
-        }       
+        }
+		if (g_UnitCfg.dat.bIsSafePosOn)
+		{
+			switch (g_UnitCfg.dat.byErr)
+	        {
+	        case 0:
+				Controller.input   = g_UnitCfg.dat.iSafePos;
+	            break;
+	        case 1:
+				Controller.input   = 0;
+	            break;
+	        default:              
+	            break;
+	        }
+		}            	
+
+		if(g_UnitCfg.dat.bIsManual)
+			Controller.input	= g_UnitData.dat.fPid;       
 
         if (Controller.counts > 20)
             pid_reset_integrator(&g_UnitCfg);
 
-//        Controller.output = pid_Controller(Controller.input, Controller.feedback, &g_UnitCfg);
-        Controller.output   = g_UnitData.dat.fPid - g_UnitData.dat.fPos;
-//		Controller.output   = Controller.input - Controller.feedback;
+		Controller.output   = Controller.input - Controller.feedback;
 
 		if(ABS(Controller.output) < g_UnitCfg.dat.iDbnd)
 				Controller.output = 0;
 
-		Controller.output  *= 1.0f;
-
-//        if (g_UnitData.dat.bInput)
-//        {
-//            if (g_UnitCfg.dat.bIsSafePosOn)
-//                Controller.output   = 10.0f*(g_UnitCfg.dat.bySafePos*10.0f - g_UnitData.dat.fPos);
-//            else
-//                m_mcbCurrent.pMenu  = NULL; 
-//        }
-
         if (Controller.output > g_UnitCfg.dat.iDbnd)
-            Controller.output += (g_UnitCfg.dat.byYbU*10);
+            Controller.output += g_UnitCfg.dat.iYbU;
         if (Controller.output < -g_UnitCfg.dat.iDbnd)
-            Controller.output -= (g_UnitCfg.dat.byYeU*10);
+            Controller.output -= g_UnitCfg.dat.iYeU;
         /* output value*/
         Controller.output = MAX(Controller.output, -1000);
         Controller.output = MIN(Controller.output,  1000);
@@ -212,6 +225,60 @@ __task void pid(void)
 
         /* counters*/
         Controller.counts++;
+    }
+}
+
+extern void WriteToAD5422(unsigned char count,unsigned char *buf);
+
+__task void dac(void)
+{
+    while (1)
+    {
+        if(g_UnitCfg.dat.byAnlMode == 0x01)
+		{
+			switch(g_UnitCfg.dat.byAnlDat)
+			{
+	        case 0:
+	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iPos >> 8;
+				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iPos & 0xFF;
+	            break;
+	        case 1:
+	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iSp >> 8;
+				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iSp & 0xFF;
+	            break;
+	        case 2:
+	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iSp >> 8;
+				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iSp & 0xFF;
+	            break;
+			case 3:
+	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iPress1 >> 8;
+				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iPress1 & 0xFF;
+	            break;
+	        case 4:
+	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iPress2 >> 8;
+				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iPress2 & 0xFF;
+	            break;
+	        case 5:
+	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iTemp >> 8;
+				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iTemp & 0xFF;
+	            break;
+	        default:            
+	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iPos >> 8;
+				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iPos & 0xFF;
+	            break;
+	        }
+			g_UnitData.dat.byAd5422[2] = g_UnitCfg.dat.byAnlMode;
+			WriteToAD5422(3,g_UnitData.dat.byAd5422);
+        }
+		else if(g_UnitCfg.dat.byAnlMode == 0x55)
+		{
+			g_UnitData.dat.byAd5422[1] = 0x10;
+			g_UnitData.dat.byAd5422[0] = g_UnitCfg.dat.byAnlCtl;
+			g_UnitData.dat.byAd5422[2] = g_UnitCfg.dat.byAnlMode;
+			WriteToAD5422(3,g_UnitData.dat.byAd5422);
+			g_UnitCfg.dat.byAnlMode = 0x01;
+		}
+		os_dly_wait(6); 
     }
 }
 
@@ -352,15 +419,15 @@ void data_init(void)
         g_UnitCfg.dat.iAd4Max = 3069;
         g_UnitCfg.dat.iAd4Min = 16;
     }
-    if (g_UnitCfg.dat.byLimD == g_UnitCfg.dat.byLimU)
+    if (g_UnitCfg.dat.iLimD == g_UnitCfg.dat.iLimU)
     {
-        g_UnitCfg.dat.byLimU = 100;
-        g_UnitCfg.dat.byLimD = 0;
+        g_UnitCfg.dat.iLimU = 1000;
+        g_UnitCfg.dat.iLimD = 0;
     }
-    if (g_UnitCfg.dat.bySrD == g_UnitCfg.dat.bySrU)
+    if (g_UnitCfg.dat.iSrD == g_UnitCfg.dat.iSrU)
     {
-        g_UnitCfg.dat.bySrU = 100;
-        g_UnitCfg.dat.bySrD = 0;
+        g_UnitCfg.dat.iSrU = 1000;
+        g_UnitCfg.dat.iSrD = 0;
     }
     if (g_UnitCfg.dat.byIN == 0)
         g_UnitCfg.dat.byIN  = GP4DAT;
@@ -380,12 +447,20 @@ __task void init(void)
 
     GP3DAT  |= 0x02000000; 
     GP0DAT  |= 0x01010000;
+	GP0DAT  |= 0x40000000;
 
     adctest = adc_read_data(0);
 
     if (adctest < 820)
     {
-        /* anl*/
+        g_UnitData.dat.byAd5422[2] = 0x55;
+		g_UnitData.dat.byAd5422[1] = 0x1c;              /* Enable Slew Rate and the Slew Rate Time is 4.8s while selecting the current mode	*/
+
+		g_UnitData.dat.byAd5422[0] = 0x35;
+		WriteToAD5422(3,g_UnitData.dat.byAd5422);
+
+		g_UnitData.dat.bIsDaOut  = TRUE;
+		t_modbus = os_tsk_create (dac, 1);  
     }
     else if (adctest < 2460)
     {
