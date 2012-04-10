@@ -579,7 +579,7 @@ static void Display()
         switch (m_byPageNo&0x7f)
         {
         case 0x00:
-            floattochar (g_UnitData.dat.fPos/10, byNum,0);
+            floattochar (g_UnitData.dat.iPos/10, byNum,0);
             display_digital(byNum,0,0);
             display_char("[[[[[POS");
             break;
@@ -589,8 +589,8 @@ static void Display()
             display_char("[[[[[CMD");
             break;
         case 0x02:
-            floattochar (g_UnitData.dat.iInp/10, byNum,0);
-            display_digital(byNum,0,0);
+            floattochar (g_UnitData.dat.iInp, byNum,0);
+            display_digital(byNum,1,0);
             display_char("[[[[[INP");
 			break;
         case 0x03:
@@ -956,8 +956,12 @@ static void InsetCutoff_DisplayHandler()
 static void InsetCutoff_OpeningHandler()
 {
     m_byCursorPos = 0;
-    for (uint16_t i = 0; i < 6; i++)
-        m_bufKeyboard[i] = '0';
+    m_bufKeyboard[0] = '1';
+	m_bufKeyboard[1] = '0';
+	m_bufKeyboard[2] = '0';
+	m_bufKeyboard[3] = '9';
+	m_bufKeyboard[4] = '9';
+	m_bufKeyboard[5] = '0';
     m_byCursorPage   = 0;
 }
 
@@ -1031,8 +1035,12 @@ static void InsetSpltrng_DisplayHandler()
 static void InsetSpltrng_OpeningHandler()
 {
     m_byCursorPos = 0;
-    for (uint16_t i = 0; i < 6; i++)
-        m_bufKeyboard[i] = '0';
+    m_bufKeyboard[0] = '0';
+	m_bufKeyboard[1] = '0';
+	m_bufKeyboard[2] = '0';
+	m_bufKeyboard[3] = '0';
+	m_bufKeyboard[4] = '0';
+	m_bufKeyboard[5] = '1';
     m_byCursorPage   = 0;
 }
 
@@ -1106,8 +1114,12 @@ static void XsetXlimit_DisplayHandler()
 static void XsetXlimit_OpeningHandler()
 {
     m_byCursorPos = 0;
-    for (uint16_t i = 0; i < 6; i++)
-        m_bufKeyboard[i] = '0';
+    m_bufKeyboard[0] = '0';
+	m_bufKeyboard[1] = '0';
+	m_bufKeyboard[2] = '0';
+	m_bufKeyboard[3] = '0';
+	m_bufKeyboard[4] = '0';
+	m_bufKeyboard[5] = '1';
     m_byCursorPage   = 0;
 }
 
@@ -1251,12 +1263,12 @@ static void SystemSafepos_OpeningHandler()
     m_byCursorPage   = 0;
 }
 
-extern void data_init(void);
-
 static void SystemSetfact_OpeningHandler()
 {
     clearLCD();
-	data_init();
+	for (U16 i = 0;i < sizeof(struct _UNIT_CFG_)/sizeof(U16);i++)
+        g_UnitCfg.buf[i]    = 0; 
+	EepromWr_n(g_UnitCfg.buf);
     display_char("[[[[DONE");
 	g_UnitCfg.dat.bIsReboot = TRUE;
     clearLCD(); 
@@ -1397,13 +1409,17 @@ static void DircmdFall_OpeningHandler()
 
 static void DiractRise_OpeningHandler()
 {
-    g_UnitCfg.dat.bIsActInverse = FALSE;
+	g_UnitCfg.dat.bIsActInverse = FALSE;
     menu_display_done( );
 }
 
 static void DiractFall_OpeningHandler()
 {
-    g_UnitCfg.dat.bIsActInverse = TRUE;
+    if(g_UnitCfg.dat.bIsCmdInverse)
+		g_UnitCfg.dat.bIsCmdInverse = FALSE;	
+	else
+		g_UnitCfg.dat.bIsCmdInverse = TRUE;	 
+	g_UnitCfg.dat.bIsActInverse = TRUE;	
     menu_display_done( ); 
 }
 
@@ -1469,8 +1485,9 @@ static void XcontrolDbnd_DisplayHandler()
 static void XcontrolDbnd_OpeningHandler()
 {
     m_byCursorPos = 0;
-    for (uint16_t i = 0; i < 3; i++)
-        m_bufKeyboard[i] = '0';
+    m_bufKeyboard[0] = '0';
+	m_bufKeyboard[1] = '1';
+	m_bufKeyboard[2] = '0';
     m_byCursorPage   = 0;
 }
 
@@ -2186,8 +2203,8 @@ static void CaluserInp_DisplayHandler()
 
     if (m_byCursorPage < 2)
     {
-        floattochar (g_UnitData.dat.iInp/10, byNum,0);
-        display_digital(byNum,0,0);
+        floattochar (g_UnitData.dat.iInp, byNum,0);
+        display_digital(byNum,1,0);
     }
     else
         display_digital("::::::",0,0);

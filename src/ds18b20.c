@@ -40,7 +40,7 @@ typedef unsigned short          WORD;
 #define    DS18B20_RecallEP    	0xB8   
 #define    DS18B20_ReadPower    0xB4   
 
-static BYTE CrcTable[256] =
+static const BYTE CrcTable[256] =
 {
 	0,  94, 188,  226,  97,  63,  221,  131,  194,  156,  126,  32,  163,  253,  31,  65,
 	157,  195,  33,  127,  252,  162,  64,  30,  95,  1,  227,  189,  62,  96,  130,  220,

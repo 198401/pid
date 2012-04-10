@@ -171,12 +171,8 @@ __task void pid(void)
             break;
         default: 
 			cmdHandle(0);              
-            Controller.input    = (S16)g_UnitData.dat.fInp;
-			if(Controller.input < g_UnitCfg.dat.iCutoffMin)
-				Controller.input	= MIN(g_UnitCfg.dat.iSrD,g_UnitCfg.dat.iSrU);
-			if(Controller.input > g_UnitCfg.dat.iCutoffMax)
-				Controller.input	= MAX(g_UnitCfg.dat.iSrD,g_UnitCfg.dat.iSrU);
-            Controller.feedback = (S16)g_UnitData.dat.fPos;
+            Controller.input    = (S16)g_UnitData.dat.fCmd;
+			Controller.feedback = (S16)g_UnitData.dat.fPos;
             break;
         }
 		if (g_UnitCfg.dat.bIsSafePosOn)
@@ -192,13 +188,14 @@ __task void pid(void)
 	        default:              
 	            break;
 	        }
-		}            	
+		}      	
 
 		if(g_UnitCfg.dat.bIsManual)
 			Controller.input	= g_UnitData.dat.fPid;       
 
         if (Controller.counts > 20)
             pid_reset_integrator(&g_UnitCfg);
+        Controller.counts++;
 
 		Controller.output   = Controller.input - Controller.feedback;
 
@@ -214,7 +211,12 @@ __task void pid(void)
         Controller.output = MIN(Controller.output,  1000);
         /* clamp output value (anti-windup)*/
 		
-
+		
+		if((Controller.input < g_UnitCfg.dat.iCutoffMin)&&(g_UnitCfg.dat.iLimD == 0))
+			Controller.output = -1000;
+		if((Controller.input > g_UnitCfg.dat.iCutoffMax)&&(g_UnitCfg.dat.iLimU == 1000))
+			Controller.output = 1000;  
+			
         if (g_UnitCfg.dat.byMode < 0x80)
         {
             if (!g_UnitCfg.dat.bIsDouble)
@@ -222,9 +224,6 @@ __task void pid(void)
             else
                 SetPwmDutyCycle2(Controller.output); 
         }
-
-        /* counters*/
-        Controller.counts++;
     }
 }
 
@@ -423,6 +422,11 @@ void data_init(void)
     {
         g_UnitCfg.dat.iLimU = 1000;
         g_UnitCfg.dat.iLimD = 0;
+    }
+	if (g_UnitCfg.dat.iCutoffMax == g_UnitCfg.dat.iCutoffMin)
+    {
+        g_UnitCfg.dat.iCutoffMax = 1000;
+        g_UnitCfg.dat.iCutoffMin = 0;
     }
     if (g_UnitCfg.dat.iSrD == g_UnitCfg.dat.iSrU)
     {
