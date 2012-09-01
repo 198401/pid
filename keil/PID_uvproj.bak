@@ -127,7 +127,7 @@
           </Simulator>
           <Target>
             <UseTarget>0</UseTarget>
-            <LoadApplicationAtStartup>0</LoadApplicationAtStartup>
+            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
@@ -158,7 +158,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4098</DriverSelection>
           </Flash1>
@@ -575,6 +575,31 @@
               <FileName>can.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\can.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freq</GroupName>
+          <Files>
+            <File>
+              <FileName>ferq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\ferq.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>dn1022</GroupName>
+          <Files>
+            <File>
+              <FileName>dn1022.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\dn1022.c</FilePath>
+            </File>
+            <File>
+              <FileName>devicenet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\devicenet.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,0 +1,13 @@
+devicenet.o: ..\src\devicenet.c
+devicenet.o: C:\Keil\ARM\RV31\Inc\stdio.h
+devicenet.o: C:\Keil\ARM\RV31\Inc\stdlib.h
+devicenet.o: C:\Keil\ARM\RV31\Inc\string.h
+devicenet.o: C:\Keil\ARM\RV31\Inc\stdbool.h
+devicenet.o: C:\Keil\ARM\RV31\Inc\absacc.h
+devicenet.o: ..\src\Types.h
+devicenet.o: ..\src\Comm.h
+devicenet.o: ..\src\AppTypes.h
+devicenet.o: ..\bsp\port\port.h
+devicenet.o: C:\Keil\ARM\RV31\Inc\assert.h
+devicenet.o: C:\Keil\ARM\RV31\Inc\inttypes.h
+devicenet.o: C:\Keil\ARM\RV31\Inc\stdint.h

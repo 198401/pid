@@ -16,7 +16,7 @@
 #include "mb.h"
 #include "mbport.h"
 
-#define OS_CLOCK       320000
+#define OS_CLOCK       (41780000UL/256)
 #define OS_TICK        50
 
 static ULONG mb_timer;
@@ -32,7 +32,7 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
 inline void
 vMBPortTimersEnable(  )
 {
-    T2CON  = 0x84;                       
+    T2CON  = 0x0688;                       
     T2LD   = mb_timer;
     IRQEN |= WAKEUP_TIMER_BIT;              
 }
@@ -40,6 +40,7 @@ vMBPortTimersEnable(  )
 inline void
 vMBPortTimersDisable(  )
 {
+    T2CON  &= ~0x0080;
     IRQEN &= ~WAKEUP_TIMER_BIT;               
 }
 

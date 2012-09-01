@@ -17,8 +17,10 @@
 #include "mb.h"
 #include "Hmi.h"
 #include "ds18b20.h"
+#include "dn1022.h"
 #include "pid.h"
 #include "calc.h"
+#include "ad5422.h"
 
 #include "AppTypes.h"
 
@@ -37,53 +39,29 @@ const U16                       g_UnitCfgInFlash[256]    __at (EEPADDR);
 OS_TID t_pid;                           /* assigned task id of task: pid     */
 OS_TID t_dac;                           /* assigned task id of task: dac     */
 OS_TID t_modbus;                        /* assigned task id of task: modbus  */
-OS_TID t_adc;                           /* assigned task id of task: adc     */
 OS_TID t_hmi;                           /* assigned task id of task: hmi     */
+OS_TID t_dn1022;                        /* assigned task id of task: dn1022  */
 
 void lpReset(void)
 {
     RSTSTA  |= 0x04;
 }
 
+#if 1
 #define PWM_DAT0VALUE           0x1000  /* set PWM freq to 5.5KHz */
+#else
+#define PWM_DAT0VALUE           (41780000UL*0.5f/500.0f)  /* set PWM freq to 500Hz */
+#endif
 
-void SetPwmDutyCycle1(S16 uiDutyCycle)  /* set sngl PWM */
-{
-    if (uiDutyCycle > 500)
-    {
-        PWMEN   = 0x1A8;
-        PWMCH0  = PWM_DAT0VALUE * 0.5f;         /* 不放气*/
-        PWMCH1  = PWM_DAT0VALUE * (-0.5f + (float)uiDutyCycle/1000.0f);
-    }
-    else if (uiDutyCycle > 0)
-    {
-        PWMEN   = 0x128;
-        PWMCH0  = PWM_DAT0VALUE * 0.5f;          /* 不放气*/
-        PWMCH1  = PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);
-    }
-    else if (uiDutyCycle > -500)
-    {
-        PWMEN   = 0x128;
-        PWMCH1  = PWM_DAT0VALUE * 0.5f;       /* 不进气*/
-        PWMCH0  = PWM_DAT0VALUE * (0.5f + (float)uiDutyCycle/1000.0f);
-    }
-    else
-    {
-        PWMEN   = 0x028;
-        PWMCH1  = PWM_DAT0VALUE * 0.5f;       /* 不进气*/
-        PWMCH0  = PWM_DAT0VALUE * (-0.5f - (float)uiDutyCycle/1000.0f);
-    }
-}
-
-void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double PWM */
+void SetPwmDutyCycle1(S16 uiDutyCycle)  /* set sngl act */
 {
     if (uiDutyCycle > 500)      /* p3.5 l*/
     {
         GP3CON &= ~0x00010000;
         GP3CON |= 0x00100000;
-        GP3DAT |= 0x10000000;  /* p3.4 0*/
+        GP3DAT |= 0x10000000; 
         PWMEN   = 0x1A9;
-        PWMCH0  = PWM_DAT0VALUE * 0.5f;         /* 不放气*/
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;       
         PWMCH2  = PWM_DAT0VALUE * (-0.5f + (float)uiDutyCycle/1000.0f);     
         PWMCH1  = PWM_DAT0VALUE * (-0.5f + (float)uiDutyCycle/1000.0f);
     }
@@ -93,7 +71,7 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double PWM */
         GP3CON |= 0x00100000;
         GP3DAT |= 0x10000000;
         PWMEN   = 0x169; 
-        PWMCH0  = PWM_DAT0VALUE * 0.5f;          /* 不放气*/
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;         
         PWMCH2  = PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);      
         PWMCH1  = PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);
     }
@@ -102,7 +80,7 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double PWM */
         GP3CON &= ~0x00100000;
         GP3CON |= 0x00010000;
         PWMEN   = 0x16A;
-        PWMCH1  = PWM_DAT0VALUE * 0.5f;       /* 不进气*/
+        PWMCH1  = PWM_DAT0VALUE * 0.5f;    
         PWMCH2  = PWM_DAT0VALUE * (0.5f + (float)uiDutyCycle/1000.0f);     
         PWMCH0  = PWM_DAT0VALUE * (0.5f + (float)uiDutyCycle/1000.0f);
     }
@@ -111,12 +89,116 @@ void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double PWM */
         GP3CON &= ~0x00100000;
         GP3CON |= 0x00010000;
         PWMEN   = 0x02A; 
-        PWMCH1  = PWM_DAT0VALUE * 0.5f;       /* 不进气*/
+        PWMCH1  = PWM_DAT0VALUE * 0.5f;      
         PWMCH2  = PWM_DAT0VALUE * (-0.5f - (float)uiDutyCycle/1000.0f);     
         PWMCH0  = PWM_DAT0VALUE * (-0.5f - (float)uiDutyCycle/1000.0f);
     }
 }
-
+#if 0
+void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double act */
+{
+	if (uiDutyCycle > 500)  
+    {
+        GP3CON &= ~0x00010000;
+        GP3CON |= 0x00100000;
+        GP3DAT |= 0x10000000; 
+        PWMEN   = 0x029;
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;         
+        PWMCH2  = PWM_DAT0VALUE * (-0.5f + (float)uiDutyCycle/1000.0f);     
+        PWMCH1  = PWM_DAT0VALUE * 0.5f;
+    }
+    else if (uiDutyCycle > 0)
+    {
+        GP3CON &= ~0x00010000;
+        GP3CON |= 0x00100000;
+		GP3DAT |= 0x10000000; 
+        PWMEN   = 0x069; 
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;        
+        PWMCH2  = PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);      
+        PWMCH1  = PWM_DAT0VALUE * 0.5f;
+    }
+	else if (uiDutyCycle == 0)
+    {
+        GP3CON &= ~0x00010000;
+        GP3CON |= 0x00100000;
+		GP3DAT |= 0x10000000; 
+        PWMEN   = 0x169; 
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;        
+        PWMCH2  = PWM_DAT0VALUE * 0.5f;      
+        PWMCH1  = PWM_DAT0VALUE * 0.5f;
+    }
+    else if (uiDutyCycle > -500)
+    {
+        GP3CON &= ~0x00100000;
+        GP3CON |= 0x00010000;
+        PWMEN   = 0x12A;
+        PWMCH1  = PWM_DAT0VALUE * (0.5f + (float)uiDutyCycle/1000.0f);    
+        PWMCH2  = PWM_DAT0VALUE * 0.5f;     
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;
+    }
+    else
+    {
+        GP3CON &= ~0x00100000;
+        GP3CON |= 0x00010000;
+        PWMEN   = 0x1AA; 
+        PWMCH1  = PWM_DAT0VALUE * (-0.5f - (float)uiDutyCycle/1000.0f);      
+        PWMCH2  = PWM_DAT0VALUE * 0.5f;     
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;
+    }
+}
+#else
+void SetPwmDutyCycle2(S16 uiDutyCycle)  /* set double act */
+{
+	if (uiDutyCycle > 500)  
+    {
+        GP3CON &= ~0x00010000;
+        GP3CON |= 0x00100000;
+        GP3DAT |= 0x10000000; 
+        PWMEN   = 0x029;
+        PWMCH2  = PWM_DAT0VALUE * 0.5f;         
+        PWMCH0  = PWM_DAT0VALUE * (-0.5f + (float)uiDutyCycle/1000.0f);     
+        PWMCH1  = PWM_DAT0VALUE * 0.5f;
+    }
+    else if (uiDutyCycle > 0)
+    {
+        GP3CON &= ~0x00010000;
+        GP3CON |= 0x00100000;
+		GP3DAT |= 0x10000000; 
+        PWMEN   = 0x129; 
+        PWMCH2  = PWM_DAT0VALUE * 0.5f;        
+        PWMCH0  = PWM_DAT0VALUE * (0.5f - (float)uiDutyCycle/1000.0f);      
+        PWMCH1  = PWM_DAT0VALUE * 0.5f;
+    }
+	else if (uiDutyCycle == 0)
+    {
+        GP3CON &= ~0x00010000;
+        GP3CON |= 0x00100000;
+		GP3DAT |= 0x10000000; 
+        PWMEN   = 0x1A9; 
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;        
+        PWMCH2  = PWM_DAT0VALUE * 0.5f;      
+        PWMCH1  = PWM_DAT0VALUE * 0.5f;
+    }
+    else if (uiDutyCycle > -500)
+    {
+        GP3CON &= ~0x00100000;
+        GP3CON |= 0x00010000;
+        PWMEN   = 0x1EA;
+        PWMCH2  = PWM_DAT0VALUE * (0.5f + (float)uiDutyCycle/1000.0f);    
+        PWMCH1  = PWM_DAT0VALUE * 0.5f;     
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;
+    }
+    else
+    {
+        GP3CON &= ~0x00100000;
+        GP3CON |= 0x00010000;
+        PWMEN   = 0x1AA; 
+        PWMCH2  = PWM_DAT0VALUE * (-0.5f - (float)uiDutyCycle/1000.0f);      
+        PWMCH1  = PWM_DAT0VALUE * 0.5f;     
+        PWMCH0  = PWM_DAT0VALUE * 0.5f;
+    }
+}
+#endif
 volatile struct Controller_struct
 {
     S16 output; 
@@ -135,8 +217,6 @@ __task void pid(void)
 {
     while (1)
     {
-        os_evt_wait_or (0x0001, 0xffff);       
-
         posHandle( );
         switch (g_UnitCfg.dat.byMode)
         {
@@ -166,30 +246,58 @@ __task void pid(void)
             Controller.input    = (S16)g_UnitData.dat.fSp;
             Controller.feedback = (S16)g_UnitData.dat.fPv;
             break;
-        case 5:
-			cmdHandle(1); 
-            break;
         default: 
 			cmdHandle(0);              
             Controller.input    = (S16)g_UnitData.dat.fCmd;
 			Controller.feedback = (S16)g_UnitData.dat.fPos;
             break;
         }
+		if((g_UnitCfg.dat.byOUT&0x70) == 0x20)
+		{
+			if(Controller.feedback > g_UnitCfg.dat.iPos1)
+				g_UnitData.dat.bOut1 =TRUE; 
+			else
+				g_UnitData.dat.bOut1 =FALSE;   	
+		}
+		if((g_UnitCfg.dat.byOUT&0x07) == 0x02)
+		{
+			if(Controller.feedback > g_UnitCfg.dat.iPos2)
+				g_UnitData.dat.bOut2 =TRUE; 
+			else
+				g_UnitData.dat.bOut2 =FALSE;   	
+		}
 		if (g_UnitCfg.dat.bIsSafePosOn)
 		{
 			switch (g_UnitCfg.dat.byErr)
 	        {
-	        case 0:
+	        case 1:
 				Controller.input   = g_UnitCfg.dat.iSafePos;
 	            break;
-	        case 1:
+	        case 2:
 				Controller.input   = 0;
 	            break;
 	        default:              
 	            break;
 	        }
-		}      	
-
+		} 
+		if(g_UnitData.dat.bInput)
+		{
+			Controller.input   = g_UnitCfg.dat.iSafePos;
+		} 
+		if((g_UnitCfg.dat.byOUT&0x70) == 0x30)
+		{
+			if(Controller.input   == g_UnitCfg.dat.iSafePos)
+				g_UnitData.dat.bOut1 =TRUE; 
+			else
+				g_UnitData.dat.bOut1 =FALSE;   	
+		}
+		if((g_UnitCfg.dat.byOUT&0x07) == 0x03)
+		{
+			if(Controller.input   == g_UnitCfg.dat.iSafePos)
+				g_UnitData.dat.bOut2 =TRUE; 
+			else
+				g_UnitData.dat.bOut2 =FALSE;   	
+		}
 		if(g_UnitCfg.dat.bIsManual)
 			Controller.input	= g_UnitData.dat.fPid;       
 
@@ -200,7 +308,27 @@ __task void pid(void)
 		Controller.output   = Controller.input - Controller.feedback;
 
 		if(ABS(Controller.output) < g_UnitCfg.dat.iDbnd)
-				Controller.output = 0;
+			Controller.output = 0;
+
+		if(ABS(Controller.output) > 100)
+			g_UnitData.dat.bErr =TRUE; 
+		else
+			g_UnitData.dat.bErr =FALSE; 
+
+		if((g_UnitCfg.dat.byOUT&0x70) == 0x10)
+		{
+			if(ABS(Controller.output) > g_UnitCfg.dat.iDbnd1)
+				g_UnitData.dat.bOut1 =TRUE; 
+			else
+				g_UnitData.dat.bOut1 =FALSE;   	
+		}
+		if((g_UnitCfg.dat.byOUT&0x07) == 0x01)
+		{
+			if(ABS(Controller.output) > g_UnitCfg.dat.iDbnd2)
+				g_UnitData.dat.bOut2 =TRUE; 
+			else
+				g_UnitData.dat.bOut2 =FALSE;   	
+		}
 
         if (Controller.output > g_UnitCfg.dat.iDbnd)
             Controller.output += g_UnitCfg.dat.iYbU;
@@ -209,9 +337,7 @@ __task void pid(void)
         /* output value*/
         Controller.output = MAX(Controller.output, -1000);
         Controller.output = MIN(Controller.output,  1000);
-        /* clamp output value (anti-windup)*/
-		
-		
+        /* clamp output value (anti-windup)*/	 	
 		if((Controller.input < g_UnitCfg.dat.iCutoffMin)&&(g_UnitCfg.dat.iLimD == 0))
 			Controller.output = -1000;
 		if((Controller.input > g_UnitCfg.dat.iCutoffMax)&&(g_UnitCfg.dat.iLimU == 1000))
@@ -224,10 +350,10 @@ __task void pid(void)
             else
                 SetPwmDutyCycle2(Controller.output); 
         }
+
+		os_dly_wait(2);                /* programmed delay                  */
     }
 }
-
-extern void WriteToAD5422(unsigned char count,unsigned char *buf);
 
 __task void dac(void)
 {
@@ -238,32 +364,46 @@ __task void dac(void)
 			switch(g_UnitCfg.dat.byAnlDat)
 			{
 	        case 0:
-	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iPos >> 8;
-				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iPos & 0xFF;
+				if(g_UnitData.dat.iPos1 > 65535)
+					g_UnitData.dat.iPos1 = 65535;
+	            g_UnitData.dat.byAd5422[1] = (uint16_t)g_UnitData.dat.iPos1 >> 8;
+				g_UnitData.dat.byAd5422[0] = (uint16_t)g_UnitData.dat.iPos1 & 0xFF;
 	            break;
 	        case 1:
-	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iSp >> 8;
-				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iSp & 0xFF;
+				if(g_UnitData.dat.iSp > 65535)
+					g_UnitData.dat.iSp = 65535;
+	            g_UnitData.dat.byAd5422[1] = (uint16_t)g_UnitData.dat.iSp >> 8;
+				g_UnitData.dat.byAd5422[0] = (uint16_t)g_UnitData.dat.iSp & 0xFF;
 	            break;
 	        case 2:
-	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iSp >> 8;
-				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iSp & 0xFF;
+				if(g_UnitData.dat.iSp > 65535)
+					g_UnitData.dat.iSp = 65535;
+	            g_UnitData.dat.byAd5422[1] = (uint16_t)g_UnitData.dat.iSp >> 8;
+				g_UnitData.dat.byAd5422[0] = (uint16_t)g_UnitData.dat.iSp & 0xFF;
 	            break;
 			case 3:
-	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iPress1 >> 8;
-				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iPress1 & 0xFF;
+				if(g_UnitData.dat.iPress1 > 65535)
+					g_UnitData.dat.iPress1 = 65535;
+	            g_UnitData.dat.byAd5422[1] = (uint16_t)g_UnitData.dat.iPress1 >> 8;
+				g_UnitData.dat.byAd5422[0] = (uint16_t)g_UnitData.dat.iPress1 & 0xFF;
 	            break;
 	        case 4:
-	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iPress2 >> 8;
-				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iPress2 & 0xFF;
+				if(g_UnitData.dat.iPress2 > 65535)
+					g_UnitData.dat.iPress2 = 65535;
+	            g_UnitData.dat.byAd5422[1] = (uint16_t)g_UnitData.dat.iPress2 >> 8;
+				g_UnitData.dat.byAd5422[0] = (uint16_t)g_UnitData.dat.iPress2 & 0xFF;
 	            break;
 	        case 5:
-	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iTemp >> 8;
-				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iTemp & 0xFF;
+				if(g_UnitData.dat.iTemp > 65535)
+					g_UnitData.dat.iTemp = 65535;
+	            g_UnitData.dat.byAd5422[1] = (uint16_t)g_UnitData.dat.iTemp >> 8;
+				g_UnitData.dat.byAd5422[0] = (uint16_t)g_UnitData.dat.iTemp & 0xFF;
 	            break;
-	        default:            
-	            g_UnitData.dat.byAd5422[1] = g_UnitData.dat.iPos >> 8;
-				g_UnitData.dat.byAd5422[0] = g_UnitData.dat.iPos & 0xFF;
+	        default:
+				if(g_UnitData.dat.iPos1 > 65535)
+					g_UnitData.dat.iPos1 = 65535;            
+	            g_UnitData.dat.byAd5422[1] = (uint16_t)g_UnitData.dat.iPos1 >> 8;
+				g_UnitData.dat.byAd5422[0] = (uint16_t)g_UnitData.dat.iPos1 & 0xFF;
 	            break;
 	        }
 			g_UnitData.dat.byAd5422[2] = g_UnitCfg.dat.byAnlMode;
@@ -290,50 +430,14 @@ __task void modbus(void)
     }
 }
 
-U32 adc_read_data(U8 adc_channel) 
-{
-    U16 adc_value[33];      
-    U32 adc_value_ave      = 0; 
-
-    T3CLRI = 0x55;
-    ADCCP                    = adc_channel;                     /*  select ADC channel          */
-    ADCCON                  |= (1UL<<7);                        /*  start continuous conversion */
-    for (U16 i=0;i<33;i++)
-    {
-        tsk_lock (); 
-        while (!ADCSTA);                                         /*  wait for end of conversion  */
-        adc_value[i]         = (ADCDAT >> 16);
-        tsk_unlock ();
-    } 
-    ADCCON                  &= ~(1UL<<7);                       /*  stop continuous conversion  */
-    for (U16 i=1;i<33;i++)
-    {
-        adc_value_ave   += adc_value[i];    
-    } 
-    adc_value_ave          >>= 5;   
-    return adc_value_ave; 
-} 
-
-__task void adc(void)
+__task void dn1022(void)
 {
     while (1)
     {
-        if ((g_UnitCfg.dat.byInp == 2)||(g_UnitCfg.dat.byInp == 3))
-            GP0DAT |= 0x40400000;
-        else
-            GP0DAT &= ~0x00400000;
-
-        g_UnitData.dat.iAD4     = adc_read_data(4);
-        g_UnitData.dat.iAD5     = adc_read_data(5);
-        g_UnitData.dat.iAD6     = adc_read_data(6);
-        g_UnitData.dat.iAD7     = adc_read_data(7);
-        g_UnitData.dat.iAD8     = adc_read_data(8);
-
-        os_evt_set (0x0001, t_pid);
-
-        os_dly_wait(5);                /* programmed delay                  */
-    }   
-} 
+        CheckFrame(  );
+        os_dly_wait(6); 
+    }
+}
 
 __task void hmi(void)
 {
@@ -347,7 +451,7 @@ __task void hmi(void)
             g_UnitData.dat.iCnt++;
             if (g_UnitData.dat.iCnt == 1000)
             {
-                GP3DAT  |= 0x00020000;
+                GP3DAT  &= ~0x00020000;
                 g_UnitData.dat.iCnt++;
             }
         }
@@ -366,10 +470,44 @@ __task void hmi(void)
         HMI_Handler();
         if (g_UnitCfg.dat.bIsReboot)
             lpReset( );
-        if ((g_UnitCfg.dat.byIN & 0x30) != (GP4DAT & 0x30))
+        if ((g_UnitCfg.dat.byIN & 0x10) != (GP4DAT & 0x10))
             g_UnitData.dat.bInput   = TRUE;
         else
-            g_UnitData.dat.bInput   = FALSE;    
+            g_UnitData.dat.bInput   = FALSE;  
+		if ((GP4DAT & 0x20) != 0x20)
+            g_UnitData.dat.bPowerLeak   = TRUE;
+        else
+            g_UnitData.dat.bPowerLeak   = FALSE; 
+			
+		if((g_UnitCfg.dat.byOUT&0x80) == 0x80)
+		{
+			if(g_UnitData.dat.bOut1)
+				GP4DAT  |= 0x40400000;
+			else
+				GP4DAT  &= ~0x00400000;
+		}
+		else
+		{
+			if(g_UnitData.dat.bOut1)
+				GP4DAT  &= ~0x00400000;
+			else
+				GP4DAT  |= 0x40400000;
+		}
+		
+		if((g_UnitCfg.dat.byOUT&0x08) == 0x08)
+		{
+		 	if(g_UnitData.dat.bOut2)
+				GP4DAT  |= 0x80800000;
+			else
+				GP4DAT  &= ~0x00800000;
+		}
+		else
+		{
+			if(g_UnitData.dat.bOut2)
+				GP4DAT  &= ~0x00800000;
+			else
+				GP4DAT  |= 0x80800000;
+		}  
 
         os_itv_wait ();
     }
@@ -435,7 +573,18 @@ void data_init(void)
     }
     if (g_UnitCfg.dat.byIN == 0)
         g_UnitCfg.dat.byIN  = GP4DAT;
+	if ((g_UnitCfg.dat.byInp == 2)||(g_UnitCfg.dat.byInp == 3))
+	{
+        GP0DAT |= 0x40400000;
+	}
+    else
+	{
+        GP0DAT &= ~0x00400000;
+	}
+	g_UnitCfg.dat.byAnlMode = 0x55;
 }
+
+extern void pla_init(void);
 
 __task void init(void)
 {
@@ -447,35 +596,41 @@ __task void init(void)
 
     iap_init();
 
+	pla_init();
+
     HMI_Init();
 
     GP3DAT  |= 0x02000000; 
     GP0DAT  |= 0x01010000;
 	GP0DAT  |= 0x40000000;
+	GP4DAT  |= 0x80800000;
+	GP4DAT  |= 0x40400000;
 
-    adctest = adc_read_data(0);
+    adctest = adTest();
 
     if (adctest < 820)
     {
-        g_UnitData.dat.byAd5422[2] = 0x55;
+        initAD5422();
+		g_UnitData.dat.byAd5422[2] = 0x55;
 		g_UnitData.dat.byAd5422[1] = 0x1c;              /* Enable Slew Rate and the Slew Rate Time is 4.8s while selecting the current mode	*/
 
 		g_UnitData.dat.byAd5422[0] = 0x35;
 		WriteToAD5422(3,g_UnitData.dat.byAd5422);
 
 		g_UnitData.dat.bIsDaOut  = TRUE;
-		t_modbus = os_tsk_create (dac, 1);  
+		t_dac = os_tsk_create (dac, 1);  
     }
     else if (adctest < 2460)
     {
         eMBInit( MB_RTU, g_UnitCfg.dat.byMbAddr, 8, g_UnitCfg.dat.uBau, MB_PAR_EVEN );
         /* Enable the Modbus Protocol Stack. */
         eMBEnable( );
-        t_modbus = os_tsk_create (modbus, 1);    /* start task 'modbus'              */
+        t_modbus = os_tsk_create (modbus, 1);           /* start task 'modbus'              */
     }
-    else if (adctest < 3680)
+    else if (adctest < 3000)
     {
-        /* can*/
+        dn1022_init(115200);
+		t_dn1022 = os_tsk_create (dn1022, 1);
     }
     else
     {
@@ -495,14 +650,12 @@ __task void init(void)
     Controller.counts = 0;
 
     /* Initilize Timer 3 in WatchDog mode with timeout period of   second*/
-    T3LD  = 0x00FF;                 /* clock ticks*/
-    T3CON = 0xE4;                   /* WatchDog mode, enable timer, 32768hz clock/256*/
-    T3CLRI = 0x55;                  /* Feed Dog*/
+//    T3LD  = 0x00FF;                 /* clock ticks*/
+//    T3CON = 0xE4;                   /* WatchDog mode, enable timer, 32768hz clock/256*/
+//    T3CLRI = 0x55;                  /* Feed Dog*/
 
 
     t_pid = os_tsk_create (pid, 3);                 /* start task 'pid'                 */
-
-    t_adc = os_tsk_create (adc, 2);                 /* start task 'adc'                 */
     t_hmi = os_tsk_create (hmi, 1);                 /* start task 'lcd'                 */
 
     os_tsk_delete_self();

@@ -49,6 +49,6 @@ void  EepromWr_n( uint16_t *pcData )
     erase_page((uint16_t)USER_ADD_START);
     for (uint16_t i = 0; i < CFG_NREGS; i ++)
     {
-        EepromWr((uint16_t)USER_ADD_START + 2 * i, pcData[i]);
+        EepromWr((uint16_t)USER_ADD_START + 2*i, pcData[i]);
     }
 }

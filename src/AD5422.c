@@ -21,13 +21,18 @@
 #define SET_SCL()       GP1DAT = (GP1DAT | 0x00100000)  /* P1.4->SCLK      */
 #define	CLR_SCL()		GP1DAT = (GP1DAT & 0xffefffff)
 
-#define SET_SDO()       GP4DAT = (GP4DAT | 0x00400000)  /* P1.6->SDIN      */
-#define CLR_SDO()		GP4DAT = (GP4DAT & 0xffbfffff)
+#define SET_SDO()       GP1DAT = (GP1DAT | 0x00400000)  /* P1.6->SDIN      */
+#define CLR_SDO()		GP1DAT = (GP1DAT & 0xffbfffff)
 
 static void delay (int length)
 {
     while (length >0)
         length--;
+}
+
+void initAD5422 (void)
+{
+    GP1DAT = (GP1DAT | 0xD2000000);
 }
 
 void WriteToAD5422(unsigned char count,unsigned char *buf)

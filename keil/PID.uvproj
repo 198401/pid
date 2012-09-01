@@ -128,7 +128,7 @@
           <Target>
             <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
+            <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -575,6 +575,31 @@
               <FileName>can.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\can.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freq</GroupName>
+          <Files>
+            <File>
+              <FileName>ferq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\ferq.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>dn1022</GroupName>
+          <Files>
+            <File>
+              <FileName>dn1022.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\dn1022.c</FilePath>
+            </File>
+            <File>
+              <FileName>devicenet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\devicenet.c</FilePath>
             </File>
           </Files>
         </Group>

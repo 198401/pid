@@ -168,6 +168,8 @@ extern void os_clock_interrupt (void);
 void os_def_interrupt   (void) __irq;
 extern void mb_timer2_interrupt (void) __irq;
 extern void mb_uart_interrupt (void) __irq;
+extern void pla_irq0_interrupt (void) __irq;
+extern void pla_irq1_interrupt (void) __irq;
 
 /*--------------------------- IRQ_Handler -----------------------------------*/
 
@@ -196,6 +198,14 @@ __asm void IRQ_Handler (void)
     TST     R0,#UART_BIT                   ; Check High Speed UART Flag
     LDMNEIA SP!,{R0}                       ; Restore R0
     LDRNE   PC,=__cpp(mb_uart_interrupt)   ; OS Clock IRQ Function
+
+	TST     R0,#PLA_IRQ0_BIT               ; Check High Speed PLA0 Flag
+    LDMNEIA SP!,{R0}                       ; Restore R0
+    LDRNE   PC,=__cpp(pla_irq0_interrupt)  ; OS Clock IRQ Function
+
+	TST     R0,#PLA_IRQ1_BIT               ; Check High Speed PLA1 Flag
+    LDMNEIA SP!,{R0}                       ; Restore R0
+    LDRNE   PC,=__cpp(pla_irq1_interrupt)  ; OS Clock IRQ Function
 
 //      TST     R0,#mIRQx                      ; Check IRQx Flag
 //      LDMNEIA SP!,{R0}                       ; Restore R0

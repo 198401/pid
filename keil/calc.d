@@ -1,5 +1,16 @@
 calc.o: ..\src\calc.c
 calc.o: C:\Keil\ARM\RV31\Inc\math.h
+calc.o: C:\Keil\ARM\Inc\ADI\ADuC7024.H
+calc.o: C:\Keil\ARM\Inc\ADI\irq.h
+calc.o: C:\Keil\ARM\Inc\ADI\timer.h
+calc.o: C:\Keil\ARM\Inc\ADI\dac.h
+calc.o: C:\Keil\ARM\Inc\ADI\uart.h
+calc.o: C:\Keil\ARM\Inc\ADI\I2C.h
+calc.o: C:\Keil\ARM\Inc\ADI\PLA.H
+calc.o: C:\Keil\ARM\Inc\ADI\GPIO.h
+calc.o: C:\Keil\ARM\Inc\ADI\flash.h
+calc.o: C:\Keil\ARM\Inc\ADI\pwm.h
+calc.o: C:\Keil\ARM\RV31\Inc\RTL.h
 calc.o: ..\src\AppTypes.h
 calc.o: ..\bsp\port\port.h
 calc.o: C:\Keil\ARM\RV31\Inc\assert.h

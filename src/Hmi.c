@@ -22,8 +22,8 @@
 #include "HT1622.h"
 #include "AppTypes.h"
 
-#define IS_KEY0_DOWN()			((GP3DAT & BIT03) == 0)
-#define IS_KEY1_DOWN()			((GP0DAT & BIT03) == 0)
+#define IS_KEY0_DOWN()			((GP4DAT & BIT03) == 0)
+#define IS_KEY1_DOWN()			((GP4DAT & BIT00) == 0)
 #define IS_KEY2_DOWN()			((GP0DAT & BIT04) == 0)
 
 #define KB_BUF_SIZE				63
@@ -41,7 +41,7 @@ const uint8_t display[][8] =
     "[[X[TIME",
     "X[CONTRL",
     "P[CONTRL",
-    "[[[[CODE",
+//    "[[[[CODE",
     "[SAFEPOS",
     "[[SIGERR",
     "[[BIN[IN",
@@ -96,10 +96,10 @@ const uint8_t display[][8] =
     "[[[[2400",
     "[[[[4800",
     "[SER[END",
-    "CODE[END",
-    "CODE[KEY",
-    "CODEMENU",
-    "CODEGLOB",                         
+//    "CODE[END",
+//    "CODE[KEY",
+//    "CODEMENU",
+//    "CODEGLOB",                         
     "BIN[SPOS",
     "[BIN[M[A",
     "[BIN[END",
@@ -111,6 +111,9 @@ const uint8_t display[][8] =
     "[CAL[END",
     "[CAL[POS",
     "[CAL[INP",
+	"[[CAL[P1",
+	"[[CAL[P2",
+	"CAL[TEMP",
     "CAL[FACT",                         
     "[PCO[END",
     "PCO[DBND",
@@ -140,7 +143,8 @@ const uint8_t display[][8] =
     "[[[0[10V",
     "[[[[0[5V",
     "[ANS[END",
-    "BIN1[DRV",
+    "BIN1[END",
+	"BIN1[DRV",
     "BIN1[LIM",
     "BIN1SPOS",                         
     "BIN1ERRS",
@@ -149,7 +153,7 @@ const uint8_t display[][8] =
     "BIN1ERRT",
     "BIN1[OPN",
     "BIN1[CLS",
-    "BIN1[END",
+    "BIN2[END",
     "BIN2[DRV",
     "BIN2[LIM",
     "BIN2SPOS",                         
@@ -158,8 +162,7 @@ const uint8_t display[][8] =
     "BIN2ERR2",
     "BIN2ERRT",
     "BIN2[OPN",
-    "BIN2[CLS",
-    "BIN2[END",
+    "BIN2[CLS",    
     "SETP[INT",
     "SETP[EXT",
     "SETP[END",
@@ -213,7 +216,7 @@ enum
     MENU_MAIN_XTIME,
     MENU_MAIN_XCONTRL,
     MENU_MAIN_PCONTRL,
-    MENU_MAIN_CODE,
+//    MENU_MAIN_CODE,
     MENU_MAIN_SAFEPOS,
     MENU_MAIN_SIGERR,
     MENU_MAIN_BININ,
@@ -277,10 +280,10 @@ enum
     MENU_SERIO_4800,
     MENU_SERIO_END,
     /* Code Menu*/
-    MENU_CODE_END,
-    MENU_CODE_KEY,
-    MENU_CODE_MENU,
-    MENU_CODE_GLOB, 
+//    MENU_CODE_END,
+//    MENU_CODE_KEY,
+//    MENU_CODE_MENU,
+//    MENU_CODE_GLOB, 
     /* Bin in Menu*/
     MENU_BININ_SPOS,
     MENU_BININ_MA,
@@ -295,6 +298,9 @@ enum
     MENU_CALUSER_END,
     MENU_CALUSER_POS,
     MENU_CALUSER_INP,
+	MENU_CALUSER_P1,
+    MENU_CALUSER_P2,
+    MENU_CALUSER_TEMP,
     MENU_CALUSER_FACT,  
     /* P Contrl Menu*/
     MENU_PCONTRL_END,
@@ -330,7 +336,8 @@ enum
     MENU_ANLSET_5,
     MENU_ANLSET_END,
     /* Bin1 Menu*/
-    MENU_BIN1_DRV,
+    MENU_BIN1_END,
+	MENU_BIN1_DRV,
     MENU_BIN1_LIM,
     MENU_BIN1_SPOS,
     MENU_BIN1_ERRS,
@@ -338,9 +345,9 @@ enum
     MENU_BIN1_ERR2,
     MENU_BIN1_ERRT,
     MENU_BIN1_OPN,
-    MENU_BIN1_CLS,
-    MENU_BIN1_END,
+    MENU_BIN1_CLS,    
     /* Bin2 Menu*/
+	MENU_BIN2_END,
     MENU_BIN2_DRV,
     MENU_BIN2_LIM,
     MENU_BIN2_SPOS,
@@ -350,7 +357,6 @@ enum
     MENU_BIN2_ERRT,
     MENU_BIN2_OPN,
     MENU_BIN2_CLS,
-    MENU_BIN2_END,
     /* Setp Menu*/
     MENU_SETP_INT,
     MENU_SETP_EXT,
@@ -408,7 +414,7 @@ static volatile void delay_1s(U32 count)   /*delay_1s(30) is 1 second*/
     U32 i;  
     while (count)
     {
-        i =200000;
+        i =100000;
         while (i>0) i--;
         count--;
     }
@@ -416,7 +422,7 @@ static volatile void delay_1s(U32 count)   /*delay_1s(30) is 1 second*/
 
 static void OnKeyDown(uint8_t byKeyCode)
 {
-    GP3DAT  &= ~0x00020000;
+    GP3DAT  |= 0x00020000;
     g_UnitData.dat.iCnt = 0;
     if (m_mcbCurrent.pMenu == NULL)
     {
@@ -449,7 +455,7 @@ static void OnKeyDown(uint8_t byKeyCode)
 
 static void OnKeyUp(uint8_t byKeyCode)
 {
-    GP3DAT  &= ~0x00020000;
+    GP3DAT  |= 0x00020000;
     g_UnitData.dat.iCnt = 0;
     if (m_mcbCurrent.pMenu == NULL)
     {
@@ -580,8 +586,12 @@ static void Display()
         {
         case 0x00:
             floattochar (g_UnitData.dat.iPos/10, byNum,0);
+//            floattochar (g_UnitData.dat.fPid, byNum,0);
             display_digital(byNum,0,0);
-            display_char("[[[[[POS");
+			if(!g_UnitData.dat.bErr)
+            	display_char("[[[[[POS");
+			else
+				display_char("[WARNING");
             break;
         case 0x01:
             floattochar (g_UnitData.dat.fCmd/10, byNum,0);
@@ -589,7 +599,7 @@ static void Display()
             display_char("[[[[[CMD");
             break;
         case 0x02:
-            floattochar (g_UnitData.dat.iInp, byNum,0);
+            floattochar (g_UnitData.dat.iInp/10, byNum,1);
             display_digital(byNum,1,0);
             display_char("[[[[[INP");
 			break;
@@ -677,7 +687,7 @@ static void MenuKeyboardHandler(uint8_t byKeyCode)
             if (!S_IS_EMPTY(m_stackMenuCtlBlock))
             {
                 display_char("[STORING");
-				delay_1s(30);
+				delay_1s(30);                                                          
 				EepromWr_n(g_UnitCfg.buf);
                 m_mcbCurrent.pMenu = NULL;
                 S_POP(m_stackMenuCtlBlock);
@@ -791,7 +801,7 @@ static void MENU_MAIN_MANUAL_OpeningHandler()
 }
 static void menu_update(void)
 {
-    for (int i = 0;i < 17;i++)
+    for (int i = 0;i < 16;i++)
         m_aMenuItems[MENU_MAIN_CHARACT + i].byChildMenuItems        = ((g_UnitCfg.dat.uMenu&(1L<<i))?1:0);
 }
 static void AddFun_KeyboardHandler(uint8_t byKeyCode)
@@ -810,12 +820,12 @@ static void AddFun_KeyboardHandler(uint8_t byKeyCode)
     else if (byKeyCode == KEY_2)
     {
         m_byCursorPos++;
-		if (m_byCursorPos > 17)
-			m_byCursorPos = 17;
+		if (m_byCursorPos > 16)
+			m_byCursorPos = 16;
     }
     else if (byKeyCode == KEY_3)
     {
-        if (m_byCursorPos < 17)
+        if (m_byCursorPos < 16)
         {
             g_UnitCfg.dat.uMenu ^= (1L<<m_byCursorPos);
         }
@@ -830,7 +840,7 @@ static void AddFun_KeyboardHandler(uint8_t byKeyCode)
 static void AddFun_DisplayHandler()
 {
     uint16_t    byMenuID = MENU_MAIN_CHARACT + m_byCursorPos;
-    if (m_byCursorPos < 17)
+    if (m_byCursorPos < 16)
     {
         if ((g_UnitCfg.dat.uMenu&(1L<<m_byCursorPos)) != 0)
             display_digital(":::::1",0,0);
@@ -865,24 +875,28 @@ static void ActDoub_OpeningHandler()
 static void Input4_OpeningHandler()
 {
     g_UnitCfg.dat.byInp = 0;
+	GP0DAT &= ~0x00400000;
     menu_display_done( );
 }
 
 static void Input0_OpeningHandler()
 {
     g_UnitCfg.dat.byInp = 1;
+	GP0DAT &= ~0x00400000;
     menu_display_done( );
 }
 
 static void Input10_OpeningHandler()
 {
     g_UnitCfg.dat.byInp = 3;
+	GP0DAT |= 0x40400000;
     menu_display_done( );
 }
 
 static void Input5_OpeningHandler()
 {
     g_UnitCfg.dat.byInp = 2;
+	GP0DAT |= 0x40400000;
     menu_display_done( );
 }
 
@@ -1569,117 +1583,278 @@ static void XcontrolPara_OpeningHandler()
 static uint16_t temp1 = 0;
 static uint16_t temp2 = 100;
 
+extern void SetPwmDutyCycle1(int16_t uiDutyCycle);
 extern void SetPwmDutyCycle2(int16_t uiDutyCycle);
 
 static void XtuneAuto_OpeningHandler()
 {
-    clearLCD();
-    display_char("11111111");
-
-    static float fDiff  = 100;
-    static float fPos   = 0;
-    static float fLast  = 0;
-    short iPwm = 0;
-
-    g_UnitCfg.dat.byMode |= 0x80;
-
-    SetPwmDutyCycle2(-1000);
-
-    delay_1s(90);
-
-    while (ABS(fDiff) > 5)
-    {
-        os_dly_wait(100);
-        fPos    = g_UnitData.dat.fPos;
-        fDiff   = fPos - fLast;
-        fLast   = fPos;
-    }
-
-    temp1 = g_UnitData.dat.iAD4;
-
-    fDiff   = 100;
-    fPos    = 0;
-    fLast   = 0;
-
-    SetPwmDutyCycle2(1000);
-    display_char("22222222");
-
-	delay_1s(60);
-
-    while (ABS(fDiff) > 5)
-    {
-        os_dly_wait(100);
-        fPos    = g_UnitData.dat.fPos;
-        fDiff   = fPos - fLast;
-        fLast   = fPos;
-    }
-
-    temp2 = g_UnitData.dat.iAD4;
-
-	while(temp1 > temp2)
+    if (!g_UnitCfg.dat.bIsDouble)
 	{
-		display_char("[[[ERR[1");
+		clearLCD();
+	
+	    static float fDiff  = 100;
+	    static float fPos   = 0;
+	    static float fLast  = 0;
+	    short iPwm = 0;
+	
+	    g_UnitCfg.dat.byMode |= 0x80;
+	
+	    SetPwmDutyCycle1(-1000);
+		display_char("[[TUNE[1");
+	    delay_1s(500);
+	
+	    while (ABS(fDiff) > 2)
+	    {
+	        os_dly_wait(100);
+	        fPos    = g_UnitData.dat.fPos;
+	        fDiff   = fPos - fLast;
+	        fLast   = fPos;
+	    }
+	
+	    temp1 = g_UnitData.dat.iAD4;
+	
+	    fDiff   = 100;
+	    fPos    = 0;
+	    fLast   = 0;
+	
+	    SetPwmDutyCycle1(1000);
+	    display_char("[[TUNE[2");
+	
+		delay_1s(500);
+	
+	    while (ABS(fDiff) > 2)
+	    {
+	        os_dly_wait(100);
+	        fPos    = g_UnitData.dat.fPos;
+	        fDiff   = fPos - fLast;
+	        fLast   = fPos;
+	    }
+	
+	    temp2 = g_UnitData.dat.iAD4;
+	
+		if(temp1 > temp2)
+		{
+			display_char("[[[ERR[1");
+			delay_1s(300);
+			RSTSTA  |= 0x04;	
+		}
+	
+		if(temp2 - temp1 < 100)
+		{
+			display_char("[[[ERR[2");
+			delay_1s(300);
+			RSTSTA  |= 0x04;
+		}
+	
+	    g_UnitCfg.dat.iAd4Min = temp1;
+	    g_UnitCfg.dat.iAd4Max = temp2;
+	
+	    SetPwmDutyCycle1(0);
+	    delay_1s(100);
+		SetPwmDutyCycle1(-1000);
+	    display_char("[[TUNE[3");
+		while (g_UnitData.dat.fPos > 980)
+		{
+	        os_dly_wait(10);
+	    }
+	    
+	    SetPwmDutyCycle1(0);
+	    display_char("[[TUNE[4");
+	    delay_1s(500);
+	
+	    fDiff = 0;
+	    iPwm  = 0;
+	    fLast = g_UnitData.dat.fPos;
+	    while (ABS(fDiff) < 5)
+	    {
+	        SetPwmDutyCycle1(iPwm);
+	        os_dly_wait(10);
+	        fPos    = g_UnitData.dat.fPos;
+	        fDiff   = fPos - fLast;
+	        fLast   = fPos;
+	        iPwm   -= 5;
+			if(iPwm < -1000)
+			{
+				display_char("[[[ERR[3");
+				delay_1s(300);
+				RSTSTA  |= 0x04;	
+			}
+	    }
+	    g_UnitCfg.dat.iYeU = -iPwm;
+	
+		SetPwmDutyCycle1(-1000);
+	    display_char("[[TUNE[5");
+		while (g_UnitData.dat.fPos > 20)
+		{
+	        os_dly_wait(10);
+	    }
+	
+	    SetPwmDutyCycle1(0);
+	    display_char("[[TUNE[6");
+	    delay_1s(500);
+	
+	    fDiff = 0;
+	    iPwm  = 0;
+	    fLast = g_UnitData.dat.fPos;
+	    while (ABS(fDiff) < 5)
+	    {
+	        SetPwmDutyCycle1(iPwm);
+	        os_dly_wait(10);
+	        fPos    = g_UnitData.dat.fPos;
+	        fDiff   = fPos - fLast;
+	        fLast   = fPos;
+	        iPwm   += 5;
+			if(iPwm > 1000)
+			{
+				display_char("[[[ERR[4");
+				delay_1s(300);
+				RSTSTA  |= 0x04;	
+			}
+	    }
+	    g_UnitCfg.dat.iYbU = iPwm;
+	
+	    g_UnitCfg.dat.iDbnd = 5;
+	
+	    g_UnitCfg.dat.byMode &= 0x7F;
+	
+	    display_char("[[[[DONE");
+		EepromWr_n(g_UnitCfg.buf); 	
+	    delay_1s(30);
+		RSTSTA  |= 0x04;
 	}
-
-	while(temp2 - temp1 < 100)
+	else
 	{
-		display_char("[[[ERR[2");
+		clearLCD();
+	
+	    static float fDiff  = 100;
+	    static float fPos   = 0;
+	    static float fLast  = 0;
+	    short iPwm = 0;
+	
+	    g_UnitCfg.dat.byMode |= 0x80;
+	
+	    SetPwmDutyCycle2(-1000);
+		display_char("[[TUNE[1");
+	    delay_1s(90);
+	
+	    while (ABS(fDiff) > 5)
+	    {
+	        os_dly_wait(100);
+	        fPos    = g_UnitData.dat.fPos;
+	        fDiff   = fPos - fLast;
+	        fLast   = fPos;
+	    }
+	
+	    temp1 = g_UnitData.dat.iAD4;
+	
+	    fDiff   = 100;
+	    fPos    = 0;
+	    fLast   = 0;
+	
+	    SetPwmDutyCycle2(1000);
+	    display_char("[[TUNE[2");
+	
+		delay_1s(60);
+	
+	    while (ABS(fDiff) > 5)
+	    {
+	        os_dly_wait(100);
+	        fPos    = g_UnitData.dat.fPos;
+	        fDiff   = fPos - fLast;
+	        fLast   = fPos;
+	    }
+	
+	    temp2 = g_UnitData.dat.iAD4;
+	
+		if(temp1 > temp2)
+		{
+			display_char("[[[ERR[1");
+			delay_1s(300);
+			RSTSTA  |= 0x04;	
+		}
+	
+		if(temp2 - temp1 < 100)
+		{
+			display_char("[[[ERR[2");
+			delay_1s(300);
+			RSTSTA  |= 0x04;
+		}
+	
+	    g_UnitCfg.dat.iAd4Min = temp1;
+	    g_UnitCfg.dat.iAd4Max = temp2;
+	
+	    SetPwmDutyCycle2(0);
+	    display_char("[[TUNE[3");
+		delay_1s(500);			   	
+	    
+	    SetPwmDutyCycle2(0);
+	    display_char("[[TUNE[4");
+	    delay_1s(500);
+	
+	    fDiff = 0;
+	    iPwm  = 0;
+	    fLast = g_UnitData.dat.fPos;
+	    while (ABS(fDiff) < 3)
+	    {
+	        SetPwmDutyCycle2(iPwm);
+	        os_dly_wait(10);
+	        fPos    = g_UnitData.dat.fPos;
+	        fDiff   = fPos - fLast;
+	        fLast   = fPos;
+	        iPwm   -= 5;
+			SetPwmDutyCycle2(0);
+	        os_dly_wait(20);
+			if(iPwm < -1000)
+			{
+				display_char("[[[ERR[3");
+				delay_1s(300);
+				RSTSTA  |= 0x04;	
+			}
+	    }
+	    g_UnitCfg.dat.iYeU = -iPwm - 5;
+	
+		SetPwmDutyCycle2(-1000);
+	    display_char("[[TUNE[5");
+		while (g_UnitData.dat.fPos > 20)
+		{
+	        os_dly_wait(10);
+	    }
+	
+	    SetPwmDutyCycle2(0);
+	    display_char("[[TUNE[6");
+	    delay_1s(1000);
+	
+	    fDiff = 0;
+	    iPwm  = 0;
+	    fLast = g_UnitData.dat.fPos;
+	    while (ABS(fDiff) < 3)
+	    {
+	        SetPwmDutyCycle2(iPwm);
+	        os_dly_wait(10);
+	        fPos    = g_UnitData.dat.fPos;
+	        fDiff   = fPos - fLast;
+	        fLast   = fPos;
+	        iPwm   += 5;
+			SetPwmDutyCycle2(0);
+	        os_dly_wait(20);
+			if(iPwm > 1000)
+			{
+				display_char("[[[ERR[4");
+				delay_1s(300);
+				RSTSTA  |= 0x04;	
+			}
+	    }
+	    g_UnitCfg.dat.iYbU = iPwm - 5;
+	
+	    g_UnitCfg.dat.iDbnd = 10;
+	
+	    g_UnitCfg.dat.byMode &= 0x7F;
+	
+	    display_char("[[[[DONE");
+		EepromWr_n(g_UnitCfg.buf); 	
+	    delay_1s(30);
+		RSTSTA  |= 0x04;
 	}
-
-    g_UnitCfg.dat.iAd4Min = temp1;
-    g_UnitCfg.dat.iAd4Max = temp2;
-
-    SetPwmDutyCycle2(-1000);
-    display_char("33333333");
-	delay_1s(60);
-
-    while (g_UnitData.dat.fPos > 660)
-        ;    
-    
-    SetPwmDutyCycle2(0);
-    display_char("44444444");
-    os_dly_wait(200);
-
-    fDiff = 0;
-    iPwm  = 0;
-    fLast = g_UnitData.dat.fPos;
-    while (ABS(fDiff) < 5)
-    {
-        SetPwmDutyCycle2(iPwm);
-        os_dly_wait(10);
-        fPos    = g_UnitData.dat.fPos;
-        fDiff   = fPos - fLast;
-        fLast   = fPos;
-        iPwm   -= 10;
-    }
-    g_UnitCfg.dat.iYeU = -iPwm;
-
-    SetPwmDutyCycle2(0);
-    display_char("55555555");
-    delay_1s(60);
-
-    fDiff = 0;
-    iPwm  = 0;
-    fLast = g_UnitData.dat.fPos;
-    while (ABS(fDiff) < 5)
-    {
-        SetPwmDutyCycle2(iPwm);
-        os_dly_wait(10);
-        fPos    = g_UnitData.dat.fPos;
-        fDiff   = fPos - fLast;
-        fLast   = fPos;
-        iPwm   += 10;
-    }
-    g_UnitCfg.dat.iYbU = iPwm;
-
-    g_UnitCfg.dat.iDbnd = 5;
-
-    g_UnitCfg.dat.byMode &= 0x7F;
-
-    display_char("[[[[DONE");
-	EepromWr_n(g_UnitCfg.buf); 	
-    delay_1s(30);
-	RSTSTA  |= 0x04;
 }
 
 static void XtunePwm_KeyboardHandler(uint8_t byKeyCode)
@@ -1834,19 +2009,22 @@ static void XtuneAir_OpeningHandler()
 
 static void SigerrFunon_OpeningHandler()
 {
-    g_UnitCfg.dat.byErr = 1;
+	g_UnitCfg.dat.byErr = 2;
+	g_UnitCfg.dat.bIsSafePosOn = TRUE;
     menu_display_done( );
 }
 
 static void SigerrPoson_OpeningHandler()
 {
-	g_UnitCfg.dat.byErr = 0;
+	g_UnitCfg.dat.byErr = 1;
+	g_UnitCfg.dat.bIsSafePosOn = TRUE;
     menu_display_done( );
 }
 
 static void SigerrOff_OpeningHandler()
 {
-    g_UnitCfg.dat.byErr = 2;
+    g_UnitCfg.dat.byErr = 0;
+	g_UnitCfg.dat.bIsSafePosOn = FALSE;
     menu_display_done( );
 }
 
@@ -1886,217 +2064,223 @@ static void Serio4800_OpeningHandler()
     menu_display_done( ); 
 }
 
-static void CodeKey_KeyboardHandler(uint8_t byKeyCode)
-{
-    if (byKeyCode == KEY_1)
-    {
-        if (m_byCursorPos > 0)
-        {
-            m_byCursorPos--;
-            m_byCursorPage   = m_byCursorPos/4;
-        }
-		else 
-        {
-            menu_return( );
-        }
-    }
-    else if (byKeyCode == KEY_2)
-    {
-        m_byCursorPos++;
-        m_byCursorPage   = m_byCursorPos/4;
-		if (m_byCursorPos > 4)
-			m_byCursorPos = 4;
-    }
-    else if (byKeyCode == KEY_3)
-    {
-        if (m_byCursorPos < 4)
-        {
-            m_bufKeyboard[m_byCursorPos]++;
-            if (m_bufKeyboard[m_byCursorPos] > '9')
-                m_bufKeyboard[m_byCursorPos] = '0';
-        }
-        else
-        {
-            g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328; 
-            menu_return( );
-        }
-    }
-}
+//static void CodeKey_KeyboardHandler(uint8_t byKeyCode)
+//{
+//    if (byKeyCode == KEY_1)
+//    {
+//        if (m_byCursorPos > 0)
+//        {
+//            m_byCursorPos--;
+//            m_byCursorPage   = m_byCursorPos/4;
+//        }
+//		else 
+//        {
+//            menu_return( );
+//        }
+//    }
+//    else if (byKeyCode == KEY_2)
+//    {
+//        m_byCursorPos++;
+//        m_byCursorPage   = m_byCursorPos/4;
+//		if (m_byCursorPos > 4)
+//			m_byCursorPos = 4;
+//    }
+//    else if (byKeyCode == KEY_3)
+//    {
+//        if (m_byCursorPos < 4)
+//        {
+//            m_bufKeyboard[m_byCursorPos]++;
+//            if (m_bufKeyboard[m_byCursorPos] > '9')
+//                m_bufKeyboard[m_byCursorPos] = '0';
+//        }
+//        else
+//        {
+//            g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328; 
+//            menu_return( );
+//        }
+//    }
+//}
+//
+//static void CodeKey_DisplayHandler()
+//{
+//    uint8_t byNum[6];
+//
+//    byNum[0] = '+';
+//    byNum[1] = ':';
+//    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
+//    byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
+//    byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
+//    byNum[5] = m_bufKeyboard[4*m_byCursorPage];
+//    if (m_byCursorPos < 4)
+//    {
+//        display_digital(byNum,0,m_byCursorPos - 4*m_byCursorPage + 1);
+//        display_char("[[[[CODE");
+//    }
+//    else
+//    {
+//        display_digital("::::::",0,0);
+//        display_char("[[[[DONE");
+//    }   
+//}
+//
+//static void CodeKey_OpeningHandler()
+//{
+//    m_byCursorPos = 0;
+//    for (uint16_t i = 0; i < 4; i++)
+//        m_bufKeyboard[i] = '0';
+//    m_byCursorPage   = 0;
+//}
 
-static void CodeKey_DisplayHandler()
-{
-    uint8_t byNum[6];
-
-    byNum[0] = '+';
-    byNum[1] = ':';
-    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
-    byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
-    byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
-    byNum[5] = m_bufKeyboard[4*m_byCursorPage];
-    if (m_byCursorPos < 4)
-    {
-        display_digital(byNum,0,m_byCursorPos - 4*m_byCursorPage + 1);
-        display_char("[[[[CODE");
-    }
-    else
-    {
-        display_digital("::::::",0,0);
-        display_char("[[[[DONE");
-    }   
-}
-
-static void CodeKey_OpeningHandler()
-{
-    m_byCursorPos = 0;
-    for (uint16_t i = 0; i < 4; i++)
-        m_bufKeyboard[i] = '0';
-    m_byCursorPage   = 0;
-}
-
-static void CodeMenu_KeyboardHandler(uint8_t byKeyCode)
-{
-    if (byKeyCode == KEY_1)
-    {
-        if (m_byCursorPos > 0)
-        {
-            m_byCursorPos--;
-            m_byCursorPage   = m_byCursorPos/4;
-        }
-		else 
-        {
-            menu_return( );
-        }
-    }
-    else if (byKeyCode == KEY_2)
-    {
-        m_byCursorPos++;
-        m_byCursorPage   = m_byCursorPos/4;
-		if (m_byCursorPos > 4)
-			m_byCursorPos = 4;
-    }
-    else if (byKeyCode == KEY_3)
-    {
-        if (m_byCursorPos < 4)
-        {
-            m_bufKeyboard[m_byCursorPos]++;
-            if (m_bufKeyboard[m_byCursorPos] > '9')
-                m_bufKeyboard[m_byCursorPos] = '0';
-        }
-        else
-        {
-            g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328; 
-            menu_return( );
-        }
-    }
-}
-
-static void CodeMenu_DisplayHandler()
-{
-    uint8_t byNum[6];
-
-    byNum[0] = '+';
-    byNum[1] = ':';
-    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
-    byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
-    byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
-    byNum[5] = m_bufKeyboard[4*m_byCursorPage];
-    if (m_byCursorPos < 4)
-    {
-        display_digital(byNum,0,m_byCursorPos - 4*m_byCursorPage + 1);
-        display_char("[[[[CODE");
-    }
-    else
-    {
-        display_digital("::::::",0,0);
-        display_char("[[[[DONE");
-    }
-
-}
-
-static void CodeMenu_OpeningHandler()
-{
-    m_byCursorPos = 0;
-    for (uint16_t i = 0; i < 4; i++)
-        m_bufKeyboard[i] = '0';
-    m_byCursorPage   = 0;
-}
-
-static void CodeGlob_KeyboardHandler(uint8_t byKeyCode)
-{
-    if (byKeyCode == KEY_1)
-    {
-        if (m_byCursorPos > 0)
-        {
-            m_byCursorPos--;
-            m_byCursorPage   = m_byCursorPos/4;
-        }
-		else 
-        {
-            menu_return( );
-        }
-    }
-    else if (byKeyCode == KEY_2)
-    {
-        m_byCursorPos++;
-        m_byCursorPage   = m_byCursorPos/4;
-		if (m_byCursorPos > 4)
-			m_byCursorPos = 4;
-    }
-    else if (byKeyCode == KEY_3)
-    {
-        if (m_byCursorPos < 4)
-        {
-            m_bufKeyboard[m_byCursorPos]++;
-            if (m_bufKeyboard[m_byCursorPos] > '9')
-                m_bufKeyboard[m_byCursorPos] = '0';
-        }
-        else
-        {
-            g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328; 
-            menu_return( );
-        }
-    }
-}
-
-static void CodeGlob_DisplayHandler()
-{
-    uint8_t byNum[6];
-
-    byNum[0] = '+';
-    byNum[1] = ':';
-    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
-    byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
-    byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
-    byNum[5] = m_bufKeyboard[4*m_byCursorPage];
-    if (m_byCursorPos < 4)
-    {
-        display_digital(byNum,0,m_byCursorPos - 4*m_byCursorPage + 1);
-        display_char("[[[[CODE");
-    }
-    else
-    {
-        display_digital("::::::",0,0);
-        display_char("[[[[DONE");
-    }   
-}
-
-static void CodeGlob_OpeningHandler()
-{
-    m_byCursorPos = 0;
-    for (uint16_t i = 0; i < 4; i++)
-        m_bufKeyboard[i] = '0';
-    m_byCursorPage   = 0;
-}
+//static void CodeMenu_KeyboardHandler(uint8_t byKeyCode)
+//{
+//    if (byKeyCode == KEY_1)
+//    {
+//        if (m_byCursorPos > 0)
+//        {
+//            m_byCursorPos--;
+//            m_byCursorPage   = m_byCursorPos/4;
+//        }
+//		else 
+//        {
+//            menu_return( );
+//        }
+//    }
+//    else if (byKeyCode == KEY_2)
+//    {
+//        m_byCursorPos++;
+//        m_byCursorPage   = m_byCursorPos/4;
+//		if (m_byCursorPos > 4)
+//			m_byCursorPos = 4;
+//    }
+//    else if (byKeyCode == KEY_3)
+//    {
+//        if (m_byCursorPos < 4)
+//        {
+//            m_bufKeyboard[m_byCursorPos]++;
+//            if (m_bufKeyboard[m_byCursorPos] > '9')
+//                m_bufKeyboard[m_byCursorPos] = '0';
+//        }
+//        else
+//        {
+//            g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328; 
+//            menu_return( );
+//        }
+//    }
+//}
+//
+//static void CodeMenu_DisplayHandler()
+//{
+//    uint8_t byNum[6];
+//
+//    byNum[0] = '+';
+//    byNum[1] = ':';
+//    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
+//    byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
+//    byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
+//    byNum[5] = m_bufKeyboard[4*m_byCursorPage];
+//    if (m_byCursorPos < 4)
+//    {
+//        display_digital(byNum,0,m_byCursorPos - 4*m_byCursorPage + 1);
+//        display_char("[[[[CODE");
+//    }
+//    else
+//    {
+//        display_digital("::::::",0,0);
+//        display_char("[[[[DONE");
+//    }
+//
+//}
+//
+//static void CodeMenu_OpeningHandler()
+//{
+//    m_byCursorPos = 0;
+//    for (uint16_t i = 0; i < 4; i++)
+//        m_bufKeyboard[i] = '0';
+//    m_byCursorPage   = 0;
+//}
+//
+//static void CodeGlob_KeyboardHandler(uint8_t byKeyCode)
+//{
+//    if (byKeyCode == KEY_1)
+//    {
+//        if (m_byCursorPos > 0)
+//        {
+//            m_byCursorPos--;
+//            m_byCursorPage   = m_byCursorPos/4;
+//        }
+//		else 
+//        {
+//            menu_return( );
+//        }
+//    }
+//    else if (byKeyCode == KEY_2)
+//    {
+//        m_byCursorPos++;
+//        m_byCursorPage   = m_byCursorPos/4;
+//		if (m_byCursorPos > 4)
+//			m_byCursorPos = 4;
+//    }
+//    else if (byKeyCode == KEY_3)
+//    {
+//        if (m_byCursorPos < 4)
+//        {
+//            m_bufKeyboard[m_byCursorPos]++;
+//            if (m_bufKeyboard[m_byCursorPos] > '9')
+//                m_bufKeyboard[m_byCursorPos] = '0';
+//        }
+//        else
+//        {
+//            g_UnitCfg.dat.iCode = m_bufKeyboard[3]*1000 + m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 53328; 
+//            menu_return( );
+//        }
+//    }
+//}
+//
+//static void CodeGlob_DisplayHandler()
+//{
+//    uint8_t byNum[6];
+//
+//    byNum[0] = '+';
+//    byNum[1] = ':';
+//    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
+//    byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
+//    byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
+//    byNum[5] = m_bufKeyboard[4*m_byCursorPage];
+//    if (m_byCursorPos < 4)
+//    {
+//        display_digital(byNum,0,m_byCursorPos - 4*m_byCursorPage + 1);
+//        display_char("[[[[CODE");
+//    }
+//    else
+//    {
+//        display_digital("::::::",0,0);
+//        display_char("[[[[DONE");
+//    }   
+//}
+//
+//static void CodeGlob_OpeningHandler()
+//{
+//    m_byCursorPos = 0;
+//    for (uint16_t i = 0; i < 4; i++)
+//        m_bufKeyboard[i] = '0';
+//    m_byCursorPage   = 0;
+//}
 
 static void CaluserPos_KeyboardHandler(uint8_t byKeyCode)
 {
     if (byKeyCode == KEY_1)
     {
-        SetPwmDutyCycle2(-1000);
+        if (!g_UnitCfg.dat.bIsDouble)
+			SetPwmDutyCycle1(-1000);
+		else
+			SetPwmDutyCycle2(-1000);
     }
     else if (byKeyCode == KEY_2)
     {
-        SetPwmDutyCycle2(1000);
+        if (!g_UnitCfg.dat.bIsDouble)
+			SetPwmDutyCycle1(1000);
+		else
+			SetPwmDutyCycle2(1000);
     }
     else if (byKeyCode == KEY_3)
     {
@@ -2203,7 +2387,7 @@ static void CaluserInp_DisplayHandler()
 
     if (m_byCursorPage < 2)
     {
-        floattochar (g_UnitData.dat.iInp, byNum,0);
+        floattochar (g_UnitData.dat.iInp/10, byNum,1);
         display_digital(byNum,1,0);
     }
     else
@@ -2221,6 +2405,183 @@ static void CaluserInp_DisplayHandler()
 }
 
 static void CaluserInp_OpeningHandler()
+{
+    m_byCursorPage      = 0;
+}
+
+static void CaluserP1_KeyboardHandler(uint8_t byKeyCode)
+{
+    if (byKeyCode == KEY_1)
+    {
+
+    }
+    else if (byKeyCode == KEY_2)
+    {
+
+    }
+    else if (byKeyCode == KEY_3)
+    {
+        if (m_byCursorPage == 0)
+        {
+            temp1 = g_UnitData.dat.iAD6;
+            m_byCursorPage++;
+        }
+        else if (m_byCursorPage == 1)
+        {
+            temp2 = g_UnitData.dat.iAD6;
+            m_byCursorPage++;
+        }
+        else
+        {
+            g_UnitCfg.dat.iAd6Ma4 = temp1;
+            g_UnitCfg.dat.iAd6Ma20 = temp2;
+             menu_return( );
+        }
+    }
+}
+
+static void CaluserP1_DisplayHandler()
+{
+    uint8_t byNum[6];
+
+    if (m_byCursorPage < 2)
+    {
+        floattochar (g_UnitData.dat.fPress1/10, byNum,0);
+        display_digital(byNum,0,0);
+    }
+    else
+        display_digital("::::::",0,0);
+    if (m_byCursorPage == 0)
+    {
+        display_char("[[[[[MIN");
+    }
+    else if (m_byCursorPage == 1)
+    {
+        display_char("[[[[[MAX");
+    }
+    else
+        display_char("[[[[DONE");
+}
+
+static void CaluserP1_OpeningHandler()
+{
+    m_byCursorPage      = 0;
+}
+
+static void CaluserP2_KeyboardHandler(uint8_t byKeyCode)
+{
+    if (byKeyCode == KEY_1)
+    {
+
+    }
+    else if (byKeyCode == KEY_2)
+    {
+
+    }
+    else if (byKeyCode == KEY_3)
+    {
+        if (m_byCursorPage == 0)
+        {
+            temp1 = g_UnitData.dat.iAD7;
+            m_byCursorPage++;
+        }
+        else if (m_byCursorPage == 1)
+        {
+            temp2 = g_UnitData.dat.iAD7;
+            m_byCursorPage++;
+        }
+        else
+        {
+            g_UnitCfg.dat.iAd7Ma4 = temp1;
+            g_UnitCfg.dat.iAd7Ma20 = temp2;
+            menu_return( );
+        }
+    }
+}
+
+static void CaluserP2_DisplayHandler()
+{
+    uint8_t byNum[6];
+
+    if (m_byCursorPage < 2)
+    {
+        floattochar (g_UnitData.dat.fPress2/10, byNum,0);
+        display_digital(byNum,0,0);
+    }
+    else
+        display_digital("::::::",0,0);
+    if (m_byCursorPage == 0)
+    {
+        display_char("[[[[[MIN");
+    }
+    else if (m_byCursorPage == 1)
+    {
+        display_char("[[[[[MAX");
+    }
+    else
+        display_char("[[[[DONE");
+}
+
+static void CaluserP2_OpeningHandler()
+{
+    m_byCursorPage      = 0;
+}
+
+static void CaluserTemp_KeyboardHandler(uint8_t byKeyCode)
+{
+    if (byKeyCode == KEY_1)
+    {
+
+    }
+    else if (byKeyCode == KEY_2)
+    {
+
+    }
+    else if (byKeyCode == KEY_3)
+    {
+        if (m_byCursorPage == 0)
+        {
+            temp1 = g_UnitData.dat.iAD8;
+            m_byCursorPage++;
+        }
+        else if (m_byCursorPage == 1)
+        {
+            temp2 = g_UnitData.dat.iAD8;
+            m_byCursorPage++;
+        }
+        else
+        {
+            g_UnitCfg.dat.iAd8Ma4 = temp1;
+            g_UnitCfg.dat.iAd8Ma20 = temp2;
+            menu_return( );
+        }
+    }
+}
+
+static void CaluserTemp_DisplayHandler()
+{
+    uint8_t byNum[6];
+
+    if (m_byCursorPage < 2)
+    {
+        floattochar (g_UnitData.dat.fTemp/10, byNum,0);
+        display_digital(byNum,0,0);
+    }
+    else
+        display_digital("::::::",0,0);
+    if (m_byCursorPage == 0)
+    {
+        display_char("[[[[[MIN");
+    }
+    else if (m_byCursorPage == 1)
+    {
+        display_char("[[[[[MAX");
+    }
+    else
+        display_char("[[[[DONE");
+}
+
+static void CaluserTemp_OpeningHandler()
 {
     m_byCursorPage      = 0;
 }
@@ -2332,7 +2693,7 @@ static void PcontrlPara_DisplayHandler()
 
     byNum[0] = '+';
     byNum[1] = ':';
-    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
     byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
     byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
     byNum[5] = m_bufKeyboard[4*m_byCursorPage];
@@ -2477,7 +2838,7 @@ static void PcontrlKv_DisplayHandler()
 
     byNum[0] = '+';
     byNum[1] = ':';
-    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
     byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
     byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
     byNum[5] = m_bufKeyboard[4*m_byCursorPage];
@@ -2562,73 +2923,199 @@ static void AnlT_OpeningHandler()
 static void AnlSet4_OpeningHandler()
 {
     g_UnitCfg.dat.byAnlCtl = 5;
+	g_UnitCfg.dat.byAnlMode = 0x55;
 	menu_display_done( );
 }
 
 static void AnlSet0_OpeningHandler()
 {
     g_UnitCfg.dat.byAnlCtl = 6;
+	g_UnitCfg.dat.byAnlMode = 0x55;
 	menu_display_done( );
 }
 
 static void AnlSet10_OpeningHandler()
 {
     g_UnitCfg.dat.byAnlCtl = 1;
+	g_UnitCfg.dat.byAnlMode = 0x55;
 	menu_display_done( );
 }
 
 static void AnlSet5_OpeningHandler()
 {
     g_UnitCfg.dat.byAnlCtl = 0;
+	g_UnitCfg.dat.byAnlMode = 0x55;
 	menu_display_done( ); 
+}
+
+static void Bin1Drv_KeyboardHandler(uint8_t byKeyCode)
+{
+    if (byKeyCode == KEY_1)
+    {
+        if (m_byCursorPos > 0)
+        {
+            m_byCursorPos--;
+        }
+		else 
+        {
+            menu_return( );
+        }
+    }
+    else if (byKeyCode == KEY_2)
+    {
+        m_byCursorPos++;
+		if (m_byCursorPos > 3)
+			m_byCursorPos = 3;
+    }
+    else if (byKeyCode == KEY_3)
+    {
+        if (m_byCursorPos < 3)
+        {
+            m_bufKeyboard[m_byCursorPos]++;
+            if (m_bufKeyboard[m_byCursorPos] > '9')
+                m_bufKeyboard[m_byCursorPos] = '0';
+			adj_display( );
+        }
+        else
+        {
+            g_UnitCfg.dat.iDbnd1 = 10*(m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328);
+			g_UnitCfg.dat.byOUT &= ~0x70; 
+    		g_UnitCfg.dat.byOUT |= 0x10;	
+            menu_return( );
+        }
+    }
+}
+
+static void Bin1Drv_DisplayHandler()
+{
+    uint8_t byNum[6];
+
+    byNum[0] = '+';
+    byNum[1] = ':';
+    byNum[2] = ':';
+    byNum[3] = m_bufKeyboard[3*m_byCursorPage + 2];
+    byNum[4] = m_bufKeyboard[3*m_byCursorPage + 1];
+    byNum[5] = m_bufKeyboard[3*m_byCursorPage];
+    if (m_byCursorPos < 3)
+    {
+        display_digital(byNum,0,m_byCursorPos - 3*m_byCursorPage + 1);
+        display_char("[[[[DEVX");
+    }
+    else
+    {
+        display_digital("::::::",0,0);
+        display_char("[[[[DONE");
+    }
 }
 
 static void Bin1Drv_OpeningHandler()
 {
-    g_UnitCfg.dat.byOUT &= ~0x38; 
-    g_UnitCfg.dat.byOUT |= 0x08;
-    menu_display_done( );
+    m_byCursorPos = 0;
+    for (uint16_t i = 0; i < 3; i++)
+        m_bufKeyboard[i] = '0';
+    m_byCursorPage   = 0;
+}
+
+static void Bin1Lim_KeyboardHandler(uint8_t byKeyCode)
+{
+    if (byKeyCode == KEY_1)
+    {
+        if (m_byCursorPos > 0)
+        {
+            m_byCursorPos--;
+        }
+		else 
+        {
+            menu_return( );
+        }
+    }
+    else if (byKeyCode == KEY_2)
+    {
+        m_byCursorPos++;
+		if (m_byCursorPos > 3)
+			m_byCursorPos = 3;
+    }
+    else if (byKeyCode == KEY_3)
+    {
+        if (m_byCursorPos < 3)
+        {
+            m_bufKeyboard[m_byCursorPos]++;
+            if (m_bufKeyboard[m_byCursorPos] > '9')
+                m_bufKeyboard[m_byCursorPos] = '0';
+			adj_display( );
+        }
+        else
+        {
+            g_UnitCfg.dat.iPos1 = 10*(m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328);
+			g_UnitCfg.dat.byOUT &= ~0x70; 
+    		g_UnitCfg.dat.byOUT |= 0x20;	
+            menu_return( );
+        }
+    }
+}
+
+static void Bin1Lim_DisplayHandler()
+{
+    uint8_t byNum[6];
+
+    byNum[0] = '+';
+    byNum[1] = ':';
+    byNum[2] = ':';
+    byNum[3] = m_bufKeyboard[3*m_byCursorPage + 2];
+    byNum[4] = m_bufKeyboard[3*m_byCursorPage + 1];
+    byNum[5] = m_bufKeyboard[3*m_byCursorPage];
+    if (m_byCursorPos < 3)
+    {
+        display_digital(byNum,0,m_byCursorPos - 3*m_byCursorPage + 1);
+        display_char("[[[[LIMX");
+    }
+    else
+    {
+        display_digital("::::::",0,0);
+        display_char("[[[[DONE");
+    }
 }
 
 static void Bin1Lim_OpeningHandler()
 {
-    g_UnitCfg.dat.byOUT &= ~0x38; 
-    g_UnitCfg.dat.byOUT |= 0x10;
-    menu_display_done( );
+    m_byCursorPos = 0;
+    for (uint16_t i = 0; i < 3; i++)
+        m_bufKeyboard[i] = '0';
+    m_byCursorPage   = 0;
 }
 
 static void Bin1Spos_OpeningHandler()
 {
-    g_UnitCfg.dat.byOUT &= ~0x38; 
-    g_UnitCfg.dat.byOUT |= 0x18;
+    g_UnitCfg.dat.byOUT &= ~0x70; 
+    g_UnitCfg.dat.byOUT |= 0x30;
     menu_display_done( );
 }
 
 static void Bin1ErrS_OpeningHandler()
 {
-    g_UnitCfg.dat.byOUT &= ~0x38; 
-    g_UnitCfg.dat.byOUT |= 0x20;
+    g_UnitCfg.dat.byOUT &= ~0x70; 
+    g_UnitCfg.dat.byOUT |= 0x40;
     menu_display_done( ); 
 }
 
 static void Bin1Err1_OpeningHandler()
 {
-    g_UnitCfg.dat.byOUT &= ~0x38; 
-    g_UnitCfg.dat.byOUT |= 0x28;
+    g_UnitCfg.dat.byOUT &= ~0x70; 
+    g_UnitCfg.dat.byOUT |= 0x50;
     menu_display_done( );
 }
 
 static void Bin1Err2_OpeningHandler()
 {
-    g_UnitCfg.dat.byOUT &= ~0x38; 
-    g_UnitCfg.dat.byOUT |= 0x30;
+    g_UnitCfg.dat.byOUT &= ~0x70; 
+    g_UnitCfg.dat.byOUT |= 0x60;
     menu_display_done( );
 }
 
 static void Bin1ErrT_OpeningHandler()
 {
-    g_UnitCfg.dat.byOUT &= ~0x38; 
-    g_UnitCfg.dat.byOUT |= 0x38; 
+    g_UnitCfg.dat.byOUT &= ~0x70; 
+    g_UnitCfg.dat.byOUT |= 0x70; 
     menu_display_done( ); 
 }
 
@@ -2644,45 +3131,167 @@ static void Bin1Cls_OpeningHandler()
     menu_display_done( ); 
 }
 
+static void Bin2Drv_KeyboardHandler(uint8_t byKeyCode)
+{
+    if (byKeyCode == KEY_1)
+    {
+        if (m_byCursorPos > 0)
+        {
+            m_byCursorPos--;
+        }
+		else 
+        {
+            menu_return( );
+        }
+    }
+    else if (byKeyCode == KEY_2)
+    {
+        m_byCursorPos++;
+		if (m_byCursorPos > 3)
+			m_byCursorPos = 3;
+    }
+    else if (byKeyCode == KEY_3)
+    {
+        if (m_byCursorPos < 3)
+        {
+            m_bufKeyboard[m_byCursorPos]++;
+            if (m_bufKeyboard[m_byCursorPos] > '9')
+                m_bufKeyboard[m_byCursorPos] = '0';
+			adj_display( );
+        }
+        else
+        {
+            g_UnitCfg.dat.iDbnd2 = 10*(m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328);
+			g_UnitCfg.dat.byOUT &= ~0x07; 
+    		g_UnitCfg.dat.byOUT |= 0x01;	
+            menu_return( );
+        }
+    }
+}
+
+static void Bin2Drv_DisplayHandler()
+{
+    uint8_t byNum[6];
+
+    byNum[0] = '+';
+    byNum[1] = ':';
+    byNum[2] = ':';
+    byNum[3] = m_bufKeyboard[3*m_byCursorPage + 2];
+    byNum[4] = m_bufKeyboard[3*m_byCursorPage + 1];
+    byNum[5] = m_bufKeyboard[3*m_byCursorPage];
+    if (m_byCursorPos < 3)
+    {
+        display_digital(byNum,0,m_byCursorPos - 3*m_byCursorPage + 1);
+        display_char("[[[[DEVX");
+    }
+    else
+    {
+        display_digital("::::::",0,0);
+        display_char("[[[[DONE");
+    }
+}
+
 static void Bin2Drv_OpeningHandler()
 {
-    g_UnitCfg.dat.byOUT &= ~0x07; 
-    g_UnitCfg.dat.byOUT |= 0x01;
-    menu_display_done( );
+    m_byCursorPos = 0;
+    for (uint16_t i = 0; i < 3; i++)
+        m_bufKeyboard[i] = '0';
+    m_byCursorPage   = 0;
+}
+
+static void Bin2Lim_KeyboardHandler(uint8_t byKeyCode)
+{
+    if (byKeyCode == KEY_1)
+    {
+        if (m_byCursorPos > 0)
+        {
+            m_byCursorPos--;
+        }
+		else 
+        {
+            menu_return( );
+        }
+    }
+    else if (byKeyCode == KEY_2)
+    {
+        m_byCursorPos++;
+		if (m_byCursorPos > 3)
+			m_byCursorPos = 3;
+    }
+    else if (byKeyCode == KEY_3)
+    {
+        if (m_byCursorPos < 3)
+        {
+            m_bufKeyboard[m_byCursorPos]++;
+            if (m_bufKeyboard[m_byCursorPos] > '9')
+                m_bufKeyboard[m_byCursorPos] = '0';
+			adj_display( );
+        }
+        else
+        {
+            g_UnitCfg.dat.iPos2 = 10*(m_bufKeyboard[2]*100 + m_bufKeyboard[1]*10 + m_bufKeyboard[0] - 5328);
+			g_UnitCfg.dat.byOUT &= ~0x07; 
+    		g_UnitCfg.dat.byOUT |= 0x02;	
+            menu_return( );
+        }
+    }
+}
+
+static void Bin2Lim_DisplayHandler()
+{
+    uint8_t byNum[6];
+
+    byNum[0] = '+';
+    byNum[1] = ':';
+    byNum[2] = ':';
+    byNum[3] = m_bufKeyboard[3*m_byCursorPage + 2];
+    byNum[4] = m_bufKeyboard[3*m_byCursorPage + 1];
+    byNum[5] = m_bufKeyboard[3*m_byCursorPage];
+    if (m_byCursorPos < 3)
+    {
+        display_digital(byNum,0,m_byCursorPos - 3*m_byCursorPage + 1);
+        display_char("[[[[LIMX");
+    }
+    else
+    {
+        display_digital("::::::",0,0);
+        display_char("[[[[DONE");
+    }
 }
 
 static void Bin2Lim_OpeningHandler()
 {
-    g_UnitCfg.dat.byOUT &= ~0x07; 
-    g_UnitCfg.dat.byOUT |= 0x01;
-    menu_display_done( ); 
+    m_byCursorPos = 0;
+    for (uint16_t i = 0; i < 3; i++)
+        m_bufKeyboard[i] = '0';
+    m_byCursorPage   = 0;
 }
 
 static void Bin2Spos_OpeningHandler()
 {
     g_UnitCfg.dat.byOUT &= ~0x07; 
-    g_UnitCfg.dat.byOUT |= 0x01;
+    g_UnitCfg.dat.byOUT |= 0x03;
     menu_display_done( );
 }
 
 static void Bin2ErrS_OpeningHandler()
 {
     g_UnitCfg.dat.byOUT &= ~0x07; 
-    g_UnitCfg.dat.byOUT |= 0x01;
+    g_UnitCfg.dat.byOUT |= 0x04;
     menu_display_done( );
 }
 
 static void Bin2Err1_OpeningHandler()
 {
     g_UnitCfg.dat.byOUT &= ~0x07; 
-    g_UnitCfg.dat.byOUT |= 0x01;
+    g_UnitCfg.dat.byOUT |= 0x05;
     menu_display_done( );
 }
 
 static void Bin2Err2_OpeningHandler()
 {
     g_UnitCfg.dat.byOUT &= ~0x07; 
-    g_UnitCfg.dat.byOUT |= 0x01;
+    g_UnitCfg.dat.byOUT |= 0x06;
     menu_display_done( );
 }
 
@@ -2695,13 +3304,13 @@ static void Bin2ErrT_OpeningHandler()
 
 static void Bin2Opn_OpeningHandler()
 {
-    g_UnitCfg.dat.byOUT |= 0x40; 
+    g_UnitCfg.dat.byOUT |= 0x08; 
     menu_display_done( );
 }
 
 static void Bin2Cls_OpeningHandler()
 {
-    g_UnitCfg.dat.byOUT &= ~0x40;
+    g_UnitCfg.dat.byOUT &= ~0x08;
     menu_display_done( );
 }
 
@@ -2747,7 +3356,7 @@ static void ScalS_DisplayHandler()
 
     byNum[0] = '+';
     byNum[1] = ':';
-    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
     byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
     byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
     byNum[5] = m_bufKeyboard[4*m_byCursorPage];
@@ -2829,7 +3438,7 @@ static void ScalF_DisplayHandler()
 
     byNum[0] = '+';
     byNum[1] = ':';
-    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
     byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
     byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
     byNum[5] = m_bufKeyboard[4*m_byCursorPage];
@@ -2911,7 +3520,7 @@ static void ScalT_DisplayHandler()
 
     byNum[0] = '+';
     byNum[1] = ':';
-    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
     byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
     byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
     byNum[5] = m_bufKeyboard[4*m_byCursorPage];
@@ -2992,7 +3601,7 @@ static void ScalP_DisplayHandler()
 
     byNum[0] = '+';
     byNum[1] = ':';
-    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
     byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
     byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
     byNum[5] = m_bufKeyboard[4*m_byCursorPage];
@@ -3109,7 +3718,7 @@ static void LeakMeas_DisplayHandler()
 
     byNum[0] = '+';
     byNum[1] = ':';
-    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];;
+    byNum[2] = m_bufKeyboard[4*m_byCursorPage + 3];
     byNum[3] = m_bufKeyboard[4*m_byCursorPage + 2];
     byNum[4] = m_bufKeyboard[4*m_byCursorPage + 1];
     byNum[5] = m_bufKeyboard[4*m_byCursorPage];
@@ -3158,8 +3767,6 @@ void HMI_Init()
 {
     initLCD_1622();
     /* Enable internal pull-up resister*/
-    GP2CON  &= ~0x00000033;
-    GP0CON  &= ~0x00030000;
 
     /* Init Main Menu*/
     m_aMenuItems[MENU_MAIN_ACT].byMenuItemID                = MENU_MAIN_ACT;
@@ -3241,12 +3848,12 @@ void HMI_Init()
     m_aMenuItems[MENU_MAIN_PCONTRL].DisplayHandler          = MainMenu_DisplayHandler;
     m_aMenuItems[MENU_MAIN_PCONTRL].OnOpeningHandler        = NULL;
 
-    m_aMenuItems[MENU_MAIN_CODE].byMenuItemID               = MENU_MAIN_CODE;
-    m_aMenuItems[MENU_MAIN_CODE].pChildMenu                 = &m_aMenuItems[MENU_CODE_END];
-    m_aMenuItems[MENU_MAIN_CODE].pParentMenu                = NULL;
-    m_aMenuItems[MENU_MAIN_CODE].KeyboardHandler            = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_MAIN_CODE].DisplayHandler             = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_MAIN_CODE].OnOpeningHandler           = NULL;
+//    m_aMenuItems[MENU_MAIN_CODE].byMenuItemID               = MENU_MAIN_CODE;
+//    m_aMenuItems[MENU_MAIN_CODE].pChildMenu                 = NULL;
+//    m_aMenuItems[MENU_MAIN_CODE].pParentMenu                = NULL;
+//    m_aMenuItems[MENU_MAIN_CODE].KeyboardHandler            = CodeKey_KeyboardHandler;
+//    m_aMenuItems[MENU_MAIN_CODE].DisplayHandler             = CodeKey_DisplayHandler;
+//    m_aMenuItems[MENU_MAIN_CODE].OnOpeningHandler           = CodeKey_OpeningHandler;
 
     m_aMenuItems[MENU_MAIN_SAFEPOS].byMenuItemID            = MENU_MAIN_SAFEPOS;
     m_aMenuItems[MENU_MAIN_SAFEPOS].pChildMenu              = NULL;
@@ -3675,37 +4282,37 @@ void HMI_Init()
     m_aMenuItems[MENU_SERIO_END].OnOpeningHandler           = NULL;
 
     /* Code Menu*/
-    m_aMenuItems[MENU_CODE_KEY].byMenuItemID                = MENU_CODE_KEY;
-    m_aMenuItems[MENU_CODE_KEY].byChildMenuItems            = 4;
-    m_aMenuItems[MENU_CODE_KEY].pChildMenu                  = NULL;
-    m_aMenuItems[MENU_CODE_KEY].pParentMenu                 = &m_aMenuItems[MENU_MAIN_CODE];
-    m_aMenuItems[MENU_CODE_KEY].KeyboardHandler             = CodeKey_KeyboardHandler;
-    m_aMenuItems[MENU_CODE_KEY].DisplayHandler              = CodeKey_DisplayHandler;
-    m_aMenuItems[MENU_CODE_KEY].OnOpeningHandler            = CodeKey_OpeningHandler;
-
-    m_aMenuItems[MENU_CODE_MENU].byMenuItemID               = MENU_CODE_MENU;
-    m_aMenuItems[MENU_CODE_MENU].byChildMenuItems           = 4;
-    m_aMenuItems[MENU_CODE_MENU].pChildMenu                 = NULL;
-    m_aMenuItems[MENU_CODE_MENU].pParentMenu                = &m_aMenuItems[MENU_MAIN_CODE];
-    m_aMenuItems[MENU_CODE_MENU].KeyboardHandler            = CodeMenu_KeyboardHandler;
-    m_aMenuItems[MENU_CODE_MENU].DisplayHandler             = CodeMenu_DisplayHandler;
-    m_aMenuItems[MENU_CODE_MENU].OnOpeningHandler           = CodeMenu_OpeningHandler;
-
-    m_aMenuItems[MENU_CODE_GLOB].byMenuItemID               = MENU_CODE_GLOB;
-    m_aMenuItems[MENU_CODE_GLOB].byChildMenuItems           = 4;
-    m_aMenuItems[MENU_CODE_GLOB].pChildMenu                 = NULL;
-    m_aMenuItems[MENU_CODE_GLOB].pParentMenu                = &m_aMenuItems[MENU_MAIN_CODE];
-    m_aMenuItems[MENU_CODE_GLOB].KeyboardHandler            = CodeGlob_KeyboardHandler;
-    m_aMenuItems[MENU_CODE_GLOB].DisplayHandler             = CodeGlob_DisplayHandler;
-    m_aMenuItems[MENU_CODE_GLOB].OnOpeningHandler           = CodeGlob_OpeningHandler;
-
-    m_aMenuItems[MENU_CODE_END].byMenuItemID                = MENU_CODE_END;
-    m_aMenuItems[MENU_CODE_END].byChildMenuItems            = 4;
-    m_aMenuItems[MENU_CODE_END].pChildMenu                  = &m_aMenuItems[MENU_MAIN_CODE];
-    m_aMenuItems[MENU_CODE_END].pParentMenu                 = &m_aMenuItems[MENU_MAIN_CODE];
-    m_aMenuItems[MENU_CODE_END].KeyboardHandler             = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_CODE_END].DisplayHandler              = MainMenu_DisplayHandler;
-    m_aMenuItems[MENU_CODE_END].OnOpeningHandler            = NULL; 
+//    m_aMenuItems[MENU_CODE_KEY].byMenuItemID                = MENU_CODE_KEY;
+//    m_aMenuItems[MENU_CODE_KEY].byChildMenuItems            = 4;
+//    m_aMenuItems[MENU_CODE_KEY].pChildMenu                  = NULL;
+//    m_aMenuItems[MENU_CODE_KEY].pParentMenu                 = &m_aMenuItems[MENU_MAIN_CODE];
+//    m_aMenuItems[MENU_CODE_KEY].KeyboardHandler             = CodeKey_KeyboardHandler;
+//    m_aMenuItems[MENU_CODE_KEY].DisplayHandler              = CodeKey_DisplayHandler;
+//    m_aMenuItems[MENU_CODE_KEY].OnOpeningHandler            = CodeKey_OpeningHandler;  
+//
+//    m_aMenuItems[MENU_CODE_MENU].byMenuItemID               = MENU_CODE_MENU;
+//    m_aMenuItems[MENU_CODE_MENU].byChildMenuItems           = 4;
+//    m_aMenuItems[MENU_CODE_MENU].pChildMenu                 = NULL;
+//    m_aMenuItems[MENU_CODE_MENU].pParentMenu                = &m_aMenuItems[MENU_MAIN_CODE];
+//    m_aMenuItems[MENU_CODE_MENU].KeyboardHandler            = CodeMenu_KeyboardHandler;
+//    m_aMenuItems[MENU_CODE_MENU].DisplayHandler             = CodeMenu_DisplayHandler;
+//    m_aMenuItems[MENU_CODE_MENU].OnOpeningHandler           = CodeMenu_OpeningHandler;
+//
+//    m_aMenuItems[MENU_CODE_GLOB].byMenuItemID               = MENU_CODE_GLOB;
+//    m_aMenuItems[MENU_CODE_GLOB].byChildMenuItems           = 4;
+//    m_aMenuItems[MENU_CODE_GLOB].pChildMenu                 = NULL;
+//    m_aMenuItems[MENU_CODE_GLOB].pParentMenu                = &m_aMenuItems[MENU_MAIN_CODE];
+//    m_aMenuItems[MENU_CODE_GLOB].KeyboardHandler            = CodeGlob_KeyboardHandler;
+//    m_aMenuItems[MENU_CODE_GLOB].DisplayHandler             = CodeGlob_DisplayHandler;
+//    m_aMenuItems[MENU_CODE_GLOB].OnOpeningHandler           = CodeGlob_OpeningHandler;
+//
+//    m_aMenuItems[MENU_CODE_END].byMenuItemID                = MENU_CODE_END;
+//    m_aMenuItems[MENU_CODE_END].byChildMenuItems            = 4;
+//    m_aMenuItems[MENU_CODE_END].pChildMenu                  = &m_aMenuItems[MENU_MAIN_CODE];
+//    m_aMenuItems[MENU_CODE_END].pParentMenu                 = &m_aMenuItems[MENU_MAIN_CODE];
+//    m_aMenuItems[MENU_CODE_END].KeyboardHandler             = MainMenu_KeyboardHandler;
+//    m_aMenuItems[MENU_CODE_END].DisplayHandler              = MainMenu_DisplayHandler;
+//    m_aMenuItems[MENU_CODE_END].OnOpeningHandler            = NULL; 
 
     /* Bin In Menu*/
     m_aMenuItems[MENU_BININ_SPOS].byMenuItemID              = MENU_BININ_SPOS;
@@ -3751,7 +4358,7 @@ void HMI_Init()
 
     m_aMenuItems[MENU_OUTPUT_BIN1].byMenuItemID             = MENU_OUTPUT_BIN1;
     m_aMenuItems[MENU_OUTPUT_BIN1].byChildMenuItems         = 5;
-    m_aMenuItems[MENU_OUTPUT_BIN1].pChildMenu               = &m_aMenuItems[MENU_BIN1_DRV];
+    m_aMenuItems[MENU_OUTPUT_BIN1].pChildMenu               = &m_aMenuItems[MENU_BIN1_END];
     m_aMenuItems[MENU_OUTPUT_BIN1].pParentMenu              = &m_aMenuItems[MENU_MAIN_OUTPUT];
     m_aMenuItems[MENU_OUTPUT_BIN1].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_OUTPUT_BIN1].DisplayHandler           = MainMenu_DisplayHandler;
@@ -3759,7 +4366,7 @@ void HMI_Init()
 
     m_aMenuItems[MENU_OUTPUT_BIN2].byMenuItemID             = MENU_OUTPUT_BIN2;
     m_aMenuItems[MENU_OUTPUT_BIN2].byChildMenuItems         = 5;
-    m_aMenuItems[MENU_OUTPUT_BIN2].pChildMenu               = &m_aMenuItems[MENU_BIN2_DRV];
+    m_aMenuItems[MENU_OUTPUT_BIN2].pChildMenu               = &m_aMenuItems[MENU_BIN2_END];
     m_aMenuItems[MENU_OUTPUT_BIN2].pParentMenu              = &m_aMenuItems[MENU_MAIN_OUTPUT];
     m_aMenuItems[MENU_OUTPUT_BIN2].KeyboardHandler          = MainMenu_KeyboardHandler;
     m_aMenuItems[MENU_OUTPUT_BIN2].DisplayHandler           = MainMenu_DisplayHandler;
@@ -3775,23 +4382,47 @@ void HMI_Init()
 
     /* Cal User Menu*/
     m_aMenuItems[MENU_CALUSER_POS].byMenuItemID             = MENU_CALUSER_POS;
-    m_aMenuItems[MENU_CALUSER_POS].byChildMenuItems         = 4;
+    m_aMenuItems[MENU_CALUSER_POS].byChildMenuItems         = 7;
     m_aMenuItems[MENU_CALUSER_POS].pChildMenu               = NULL;
     m_aMenuItems[MENU_CALUSER_POS].pParentMenu              = &m_aMenuItems[MENU_MAIN_CALUSER];
     m_aMenuItems[MENU_CALUSER_POS].KeyboardHandler          = CaluserPos_KeyboardHandler;
     m_aMenuItems[MENU_CALUSER_POS].DisplayHandler           = CaluserPos_DisplayHandler;
     m_aMenuItems[MENU_CALUSER_POS].OnOpeningHandler         = CaluserPos_OpeningHandler;
-
+	
     m_aMenuItems[MENU_CALUSER_INP].byMenuItemID             = MENU_CALUSER_INP;
-    m_aMenuItems[MENU_CALUSER_INP].byChildMenuItems         = 4;
+    m_aMenuItems[MENU_CALUSER_INP].byChildMenuItems         = 7;
     m_aMenuItems[MENU_CALUSER_INP].pChildMenu               = NULL;
     m_aMenuItems[MENU_CALUSER_INP].pParentMenu              = &m_aMenuItems[MENU_MAIN_CALUSER];
     m_aMenuItems[MENU_CALUSER_INP].KeyboardHandler          = CaluserInp_KeyboardHandler;
     m_aMenuItems[MENU_CALUSER_INP].DisplayHandler           = CaluserInp_DisplayHandler;
-    m_aMenuItems[MENU_CALUSER_INP].OnOpeningHandler         = CaluserInp_OpeningHandler;
+    m_aMenuItems[MENU_CALUSER_INP].OnOpeningHandler         = CaluserInp_OpeningHandler;   
+	
+    m_aMenuItems[MENU_CALUSER_P1].byMenuItemID             	= MENU_CALUSER_P1;
+    m_aMenuItems[MENU_CALUSER_P1].byChildMenuItems         	= 7;
+    m_aMenuItems[MENU_CALUSER_P1].pChildMenu               	= NULL;
+    m_aMenuItems[MENU_CALUSER_P1].pParentMenu              	= &m_aMenuItems[MENU_MAIN_CALUSER];
+    m_aMenuItems[MENU_CALUSER_P1].KeyboardHandler          	= CaluserP1_KeyboardHandler;
+    m_aMenuItems[MENU_CALUSER_P1].DisplayHandler           	= CaluserP1_DisplayHandler;
+    m_aMenuItems[MENU_CALUSER_P1].OnOpeningHandler         	= CaluserP1_OpeningHandler;
+	
+    m_aMenuItems[MENU_CALUSER_P2].byMenuItemID             	= MENU_CALUSER_P2;
+    m_aMenuItems[MENU_CALUSER_P2].byChildMenuItems         	= 7;
+    m_aMenuItems[MENU_CALUSER_P2].pChildMenu               	= NULL;
+    m_aMenuItems[MENU_CALUSER_P2].pParentMenu              	= &m_aMenuItems[MENU_MAIN_CALUSER];
+    m_aMenuItems[MENU_CALUSER_P2].KeyboardHandler          	= CaluserP2_KeyboardHandler;
+    m_aMenuItems[MENU_CALUSER_P2].DisplayHandler           	= CaluserP2_DisplayHandler;
+    m_aMenuItems[MENU_CALUSER_P2].OnOpeningHandler         	= CaluserP2_OpeningHandler;
+	
+    m_aMenuItems[MENU_CALUSER_TEMP].byMenuItemID      	   	= MENU_CALUSER_TEMP;
+    m_aMenuItems[MENU_CALUSER_TEMP].byChildMenuItems       	= 7;
+    m_aMenuItems[MENU_CALUSER_TEMP].pChildMenu             	= NULL;
+    m_aMenuItems[MENU_CALUSER_TEMP].pParentMenu            	= &m_aMenuItems[MENU_MAIN_CALUSER];
+    m_aMenuItems[MENU_CALUSER_TEMP].KeyboardHandler        	= CaluserTemp_KeyboardHandler;
+    m_aMenuItems[MENU_CALUSER_TEMP].DisplayHandler         	= CaluserTemp_DisplayHandler;
+    m_aMenuItems[MENU_CALUSER_TEMP].OnOpeningHandler        = CaluserTemp_OpeningHandler;
 
     m_aMenuItems[MENU_CALUSER_FACT].byMenuItemID            = MENU_CALUSER_FACT;
-    m_aMenuItems[MENU_CALUSER_FACT].byChildMenuItems        = 4;
+    m_aMenuItems[MENU_CALUSER_FACT].byChildMenuItems        = 7;
     m_aMenuItems[MENU_CALUSER_FACT].pChildMenu              = NULL;
     m_aMenuItems[MENU_CALUSER_FACT].pParentMenu             = &m_aMenuItems[MENU_MAIN_CALUSER];
     m_aMenuItems[MENU_CALUSER_FACT].KeyboardHandler         = MainMenu_KeyboardHandler;
@@ -3799,7 +4430,7 @@ void HMI_Init()
     m_aMenuItems[MENU_CALUSER_FACT].OnOpeningHandler        = CaluserFact_OpeningHandler;
 
     m_aMenuItems[MENU_CALUSER_END].byMenuItemID             = MENU_CALUSER_END;
-    m_aMenuItems[MENU_CALUSER_END].byChildMenuItems         = 4;
+    m_aMenuItems[MENU_CALUSER_END].byChildMenuItems         = 7;
     m_aMenuItems[MENU_CALUSER_END].pChildMenu               = &m_aMenuItems[MENU_MAIN_CALUSER];
     m_aMenuItems[MENU_CALUSER_END].pParentMenu              = &m_aMenuItems[MENU_MAIN_CALUSER];
     m_aMenuItems[MENU_CALUSER_END].KeyboardHandler          = MainMenu_KeyboardHandler;
@@ -4040,16 +4671,16 @@ void HMI_Init()
     m_aMenuItems[MENU_BIN1_DRV].byChildMenuItems            = 10;
     m_aMenuItems[MENU_BIN1_DRV].pChildMenu                  = NULL;
     m_aMenuItems[MENU_BIN1_DRV].pParentMenu                 = &m_aMenuItems[MENU_OUTPUT_BIN1];
-    m_aMenuItems[MENU_BIN1_DRV].KeyboardHandler             = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_BIN1_DRV].DisplayHandler              = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_BIN1_DRV].KeyboardHandler             = Bin1Drv_KeyboardHandler;
+    m_aMenuItems[MENU_BIN1_DRV].DisplayHandler              = Bin1Drv_DisplayHandler;
     m_aMenuItems[MENU_BIN1_DRV].OnOpeningHandler            = Bin1Drv_OpeningHandler;
 
     m_aMenuItems[MENU_BIN1_LIM].byMenuItemID                = MENU_BIN1_LIM;
     m_aMenuItems[MENU_BIN1_LIM].byChildMenuItems            = 10;
     m_aMenuItems[MENU_BIN1_LIM].pChildMenu                  = NULL;
     m_aMenuItems[MENU_BIN1_LIM].pParentMenu                 = &m_aMenuItems[MENU_OUTPUT_BIN1];
-    m_aMenuItems[MENU_BIN1_LIM].KeyboardHandler             = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_BIN1_LIM].DisplayHandler              = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_BIN1_LIM].KeyboardHandler             = Bin1Lim_KeyboardHandler;
+    m_aMenuItems[MENU_BIN1_LIM].DisplayHandler              = Bin1Lim_DisplayHandler;
     m_aMenuItems[MENU_BIN1_LIM].OnOpeningHandler            = Bin1Lim_OpeningHandler;
 
     m_aMenuItems[MENU_BIN1_SPOS].byMenuItemID               = MENU_BIN1_SPOS;
@@ -4121,16 +4752,16 @@ void HMI_Init()
     m_aMenuItems[MENU_BIN2_DRV].byChildMenuItems            = 10;
     m_aMenuItems[MENU_BIN2_DRV].pChildMenu                  = NULL;
     m_aMenuItems[MENU_BIN2_DRV].pParentMenu                 = &m_aMenuItems[MENU_OUTPUT_BIN2];
-    m_aMenuItems[MENU_BIN2_DRV].KeyboardHandler             = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_BIN2_DRV].DisplayHandler              = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_BIN2_DRV].KeyboardHandler             = Bin2Drv_KeyboardHandler;
+    m_aMenuItems[MENU_BIN2_DRV].DisplayHandler              = Bin2Drv_DisplayHandler;
     m_aMenuItems[MENU_BIN2_DRV].OnOpeningHandler            = Bin2Drv_OpeningHandler;
 
     m_aMenuItems[MENU_BIN2_LIM].byMenuItemID                = MENU_BIN2_LIM;
     m_aMenuItems[MENU_BIN2_LIM].byChildMenuItems            = 10;
     m_aMenuItems[MENU_BIN2_LIM].pChildMenu                  = NULL;
     m_aMenuItems[MENU_BIN2_LIM].pParentMenu                 = &m_aMenuItems[MENU_OUTPUT_BIN2];
-    m_aMenuItems[MENU_BIN2_LIM].KeyboardHandler             = MainMenu_KeyboardHandler;
-    m_aMenuItems[MENU_BIN2_LIM].DisplayHandler              = MainMenu_DisplayHandler;
+    m_aMenuItems[MENU_BIN2_LIM].KeyboardHandler             = Bin2Lim_KeyboardHandler;
+    m_aMenuItems[MENU_BIN2_LIM].DisplayHandler              = Bin2Lim_DisplayHandler;
     m_aMenuItems[MENU_BIN2_LIM].OnOpeningHandler            = Bin2Lim_OpeningHandler;
 
     m_aMenuItems[MENU_BIN2_SPOS].byMenuItemID               = MENU_BIN2_SPOS;

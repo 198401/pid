@@ -66,8 +66,7 @@ static BYTE CRC(BYTE * a,BYTE j)
 	for(i=0;i < j;i++)
 	    crc_data = CrcTable[crc_data^a[i]];
 	return (crc_data);
-}
-
+}		 
 
 static volatile void delay_5us(WORD count)      
 {

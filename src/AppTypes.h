@@ -21,24 +21,29 @@ typedef union _UNIT_DATA
         float       fTemp;
         float       fTem;
         float       fPid;
+		float	    iPos1;		
+		float	    iInp;
+        float	    iSp;
+        float	    iPress1;
+        float	    iPress2;
+        float	    iTemp;
 
         uint16_t    iAD4;
         uint16_t    iAD5;
         uint16_t    iAD6;
         uint16_t    iAD7;
         uint16_t    iAD8;
+		uint16_t    iFreq;
         uint16_t    iCnt;
-
 		uint16_t    iPos;
-		uint16_t    iInp;
-        uint16_t    iSp;
-        uint16_t    iPress1;
-        uint16_t    iPress2;
-        uint16_t    iTemp;
 
 		uint8_t     byAd5422[3];
 
         mbBOOL      bInput;
+		mbBOOL      bOut1;
+		mbBOOL      bOut2;
+		mbBOOL      bErr;
+		mbBOOL      bPowerLeak;
 		mbBOOL      bIsDaOut;
         mbBOOL      bZZZZ;
     } dat;
@@ -50,22 +55,15 @@ typedef union _UNIT_CFG
     __packed struct _UNIT_CFG_
     {
         uint32_t    uBau; 
-		uint32_t    uMenu;        
-
-        /* Summation of errors, used for integrate calculations*/
-        int32_t sumError;
-        /* Maximum allowed sumerror, avoid overflow   */
-        int32_t maxSumError;
-        /* The Proportional tuning constant, multiplied with SCALING_FACTOR*/
-        int16_t P_Factor;       /* P_Factor*128     */
-        /* The Integral tuning constant, multiplied with SCALING_FACTOR*/
-        int16_t I_Factor;       /* P_Factor*128*0.05/Ti     */
-        /* The Derivative tuning constant, multiplied with SCALING_FACTOR*/
-        int16_t D_Factor;       /* P_Factor*Td*128     */
-        /* Last process value, used to find derivative of process value.   */
-        int16_t lastProcessValue;
-        /* Maximum allowed error, avoid overflow*/
-        int16_t maxError;       
+		uint32_t    uMenu;  
+        
+        int32_t 	sumError;				/* Summation of errors, used for integrate calculations*/	          
+        int32_t 	maxSumError;			/* Maximum allowed sumerror, avoid overflow   */			          
+        int16_t 	P_Factor;       		/* P_Factor*128 The Proportional tuning constant, multiplied with SCALING_FACTOR*/          
+        int16_t 	I_Factor;       		/* P_Factor*128*0.02/Ti The Integral tuning constant, multiplied with SCALING_FACTOR*/        
+        int16_t 	D_Factor;       		/* P_Factor*Td*128 The Derivative tuning constant, multiplied with SCALING_FACTOR*/        
+        int16_t 	lastProcessValue;		/* Last process value, used to find derivative of process value.   */	           
+        int16_t 	maxError;       		/* Maximum allowed error, avoid overflow*/
 
         uint16_t    iAd4Max;
         uint16_t    iAd4Min;
@@ -84,7 +82,11 @@ typedef union _UNIT_CFG
         uint16_t    iAd8R100;
         uint16_t    iAd8R200;
         uint16_t    iCode;
-		uint16_t    iDbnd;    
+		uint16_t    iDbnd;
+		uint16_t    iDbnd1;
+		uint16_t    iDbnd2; 
+		uint16_t    iPos1;
+		uint16_t    iPos2;    
 		uint16_t    iPidDbnd; 
 
         int16_t     iLimD;
@@ -135,16 +137,16 @@ typedef union _UNIT_CFG
          */
         uint8_t     byIN;      /* bit map to PortD  */
         /*!
-         * byIN bit map of portD
+         * bit output contrl
          *
          * <code>
-         * <---------- byIN (1)------->
+         * <---------- Out (1)------->
          *  +------------------------+
          *  | 7  6  5  4  3  2  1  0 |
          *  +------------------------+
          *  7 portD.6
-         *  6 portD.7
-         *  5...3 err mode of portD.6
+         *  4 portD.7
+         *  6...4 err mode of portD.6
          *  2...0 err mode of portD.7
          * </code>
          */
